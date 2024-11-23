@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Outputting text by printing something to the console is rather easy. Getting a setup to output an image is a bit more difficult, but not to worry: I&rsquo;ve done all the hard work for you behind the scenes. Here we&rsquo;ll introduce the tools to work with images specifically for this site.
+First let&rsquo;s take a look at Python. We use a framework called processing. There&rsquo;s a variant made for Python which is what we&rsquo;ll use. Follow the comments along in the code editor below to see how we can draw a clear canvas:
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/basics/visualizationtools/" />
+
+
+    <title>
+        
+            Visualization tools :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.e02674a12d952c0cafc5ce3ac3d66a0b9a140507232672f9436bfcb5edd80fda.css" integrity="sha256-4CZ0oS2VLAyvxc46w9ZqC5oUBQcjJnL5Q2v8te3YD9o=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Visualization tools">
+  <meta itemprop="description" content="Outputting text by printing something to the console is rather easy. Getting a setup to output an image is a bit more difficult, but not to worry: I’ve done all the hard work for you behind the scenes. Here we’ll introduce the tools to work with images specifically for this site.
+First let’s take a look at Python. We use a framework called processing. There’s a variant made for Python which is what we’ll use. Follow the comments along in the code editor below to see how we can draw a clear canvas:">
+  <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="wordCount" content="726">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Visualization tools">
+  <meta name="twitter:description" content="Outputting text by printing something to the console is rather easy. Getting a setup to output an image is a bit more difficult, but not to worry: I’ve done all the hard work for you behind the scenes. Here we’ll introduce the tools to work with images specifically for this site.
+First let’s take a look at Python. We use a framework called processing. There’s a variant made for Python which is what we’ll use. Follow the comments along in the code editor below to see how we can draw a clear canvas:">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-22 12:31:32 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title">
+                Visualization tools
+            </h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>Outputting text by printing something to the console is rather easy. Getting a setup to output an image is a bit more difficult, but not to worry: I&rsquo;ve done all the hard work for you behind the scenes. Here we&rsquo;ll introduce the tools to work with images specifically for this site.</p>
+<p>First let&rsquo;s take a look at Python. We use a framework called <a href="https://processing.org/">processing</a>. There&rsquo;s a <a href="https://py.processing.org/">variant made for Python</a> which is what we&rsquo;ll use. Follow the comments along in the code editor below to see how we can draw a clear canvas:</p>
+
+<div class="bs-component">
+<ul id="processingtabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonprocessingtab">
+<a href="#pythonprocessingtab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+<li class="nav-item" data-tab="cppprocessingtab">
+<a href="#cppprocessingtab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythonprocessingtab">
+<textarea id="pythonprocessing">
+# In order to draw anything we need to import the processing framework
+from processing import *
+
+# Define the size of the canvas 
+width = 400
+height = 300
+
+# The setup function runs exactly once at the start of the program
+def setup():
+    # Set the canvas size using our parameters
+    size(width, height)
+    # Clear the canvas to black 
+    background(0)
+
+# Run the program
+run()</textarea>
+<button id="pythonprocessingbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonprocessingoutput" style="display: none;"></pre>
+</div>
+ 
+
+<div class="tab-pane fade" id="cppprocessingtab">
+<textarea id="cppprocessing">
+// In order to draw anything include the following header
+// I defined some easy to use functions in there like the ClearCanvas
+#include &#34;Drawing.h&#34;
+
+// Define the size of the canvas
+int width = 400;
+int height = 300;
+// Create a canvas object
+Canvas c(width, height);
+
+int main()
+{
+    // Clear the canvas to black
+    ClearCanvas(c, width, height, &#34;rgb(0, 0, 0)&#34;);
+}</textarea>
+<button id="cppprocessingbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppprocessingoutput" style="display: none;"></pre>
+</div>
+ 
+
+</div>
+</div>
+
+
+<div id="pythonprocessingdiv" style="display: none;">
+<canvas id="pythonprocessingcanvas" height="500" width="500"></canvas>
+</div>
+
+<div id="cppprocessingdiv" style="display: none;">
+<canvas id="cppprocessingcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#processingtabs a:first').tab('show')
+        $('#processingtabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythonprocessing", "python");
+        
+            
+            
+                
+            
+            var editor = createEditor("cppprocessing", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<p>This is great to draw static images, but it gets more interesting if we can actually create some moving parts. Both the processing framework and the C++ framework have a method to continuously update the canvas. For the Python variant the function is called <code>draw()</code> and in C++ we have a more extended function <code>loop()</code> with some parameters we&rsquo;ll use in the examples below. We&rsquo;re going to draw a circle that moves left to right using the <code>sine</code> function applied on the total time since the program started. The variants have different functions names which may be confusing, I tried to stick as close as the existing Javascript canvas drawing functions for the C++ functionality I made, which is different to the processing functions defined for the Python drawing code.</p>
+
+<div class="bs-component">
+<ul id="animatedtabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonanimatedtab">
+<a href="#pythonanimatedtab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+<li class="nav-item" data-tab="cppanimatedtab">
+<a href="#cppanimatedtab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythonanimatedtab">
+<textarea id="pythonanimated">
+from processing import *
+import math
+
+width = 400
+height = 300
+
+def setup():
+    size(width, height)
+
+# This function will be called every frame
+def draw():
+    background(0)
+    ellipse(width/2 &#43; math.sin(millis() * 0.001) * 100, height/2, 100, 100)
+
+run()</textarea>
+<button id="pythonanimatedbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonanimatedoutput" style="display: none;"></pre>
+</div>
+
+
+<div class="tab-pane fade" id="cppanimatedtab">
+<textarea id="cppanimated">
+#include &#34;Drawing.h&#34;
+// This is the main difference, this include defines the main function for you
+// And allows you to override the setup and loop functions below
+#include &#34;canvas_main.h&#34;
+
+int width = 400;
+int height = 300;
+Canvas c(width, height);
+
+// We now have a function setup that is called once at the start
+void setup() {}
+
+// This function will be called every frame
+// The parameter t is the total time since the start of the program
+// dt stands for delta time, which is the difference in time between the last frame
+void loop(double t, double dt)
+{
+    ClearCanvas(c, width, height, &#34;black&#34;);
+    DrawDisc(c, Float2(width/2 &#43; sinf(t) * 100, height/2), 50, &#34;white&#34;);
+}</textarea>
+<button id="cppanimatedbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppanimatedoutput" style="display: none;"></pre>
+</div>
+ 
+
+</div>
+</div>
+
+
+<div id="pythonanimateddiv" style="display: none;">
+<canvas id="pythonanimatedcanvas" height="500" width="500"></canvas>
+</div>
+
+<div id="cppanimateddiv" style="display: none;">
+<canvas id="cppanimatedcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#animatedtabs a:first').tab('show')
+        $('#animatedtabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythonanimated", "python");
+        
+            
+            
+                
+            
+            var editor = createEditor("cppanimated", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<p>Finally let&rsquo;s take a look at how to set individual pixels as this is a common use case for rendering applications. Here we only look at C++ as we aren&rsquo;t going to touch individual pixels from Python. In the example below we&rsquo;re creating an image in which we set the color of every pixel. After we&rsquo;ve done that we&rsquo;ll draw the image on the canvas.</p>
+
+<div class="bs-component">
+<ul id="pixelstabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="cpppixelstab">
+<a href="#cpppixelstab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="cpppixelstab">
+<textarea id="cpppixels">
+#include &#34;Drawing.h&#34;
+#include &#34;canvas_main.h&#34;
+
+int width = 400;
+int height = 300;
+Canvas c(width, height);
+Float2 offset;
+
+void setup()
+{
+    offset = Float2(0, 0);
+}
+
+void loop(double t, double dt)
+{
+    offset &#43;= dt * 100;
+
+    // Create an image to store the pixel values in
+    ImageData image(width, height);
+    for (int j = 0; j &lt; height; j&#43;&#43;) 
+    {
+        for (int i = 0; i &lt; width; &#43;&#43;i) 
+        {
+            // Create a nice pattern to give a color to each pixel
+            Float2 coordinate = Float2(i, j) &#43; offset;
+            Float3 color = Float3((int)coordinate.x | (int)coordinate.y);
+
+            // Set each individual pixel in the image as if it&#39;s a single array
+            // So pixel at coordinates (x, y) will have location [y * row size &#43; x] in the array
+            image.data[j * width &#43; i] = RGB(color.x, color.y, color.z);
+        }
+    }
+
+    image.commit();
+    c.putImageData(image, 0, 0);
+}</textarea>
+<button id="cpppixelsbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cpppixelsoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="cpppixelsdiv" style="display: none;">
+<canvas id="cpppixelscanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#pixelstabs a:first').tab('show')
+        $('#pixelstabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("cpppixels", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://pixelcraft.dev/">Robbin Marcus</a></span>
+            
+            <span><a href="https://pixelcraft.dev/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>

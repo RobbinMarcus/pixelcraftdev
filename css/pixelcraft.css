@@ -1,0 +1,108 @@
+/* CSS overrides */
+body {
+    color: #e2e2e2;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+pre,
+.CodeMirror-linenumber
+{
+    font-size: 80%;
+}
+
+/* .CodeMirror-linenumber { */
+/*     font-size: 75%; */
+/* } */
+
+.nav-tabs {
+    border-bottom: 0px;
+}
+
+.CodeMirror {
+    margin-bottom: 1rem;
+}
+
+.bs-component {
+    margin-bottom: 1rem;
+}
+
+pre.output {
+    border: 1px solid rgb(53, 57, 59);
+    min-height: 10px;
+    max-height: 250px;
+}
+
+/* Centered images + canvas */
+img {
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+canvas {
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.card-body {
+    padding: 0px;
+}
+.container {
+    padding: 0px;
+}
+
+/* Style the resize icon */
+@media screen and (min-width: 1025px) {
+    .ui-resizable-e {
+        margin-top: 20px;
+        border-radius: 5px;
+        height: 100px;
+        width: 5px;
+    }
+
+    .ui-resizable-handle {
+        display: inline-block;
+        font-size: inherit;
+        color:#686868;
+    }
+    .ui-resizable-handle::before, .ui-resizable-handle::after {
+        content: "";
+        display: block;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+    }
+
+    .ui-resizable-e::before {
+        border: .1rem solid currentColor;
+        border-bottom: 0;
+        border-top: 0;
+        border-left: 0;
+        height: 2em;
+        transform: translate(-80%, -50%); 
+        width: 1.4em;
+    }
+    .ui-resizable-e::after {
+        border: .1rem solid currentColor;
+        border-bottom: 0;
+        border-top: 0;
+        border-left: 0;
+        height: 1em;
+        transform: translate(-30%, -50%); 
+        width: .7em;
+    }
+}
+
+/* Update max width for readability */
+@media (min-width: 1200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        min-width: 360px;
+        max-width: none;
+    }
+}

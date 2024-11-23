@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Raytracing on Pixel Craft</title>
+    <link>https://pixelcraft.dev/courses/rendering/raytracing/</link>
+    <description>Recent content in Raytracing on Pixel Craft</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 22 Nov 2024 12:31:32 +0100</lastBuildDate>
+    <atom:link href="https://pixelcraft.dev/courses/rendering/raytracing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduction to raytracing</title>
+      <link>https://pixelcraft.dev/courses/rendering/raytracing/introduction/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/rendering/raytracing/introduction/</guid>
+      <description>&lt;p&gt;At the time of writing, the term raytracing is used often to represent &amp;ldquo;high quality graphics&amp;rdquo; or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let&amp;rsquo;s first split the term to make sure we&amp;rsquo;re talking about the same thing:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raycasting&lt;/strong&gt; is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raytracing&lt;/strong&gt; is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Pathtracing&lt;/strong&gt; is a form of raytracing where we use probability sampling to reflect realistic light paths. It&amp;rsquo;s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples.&#xA;In this tutorial series we&amp;rsquo;re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios!&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is &lt;a href=&#34;https://raytracing.github.io/books/RayTracingInOneWeekend.html&#34;&gt;&lt;em&gt;Ray Tracing in One Weekend&lt;/em&gt;&lt;/a&gt;. Throughout the series I will refer to some of these articles that I&amp;rsquo;ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here&amp;rsquo;s the complete final example from &lt;a href=&#34;https://raytracing.github.io/books/RayTracingInOneWeekend.html&#34;&gt;&lt;em&gt;Ray Tracing in One Weekend&lt;/em&gt;&lt;/a&gt; running live:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Your first raytracer</title>
+      <link>https://pixelcraft.dev/courses/rendering/raytracing/firstraytracer/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/rendering/raytracing/firstraytracer/</guid>
+      <description>&lt;p&gt;Before starting this article make sure you are familiar with the visualization tools and vectors, we&amp;rsquo;re going to use them extensively in this raytracing series!&lt;/p&gt;&#xA;&lt;p&gt;In this article we&amp;rsquo;re going to do a couple of things:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Define structures for a ray and sphere&lt;/li&gt;&#xA;&lt;li&gt;Create a camera model&lt;/li&gt;&#xA;&lt;li&gt;Intersect rays with the scene and output a color&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;rays&#34;&gt;Rays&lt;/h3&gt;&#xA;&lt;p&gt;A ray can be defined as two vectors: one to define the starting position (also known as the origin) and one for the direction it&amp;rsquo;s traversing in. In code this looks as follows:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

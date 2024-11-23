@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="At the time of writing, the term raytracing is used often to represent &ldquo;high quality graphics&rdquo; or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let&rsquo;s first split the term to make sure we&rsquo;re talking about the same thing:
+Raycasting is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example. Raytracing is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be. Pathtracing is a form of raytracing where we use probability sampling to reflect realistic light paths. It&rsquo;s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples. In this tutorial series we&rsquo;re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios! Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is Ray Tracing in One Weekend. Throughout the series I will refer to some of these articles that I&rsquo;ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here&rsquo;s the complete final example from Ray Tracing in One Weekend running live:
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/rendering/raytracing/introduction/" />
+
+
+    <title>
+        
+            Introduction to raytracing :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.e02674a12d952c0cafc5ce3ac3d66a0b9a140507232672f9436bfcb5edd80fda.css" integrity="sha256-4CZ0oS2VLAyvxc46w9ZqC5oUBQcjJnL5Q2v8te3YD9o=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Introduction to raytracing">
+  <meta itemprop="description" content="At the time of writing, the term raytracing is used often to represent “high quality graphics” or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let’s first split the term to make sure we’re talking about the same thing:
+Raycasting is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example. Raytracing is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be. Pathtracing is a form of raytracing where we use probability sampling to reflect realistic light paths. It’s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples. In this tutorial series we’re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios! Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is Ray Tracing in One Weekend. Throughout the series I will refer to some of these articles that I’ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here’s the complete final example from Ray Tracing in One Weekend running live:">
+  <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="wordCount" content="2434">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Introduction to raytracing">
+  <meta name="twitter:description" content="At the time of writing, the term raytracing is used often to represent “high quality graphics” or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let’s first split the term to make sure we’re talking about the same thing:
+Raycasting is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example. Raytracing is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be. Pathtracing is a form of raytracing where we use probability sampling to reflect realistic light paths. It’s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples. In this tutorial series we’re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios! Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is Ray Tracing in One Weekend. Throughout the series I will refer to some of these articles that I’ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here’s the complete final example from Ray Tracing in One Weekend running live:">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-22 12:31:32 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title">
+                Introduction to raytracing
+            </h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>At the time of writing, the term raytracing is used often to represent &ldquo;high quality graphics&rdquo; or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let&rsquo;s first split the term to make sure we&rsquo;re talking about the same thing:</p>
+<ul>
+<li><strong>Raycasting</strong> is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example.</li>
+<li><strong>Raytracing</strong> is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be.</li>
+<li><strong>Pathtracing</strong> is a form of raytracing where we use probability sampling to reflect realistic light paths. It&rsquo;s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples.
+In this tutorial series we&rsquo;re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios!</li>
+</ul>
+<p>Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html"><em>Ray Tracing in One Weekend</em></a>. Throughout the series I will refer to some of these articles that I&rsquo;ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here&rsquo;s the complete final example from <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html"><em>Ray Tracing in One Weekend</em></a> running live:</p>
+
+<div class="bs-component">
+<ul id="exampletabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="cppexampletab">
+<a href="#cppexampletab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="cppexampletab">
+<textarea id="cppexample">
+#include &lt;cmath&gt;
+#include &lt;cstdlib&gt;
+#include &lt;limits&gt;
+#include &lt;memory&gt;
+#include &lt;vector&gt;
+#include &lt;canvas.h&gt;
+
+// Usings
+
+using std::sqrt;
+
+// Constants
+
+const double infinity = std::numeric_limits&lt;double&gt;::infinity();
+const double pi = 3.1415926535897932385;
+
+// Utility Functions
+
+inline double degrees_to_radians(double degrees) {
+    return degrees * pi / 180.0;
+}
+
+inline double clamp(double x, double min, double max) {
+    if (x &lt; min) return min;
+    if (x &gt; max) return max;
+    return x;
+}
+
+inline double random_double() {
+    // Returns a random real in [0,1).
+    return rand() / (RAND_MAX &#43; 1.0);
+}
+
+inline double random_double(double min, double max) {
+    // Returns a random real in [min,max).
+    return min &#43; (max - min) * random_double();
+}
+
+inline int random_int(int min, int max) {
+    // Returns a random integer in [min,max].
+    return static_cast&lt;int&gt;(random_double(min, max &#43; 1));
+}
+
+using std::sqrt;
+using std::fabs;
+
+struct int3
+{
+public:
+    int x, y, z;
+};
+
+class vec3 {
+public:
+    vec3() : e{ 0,0,0 } {}
+    vec3(double e0, double e1, double e2) : e{ e0, e1, e2 } {}
+
+    double x() const { return e[0]; }
+    double y() const { return e[1]; }
+    double z() const { return e[2]; }
+
+    vec3 operator-() const { return vec3(-e[0], -e[1], -e[2]); }
+    double operator[](int i) const { return e[i]; }
+    double& operator[](int i) { return e[i]; }
+
+    vec3& operator&#43;=(const vec3& v) {
+        e[0] &#43;= v.e[0];
+        e[1] &#43;= v.e[1];
+        e[2] &#43;= v.e[2];
+        return *this;
+    }
+
+    vec3& operator*=(const double t) {
+        e[0] *= t;
+        e[1] *= t;
+        e[2] *= t;
+        return *this;
+    }
+
+    vec3& operator/=(const double t) {
+        return *this *= 1 / t;
+    }
+
+    double length() const {
+        return sqrt(length_squared());
+    }
+
+    double length_squared() const {
+        return e[0] * e[0] &#43; e[1] * e[1] &#43; e[2] * e[2];
+    }
+
+    bool near_zero() const {
+        // Return true if the vector is close to zero in all dimensions.
+        const auto s = 1e-8;
+        return (fabs(e[0]) &lt; s) && (fabs(e[1]) &lt; s) && (fabs(e[2]) &lt; s);
+    }
+
+    inline static vec3 random() {
+        return vec3(random_double(), random_double(), random_double());
+    }
+
+    inline static vec3 random(double min, double max) {
+        return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+    }
+
+public:
+    double e[3];
+};
+
+
+// Type aliases for vec3
+using point3 = vec3;   // 3D point
+using color = vec3;    // RGB color
+
+
+// vec3 Utility Functions
+
+inline vec3 operator&#43;(const vec3& u, const vec3& v) {
+    return vec3(u.e[0] &#43; v.e[0], u.e[1] &#43; v.e[1], u.e[2] &#43; v.e[2]);
+}
+
+inline vec3 operator-(const vec3& u, const vec3& v) {
+    return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
+}
+
+inline vec3 operator*(const vec3& u, const vec3& v) {
+    return vec3(u.e[0] * v.e[0], u.e[1] * v.e[1], u.e[2] * v.e[2]);
+}
+
+inline vec3 operator*(double t, const vec3& v) {
+    return vec3(t * v.e[0], t * v.e[1], t * v.e[2]);
+}
+
+inline vec3 operator*(const vec3& v, double t) {
+    return t * v;
+}
+
+inline vec3 operator/(vec3 v, double t) {
+    return (1 / t) * v;
+}
+
+inline double dot(const vec3& u, const vec3& v) {
+    return u.e[0] * v.e[0]
+        &#43; u.e[1] * v.e[1]
+        &#43; u.e[2] * v.e[2];
+}
+
+inline vec3 cross(const vec3& u, const vec3& v) {
+    return vec3(u.e[1] * v.e[2] - u.e[2] * v.e[1],
+        u.e[2] * v.e[0] - u.e[0] * v.e[2],
+        u.e[0] * v.e[1] - u.e[1] * v.e[0]);
+}
+
+inline vec3 unit_vector(vec3 v) {
+    return v / v.length();
+}
+
+inline vec3 random_in_unit_disk() {
+    while (true) {
+        auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
+        if (p.length_squared() &gt;= 1) continue;
+        return p;
+    }
+}
+
+inline vec3 random_in_unit_sphere() {
+    while (true) {
+        auto p = vec3::random(-1, 1);
+        if (p.length_squared() &gt;= 1) continue;
+        return p;
+    }
+}
+
+inline vec3 random_unit_vector() {
+    return unit_vector(random_in_unit_sphere());
+}
+
+inline vec3 random_in_hemisphere(const vec3& normal) {
+    vec3 in_unit_sphere = random_in_unit_sphere();
+    if (dot(in_unit_sphere, normal) &gt; 0.0) // In the same hemisphere as the normal
+        return in_unit_sphere;
+    else
+        return -in_unit_sphere;
+}
+
+inline vec3 reflect(const vec3& v, const vec3& n) {
+    return v - 2 * dot(v, n) * n;
+}
+
+inline vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
+    auto cos_theta = fmin(dot(-uv, n), 1.0);
+    vec3 r_out_perp = etai_over_etat * (uv &#43; cos_theta * n);
+    vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
+    return r_out_perp &#43; r_out_parallel;
+}
+
+class ray {
+public:
+    ray() {}
+    ray(const point3& origin, const vec3& direction)
+        : orig(origin), dir(direction), tm(0)
+    {}
+
+    ray(const point3& origin, const vec3& direction, double time)
+        : orig(origin), dir(direction), tm(time)
+    {}
+
+    point3 origin() const { return orig; }
+    vec3 direction() const { return dir; }
+    double time() const { return tm; }
+
+    point3 at(double t) const {
+        return orig &#43; t * dir;
+    }
+
+public:
+    point3 orig;
+    vec3 dir;
+    double tm;
+};
+
+class camera {
+public:
+    camera() : camera(point3(0, 0, -1), point3(0, 0, 0), vec3(0, 1, 0), 40, 1, 0, 10) {}
+
+    camera(
+        point3 lookfrom,
+        point3 lookat,
+        vec3   vup,
+        double vfov, // vertical field-of-view in degrees
+        double aspect_ratio,
+        double aperture,
+        double focus_dist,
+        double _time0 = 0,
+        double _time1 = 0
+    ) {
+        auto theta = degrees_to_radians(vfov);
+        auto h = tan(theta / 2);
+        auto viewport_height = 2.0 * h;
+        auto viewport_width = aspect_ratio * viewport_height;
+
+        w = unit_vector(lookfrom - lookat);
+        u = unit_vector(cross(vup, w));
+        v = cross(w, u);
+
+        origin = lookfrom;
+        horizontal = focus_dist * viewport_width * u;
+        vertical = focus_dist * viewport_height * v;
+        lower_left_corner = origin - horizontal / 2 - vertical / 2 - focus_dist * w;
+
+        lens_radius = aperture / 2;
+        time0 = _time0;
+        time1 = _time1;
+    }
+
+    ray get_ray(double s, double t) const {
+        vec3 rd = lens_radius * random_in_unit_disk();
+        vec3 offset = u * rd.x() &#43; v * rd.y();
+        return ray(
+            origin &#43; offset,
+            lower_left_corner &#43; s * horizontal &#43; t * vertical - origin - offset,
+            random_double(time0, time1)
+        );
+    }
+
+private:
+    point3 origin;
+    point3 lower_left_corner;
+    vec3 horizontal;
+    vec3 vertical;
+    vec3 u, v, w;
+    double lens_radius;
+    double time0, time1;  // shutter open/close times
+};
+
+
+int3 get_color(color pixel_color, int samples_per_pixel) {
+    auto r = pixel_color.x();
+    auto g = pixel_color.y();
+    auto b = pixel_color.z();
+
+    // Replace NaN components with zero. See explanation in Ray Tracing: The Rest of Your Life.
+    if (r != r) r = 0.0;
+    if (g != g) g = 0.0;
+    if (b != b) b = 0.0;
+
+    // Divide the color by the number of samples and gamma-correct for gamma=2.0.
+    auto scale = 1.0 / samples_per_pixel;
+    r = sqrt(scale * r);
+    g = sqrt(scale * g);
+    b = sqrt(scale * b);
+
+    int3 result;
+    result.x = 256 * clamp(r, 0.0, 0.999);
+    result.y = 256 * clamp(g, 0.0, 0.999);
+    result.z = 256 * clamp(b, 0.0, 0.999);
+
+    return result;
+}
+
+class material;
+
+struct hit_record {
+    point3 p;
+    vec3 normal;
+    material* mat_ptr;
+    double t;
+    bool front_face;
+
+    inline void set_face_normal(const ray& r, const vec3& outward_normal) {
+        front_face = dot(r.direction(), outward_normal) &lt; 0;
+        normal = front_face ? outward_normal : -outward_normal;
+    }
+};
+
+class hittable {
+public:
+    virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const = 0;
+};
+
+class hittable_list : public hittable {
+public:
+    hittable_list() {}
+    hittable_list(hittable* object) { add(object); }
+
+    void clear() { objects.clear(); }
+    void add(hittable* object) { objects.push_back(object); }
+
+    virtual bool hit(
+        const ray& r, double t_min, double t_max, hit_record& rec) const override;
+
+public:
+    std::vector&lt;hittable*&gt; objects;
+};
+
+
+bool hittable_list::hit(const ray& r, double t_min, double t_max, hit_record& rec) const {
+    hit_record temp_rec;
+    auto hit_anything = false;
+    auto closest_so_far = t_max;
+
+    for (const auto& object : objects) {
+        if (object-&gt;hit(r, t_min, closest_so_far, temp_rec)) {
+            hit_anything = true;
+            closest_so_far = temp_rec.t;
+            rec = temp_rec;
+        }
+    }
+
+    return hit_anything;
+}
+
+class material {
+public:
+    virtual bool scatter(
+        const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered
+    ) const = 0;
+};
+
+
+class lambertian : public material {
+public:
+    lambertian(const color& a) : albedo(a) {}
+
+    virtual bool scatter(
+        const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered
+    ) const override {
+        auto scatter_direction = rec.normal &#43; random_unit_vector();
+
+        // Catch degenerate scatter direction
+        if (scatter_direction.near_zero())
+            scatter_direction = rec.normal;
+
+        scattered = ray(rec.p, scatter_direction);
+        attenuation = albedo;
+        return true;
+    }
+
+public:
+    color albedo;
+};
+
+
+class metal : public material {
+public:
+    metal(const color& a, double f) : albedo(a), fuzz(f &lt; 1 ? f : 1) {}
+
+    virtual bool scatter(
+        const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered
+    ) const override {
+        vec3 reflected = reflect(unit_vector(r_in.direction()), rec.normal);
+        scattered = ray(rec.p, reflected &#43; fuzz * random_in_unit_sphere());
+        attenuation = albedo;
+        return (dot(scattered.direction(), rec.normal) &gt; 0);
+    }
+
+public:
+    color albedo;
+    double fuzz;
+};
+
+
+class dielectric : public material {
+public:
+    dielectric(double index_of_refraction) : ir(index_of_refraction) {}
+
+    virtual bool scatter(
+        const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered
+    ) const override {
+        attenuation = color(1.0, 1.0, 1.0);
+        double refraction_ratio = rec.front_face ? (1.0 / ir) : ir;
+
+        vec3 unit_direction = unit_vector(r_in.direction());
+        double cos_theta = fmin(dot(-unit_direction, rec.normal), 1.0);
+        double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
+
+        bool cannot_refract = refraction_ratio * sin_theta &gt; 1.0;
+        vec3 direction;
+
+        if (cannot_refract || reflectance(cos_theta, refraction_ratio) &gt; random_double())
+            direction = reflect(unit_direction, rec.normal);
+        else
+            direction = refract(unit_direction, rec.normal, refraction_ratio);
+
+        scattered = ray(rec.p, direction);
+        return true;
+    }
+
+public:
+    double ir; // Index of Refraction
+
+private:
+    static double reflectance(double cosine, double ref_idx) {
+        // Use Schlick&#39;s approximation for reflectance.
+        auto r0 = (1 - ref_idx) / (1 &#43; ref_idx);
+        r0 = r0 * r0;
+        return r0 &#43; (1 - r0) * pow((1 - cosine), 5);
+    }
+};
+
+class sphere : public hittable {
+public:
+    sphere() {}
+
+    sphere(point3 cen, double r, material* m)
+        : center(cen), radius(r), mat_ptr(m) {};
+
+    virtual bool hit(
+        const ray& r, double t_min, double t_max, hit_record& rec) const override;
+
+public:
+    point3 center;
+    double radius;
+    material* mat_ptr;
+};
+
+
+bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) const {
+    vec3 oc = r.origin() - center;
+    auto a = r.direction().length_squared();
+    auto half_b = dot(oc, r.direction());
+    auto c = oc.length_squared() - radius * radius;
+
+    auto discriminant = half_b * half_b - a * c;
+    if (discriminant &lt; 0) return false;
+    auto sqrtd = sqrt(discriminant);
+
+    // Find the nearest root that lies in the acceptable range.
+    auto root = (-half_b - sqrtd) / a;
+    if (root &lt; t_min || t_max &lt; root) {
+        root = (-half_b &#43; sqrtd) / a;
+        if (root &lt; t_min || t_max &lt; root)
+            return false;
+    }
+
+    rec.t = root;
+    rec.p = r.at(rec.t);
+    vec3 outward_normal = (rec.p - center) / radius;
+    rec.set_face_normal(r, outward_normal);
+    rec.mat_ptr = mat_ptr;
+
+    return true;
+}
+
+
+color ray_color(const ray& r, const hittable& world, int depth) {
+    hit_record rec;
+
+    // If we&#39;ve exceeded the ray bounce limit, no more light is gathered.
+    if (depth &lt;= 0)
+        return color(0, 0, 0);
+
+    if (world.hit(r, 0.001, infinity, rec)) {
+        ray scattered;
+        color attenuation;
+        if (rec.mat_ptr-&gt;scatter(r, rec, attenuation, scattered))
+            return attenuation * ray_color(scattered, world, depth - 1);
+        return color(0, 0, 0);
+    }
+
+    vec3 unit_direction = unit_vector(r.direction());
+    auto t = 0.5 * (unit_direction.y() &#43; 1.0);
+    return (1.0 - t) * color(1.0, 1.0, 1.0) &#43; t * color(0.5, 0.7, 1.0);
+}
+
+
+hittable_list random_scene() {
+    hittable_list world;
+
+    auto ground_material = new lambertian(color(0.5, 0.5, 0.5));
+    world.add(new sphere(point3(0, -1000, 0), 1000, ground_material));
+
+    for (int a = -11; a &lt; 11; a&#43;&#43;) {
+        for (int b = -11; b &lt; 11; b&#43;&#43;) {
+            auto choose_mat = random_double();
+            point3 center(a &#43; 0.9 * random_double(), 0.2, b &#43; 0.9 * random_double());
+
+            if ((center - point3(4, 0.2, 0)).length() &gt; 0.9) {
+                material* sphere_material;
+
+                if (choose_mat &lt; 0.8) {
+                    // diffuse
+                    auto albedo = color::random() * color::random();
+                    sphere_material = new lambertian(albedo);
+                    world.add(new sphere(center, 0.2, sphere_material));
+                }
+                else if (choose_mat &lt; 0.95) {
+                    // metal
+                    auto albedo = color::random(0.5, 1);
+                    auto fuzz = random_double(0, 0.5);
+                    sphere_material = new metal(albedo, fuzz);
+                    world.add(new sphere(center, 0.2, sphere_material));
+                }
+                else {
+                    // glass
+                    sphere_material = new dielectric(1.5);
+                    world.add(new sphere(center, 0.2, sphere_material));
+                }
+            }
+        }
+    }
+
+    auto material1 = new dielectric(1.5);
+    world.add(new sphere(point3(0, 1, 0), 1.0, material1));
+
+    auto material2 = new lambertian(color(0.4, 0.2, 0.1));
+    world.add(new sphere(point3(-4, 1, 0), 1.0, material2));
+
+    auto material3 = new metal(color(0.7, 0.6, 0.5), 0.0);
+    world.add(new sphere(point3(4, 1, 0), 1.0, material3));
+
+    return world;
+}
+
+
+
+int main() {
+
+    // Image
+
+    const auto aspect_ratio = 16.0 / 9.0;
+    const int image_width = 400;
+    const int image_height = static_cast&lt;int&gt;(image_width / aspect_ratio);
+    const int samples_per_pixel = 10;
+    const int max_depth = 5;
+
+    // World
+
+    auto world = random_scene();
+
+    // Camera
+
+    point3 lookfrom(13, 2, 3);
+    point3 lookat(0, 0, 0);
+    vec3 vup(0, 1, 0);
+    auto dist_to_focus = 10.0;
+    auto aperture = 0.1;
+
+    camera cam(lookfrom, lookat, vup, 20, aspect_ratio, aperture, dist_to_focus);
+
+    // Render
+
+    Canvas C(image_width, image_height);
+    ImageData image(image_width, image_height);
+
+    for (int j = image_height - 1; j &gt;= 0; --j) {
+        for (int i = 0; i &lt; image_width; &#43;&#43;i) {
+            color pixel_color(0, 0, 0);
+            for (int s = 0; s &lt; samples_per_pixel; &#43;&#43;s) {
+                auto u = (i &#43; random_double()) / (image_width - 1);
+                auto v = (j &#43; random_double()) / (image_height - 1);
+                ray r = cam.get_ray(u, v);
+                pixel_color &#43;= ray_color(r, world, max_depth);
+            }
+            int3 color = get_color(pixel_color, samples_per_pixel);
+            image.data[(image_height-j) * image_width &#43; i] = RGB(color.x, color.y, color.z);
+        }
+    }
+
+    image.commit();
+    C.putImageData(image, 0, 0);
+}</textarea>
+<button id="cppexamplebutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppexampleoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="cppexamplediv" style="display: none;">
+<canvas id="cppexamplecanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#exampletabs a:first').tab('show')
+        $('#exampletabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<p>It may take a while to compute the final image. I&rsquo;ve adapted the code slightly to run on this web page, but no major changes to the code have been made.</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://pixelcraft.dev/">Robbin Marcus</a></span>
+            
+            <span><a href="https://pixelcraft.dev/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>

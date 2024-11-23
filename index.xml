@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pixel Craft</title>
+    <link>https://pixelcraft.dev/</link>
+    <description>Recent content on Pixel Craft</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 22 Nov 2024 12:31:32 +0100</lastBuildDate>
+    <atom:link href="https://pixelcraft.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduction to raytracing</title>
+      <link>https://pixelcraft.dev/courses/rendering/raytracing/introduction/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/rendering/raytracing/introduction/</guid>
+      <description>&lt;p&gt;At the time of writing, the term raytracing is used often to represent &amp;ldquo;high quality graphics&amp;rdquo; or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let&amp;rsquo;s first split the term to make sure we&amp;rsquo;re talking about the same thing:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raycasting&lt;/strong&gt; is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raytracing&lt;/strong&gt; is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Pathtracing&lt;/strong&gt; is a form of raytracing where we use probability sampling to reflect realistic light paths. It&amp;rsquo;s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples.&#xA;In this tutorial series we&amp;rsquo;re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios!&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is &lt;a href=&#34;https://raytracing.github.io/books/RayTracingInOneWeekend.html&#34;&gt;&lt;em&gt;Ray Tracing in One Weekend&lt;/em&gt;&lt;/a&gt;. Throughout the series I will refer to some of these articles that I&amp;rsquo;ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here&amp;rsquo;s the complete final example from &lt;a href=&#34;https://raytracing.github.io/books/RayTracingInOneWeekend.html&#34;&gt;&lt;em&gt;Ray Tracing in One Weekend&lt;/em&gt;&lt;/a&gt; running live:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>About</title>
+      <link>https://pixelcraft.dev/about/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/about/</guid>
+      <description>&lt;h3 id=&#34;why-this-site&#34;&gt;Why this site&lt;/h3&gt;&#xA;&lt;p&gt;What if you had a book about programming, but you could also run the code examples? That is the thought behind this site. The goal was to create the tools that I would have loved to have if I had to start over.&lt;/p&gt;&#xA;&lt;p&gt;A core aspect of this site will be sharing knowledge about what is helpful to know as a game developer. You will note that I tend to directly explain concepts through code wherever possible. That&amp;rsquo;s because coding a lot is really important. Once you get the main concept you can dig deeper in the theory that&amp;rsquo;s explained afterwards or just go ahead and use the tools in practice.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>How to use</title>
+      <link>https://pixelcraft.dev/courses/basics/howtouse/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/basics/howtouse/</guid>
+      <description>&lt;p&gt;On this site I try to pass most of the knowledge using practical examples. It&amp;rsquo;s a digital book, and unlike paper books I can make pages interactive. There will be interactive code editors on most pages. I would have loved to have these tools when I started learning programming.  Try it out yourself, write any code you want and press run to see the output printed below:&lt;/p&gt;&#xA;&#xA;&lt;div class=&#34;bs-component&#34;&gt;&#xA;&lt;ul id=&#34;exampletabs&#34; class=&#34;nav nav-tabs&#34; role=&#34;tabslist&#34;&gt;&#xA;&#xA;&lt;li class=&#34;nav-item&#34; data-tab=&#34;pythonexampletab&#34;&gt;&#xA;&lt;a href=&#34;#pythonexampletab&#34; class=&#34;nav-link&#34; data-bs-toggle=&#34;tab&#34;&gt;python&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&#xA;&lt;li class=&#34;nav-item&#34; data-tab=&#34;cppexampletab&#34;&gt;&#xA;&lt;a href=&#34;#cppexampletab&#34; class=&#34;nav-link&#34; data-bs-toggle=&#34;tab&#34;&gt;cpp&lt;/a&gt;&#xA;&lt;/li&gt;&#xA;&#xA;&lt;/ul&gt;&#xA;&lt;div id=&#34;myTabContent&#34; class=&#34;tab-content&#34;&gt;&#xA;&#xD;&#xA;&lt;div class=&#34;tab-pane fade&#34; id=&#34;pythonexampletab&#34;&gt;&#xA;&lt;textarea id=&#34;pythonexample&#34;&gt;&#xD;&#xA;print(&amp;#39;Hello world!&amp;#39;)&#xD;&#xA;data = [&amp;#39;Test&amp;#39;, 1, &amp;#39;Yellow&amp;#39;, &amp;#39;Banana&amp;#39;]&#xD;&#xA;for element in data:&#xD;&#xA;    print(element)&lt;/textarea&gt;&#xA;&lt;button id=&#34;pythonexamplebutton&#34; type=&#34;button&#34; class=&#34;btn btn-success&#34;&gt;Run&lt;/button&gt;&#xA;&lt;pre class=&#34;output&#34; id=&#34;pythonexampleoutput&#34; style=&#34;display: none;&#34;&gt;&lt;/pre&gt;&#xA;&lt;/div&gt;&#xA; &#xD;&#xA;&lt;div class=&#34;tab-pane fade&#34; id=&#34;cppexampletab&#34;&gt;&#xA;&lt;textarea id=&#34;cppexample&#34;&gt;&#xD;&#xA;#include &amp;lt;stdio.h&amp;gt;&#xD;&#xA;&#xD;&#xA;int main()&#xD;&#xA;{&#xD;&#xA;    printf(&amp;#34;Hello world from C&amp;#43;&amp;#43;!&amp;#34;);&#xD;&#xA;}&lt;/textarea&gt;&#xA;&lt;button id=&#34;cppexamplebutton&#34; type=&#34;button&#34; class=&#34;btn btn-success&#34;&gt;Run&lt;/button&gt;&#xA;&lt;pre class=&#34;output&#34; id=&#34;cppexampleoutput&#34; style=&#34;display: none;&#34;&gt;&lt;/pre&gt;&#xA;&lt;/div&gt;&#xA;&#xD;&#xA;&#xA;&lt;/div&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&#xA;&lt;div id=&#34;pythonexamplediv&#34; style=&#34;display: none;&#34;&gt;&#xA;&lt;canvas id=&#34;pythonexamplecanvas&#34; height=&#34;500&#34; width=&#34;500&#34;&gt;&lt;/canvas&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;div id=&#34;cppexamplediv&#34; style=&#34;display: none;&#34;&gt;&#xA;&lt;canvas id=&#34;cppexamplecanvas&#34; height=&#34;500&#34; width=&#34;500&#34;&gt;&lt;/canvas&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&#xA;&lt;script type=&#34;text/javascript&#34;&gt;&#xA;    $(document).ready(function() &#xA;    { &#xA;        $(&#39;#exampletabs a:first&#39;).tab(&#39;show&#39;)&#xA;        $(&#39;#exampletabs a&#39;).click(function (e) {&#xA;            e.preventDefault();&#xA;            $(this).tab(&#39;show&#39;);&#xA;        })&#xA;&#xA;        &#xA;            &#xA;            &#xA;                &#xA;            &#xA;            var editor = createEditor(&#34;pythonexample&#34;, &#34;python&#34;);&#xA;        &#xA;            &#xA;            &#xA;                &#xA;            &#xA;            var editor = createEditor(&#34;cppexample&#34;, &#34;text\/x-c\u002b\u002bsrc&#34;);&#xA;        &#xA;    });&#xA;    &#xA;&lt;/script&gt;&#xA;&#xA;&lt;p&gt;There are currently two supported programming languages: &lt;strong&gt;Python&lt;/strong&gt; and &lt;strong&gt;C++&lt;/strong&gt;. In game programming  &lt;strong&gt;C++&lt;/strong&gt; is the language of choice for most high quality games. This is due to the flexibility it offers to mess around with low level details such as memory management. For high level concepts I will try to use &lt;strong&gt;Python&lt;/strong&gt; more, as it&amp;rsquo;s the easier language to teach and understand general concepts.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Introduction to C&#43;&#43;</title>
+      <link>https://pixelcraft.dev/courses/c&#43;&#43;/introductiontocpp/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/c&#43;&#43;/introductiontocpp/</guid>
+      <description>&lt;p&gt;If you have never used C++ you may have heard or seen some code that looks particularly complex, but don&amp;rsquo;t worry: this is not the default! It is one of the older languages that&amp;rsquo;s been around forever and still widely used, why is that?&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-is-c-the-most-used-language-in-game-programming&#34;&gt;Why is C++ the most used language in game programming?&lt;/h2&gt;&#xA;&lt;p&gt;C++ main use case is for writing code that needs to perform well. Games generally tend to have a real time requirement, for example running a game that draws fancy 3D scenes at more than 60 frames per second. In order to achieve that we need to have code that runs fast and have control over almost all aspects, more on that in the next section.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Time and space complexity</title>
+      <link>https://pixelcraft.dev/courses/algorithms/timespacecomplexity/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/algorithms/timespacecomplexity/</guid>
+      <description>&lt;p&gt;Every algorithm comes with it&amp;rsquo;s own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.&lt;/p&gt;&#xA;&lt;p&gt;The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let&amp;rsquo;s consider the following algorithm to check if an element exists in a given array:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Unity</title>
+      <link>https://pixelcraft.dev/courses/frameworks/unity/unity/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/frameworks/unity/unity/</guid>
+      <description>&lt;p&gt;One of the most used game engines in the industry, notable for its ease of use due to using C# as their core scripting language. We will look at how Unity structures their systems for creating games.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Unreal Engine</title>
+      <link>https://pixelcraft.dev/courses/frameworks/unreal-engine/unreal-engine/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/frameworks/unreal-engine/unreal-engine/</guid>
+      <description>&lt;p&gt;One of the largest engine used to create high quality games. This series will be about where to start with UE and in depth topics like tweaking the engine settings or changing core systems.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vectors</title>
+      <link>https://pixelcraft.dev/courses/math/vectors/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/math/vectors/</guid>
+      <description>&lt;p&gt;Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Location of the player&lt;/li&gt;&#xA;&lt;li&gt;Rays (they are basically a position and direction)&lt;/li&gt;&#xA;&lt;li&gt;Physics (for example the velocity of a bullet)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;To define vectors more thoroughly we first have to define &lt;strong&gt;scalars&lt;/strong&gt; which are just ordinary numbers like &lt;code&gt;1.0&lt;/code&gt;. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example &lt;code&gt;(1.0, 2.0)&lt;/code&gt; is a 2D vector with the &lt;code&gt;x&lt;/code&gt; component set to &lt;code&gt;1.0&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; set to &lt;code&gt;2.0&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Visualization tools</title>
+      <link>https://pixelcraft.dev/courses/basics/visualizationtools/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/basics/visualizationtools/</guid>
+      <description>&lt;p&gt;Outputting text by printing something to the console is rather easy. Getting a setup to output an image is a bit more difficult, but not to worry: I&amp;rsquo;ve done all the hard work for you behind the scenes. Here we&amp;rsquo;ll introduce the tools to work with images specifically for this site.&lt;/p&gt;&#xA;&lt;p&gt;First let&amp;rsquo;s take a look at Python. We use a framework called &lt;a href=&#34;https://processing.org/&#34;&gt;processing&lt;/a&gt;. There&amp;rsquo;s a &lt;a href=&#34;https://py.processing.org/&#34;&gt;variant made for Python&lt;/a&gt; which is what we&amp;rsquo;ll use. Follow the comments along in the code editor below to see how we can draw a clear canvas:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Your first raytracer</title>
+      <link>https://pixelcraft.dev/courses/rendering/raytracing/firstraytracer/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/rendering/raytracing/firstraytracer/</guid>
+      <description>&lt;p&gt;Before starting this article make sure you are familiar with the visualization tools and vectors, we&amp;rsquo;re going to use them extensively in this raytracing series!&lt;/p&gt;&#xA;&lt;p&gt;In this article we&amp;rsquo;re going to do a couple of things:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Define structures for a ray and sphere&lt;/li&gt;&#xA;&lt;li&gt;Create a camera model&lt;/li&gt;&#xA;&lt;li&gt;Intersect rays with the scene and output a color&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;rays&#34;&gt;Rays&lt;/h3&gt;&#xA;&lt;p&gt;A ray can be defined as two vectors: one to define the starting position (also known as the origin) and one for the direction it&amp;rsquo;s traversing in. In code this looks as follows:&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

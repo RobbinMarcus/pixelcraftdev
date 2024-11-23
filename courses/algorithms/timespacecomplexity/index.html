@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Every algorithm comes with it&rsquo;s own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.
+The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let&rsquo;s consider the following algorithm to check if an element exists in a given array:
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/algorithms/timespacecomplexity/" />
+
+
+    <title>
+        
+            Time and space complexity :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.e02674a12d952c0cafc5ce3ac3d66a0b9a140507232672f9436bfcb5edd80fda.css" integrity="sha256-4CZ0oS2VLAyvxc46w9ZqC5oUBQcjJnL5Q2v8te3YD9o=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Time and space complexity">
+  <meta itemprop="description" content="Every algorithm comes with it’s own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.
+The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let’s consider the following algorithm to check if an element exists in a given array:">
+  <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="wordCount" content="951">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Time and space complexity">
+  <meta name="twitter:description" content="Every algorithm comes with it’s own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.
+The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let’s consider the following algorithm to check if an element exists in a given array:">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-22 12:31:32 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title">
+                Time and space complexity
+            </h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>Every algorithm comes with it&rsquo;s own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.</p>
+<p>The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let&rsquo;s consider the following algorithm to check if an element exists in a given array:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">        <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span> 
+</span></span><span class="line"><span class="ln">4</span><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="k">return</span> <span class="kc">False</span>
+</span></span></code></pre></div><p>If every comparison in the above code is taking up a constant time, the time complexity can be described by the element we are looking for: $x$. The amount of comparisons executed can be visualized if we track them in code as follows:</p>
+<p>EditorLinearExample:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">def</span> <span class="nf">countComparisons</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">        <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span> 
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">            <span class="k">return</span> <span class="n">count</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="k">return</span> <span class="n">count</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">countComparisons</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">countComparisons</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="n">countComparisons</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+</span></span></code></pre></div><p>When analyzing algorithms we usually consider the worst case scenario. When running the above code this scenario is clear: the amount of comparisons is the largest when $x$ is not in the array. The total execution time will then be the constant time for a comparison multiplied by the amount of comparisons: in this case the length of the array. The amount of operations executed in the algorithm is referred to as $n$.</p>
+<p>We will use $n$ to determine some bounds of the function to reason about its runtime. These bounds are known as asymptotic bounds which are lines that bound a certain curve. There are three asymptotic notations that are relevant for this: $O$, $\Omega$ and $\Theta$. They are the asymptotic- upper bound, lower bound and tight bound respectively. $O$ (pronounced as &ldquo;big O&rdquo;) bounds the function on the upper bound, which is the worst case scenario we are looking for.</p>
+<h2 id="order-of-growth">Order of growth</h2>
+<p>Comparing algorithms can be done rather easily if you know the order of growth. Knowing the order of growth allows you to calculate in advance how much more calculations have to be executed when increasing $n$. We express the order of growth in one of the above mentioned asymptotic bounds. Going back to the first example we can express the upper limit of this function as follows:</p>
+$$O(\text{contains}(n)) = O(n)$$<p>We say $O(n)$ to indicate that it&rsquo;s a linear function: it grows linearly with the input size. If we were to increase the array size in the example, you can see that in the worst case the amount of comparisons will be no larger than a multiple of $n$. Here is a list of common bounds:</p>
+<ul>
+<li>Constant: $O(1)$</li>
+<li>Logarithmic: $O(log(n))$</li>
+<li>Linear: $O(n)$</li>
+<li>Quadratic: $O(n^2)$</li>
+<li>Polynomial: $O(n^a)$</li>
+<li>Exponential: $O(a^n)$</li>
+<li>Factorial: $O(n!)$</li>
+</ul>
+<p>Where $a$ is some constant. Note that we are only interested in the largest increasing factor. The actual linear function would be in the format of $an + b$ where the constants $a$ and $b$ do not really matter since the upper bound will still scale linearly with n regardless.</p>
+<p>For the next couple of examples, try to estimate the upper bound of the algorithms. The answers are listed at the bottom of the article.</p>
+
+<div class="bs-component">
+<ul id="iseventabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythoniseventab">
+<a href="#pythoniseventab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythoniseventab">
+<textarea id="pythoniseven">
+def is_even(x):
+    return x % 2 == 0
+
+print(is_even(1))
+print(is_even(2))</textarea>
+<button id="pythonisevenbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonisevenoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="pythonisevendiv" style="display: none;">
+<canvas id="pythonisevencanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#iseventabs a:first').tab('show')
+        $('#iseventabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythoniseven", "python");
+        
+    });
+    
+</script>
+
+<div class="container">
+<div class="card border-danger mb-3">
+<div class="card-header" id="headingspoiler_constant">
+<button class="btn btn-danger btn-smbtn-danger" data-target="#collapsespoiler_constant" data-toggle="collapse">Show time complexity</button>
+</div>
+<div class="collapse" id="collapsespoiler_constant">
+<div class="card-body">
+<p><code>is_even</code> is $O(1)$. There are only a constant set of operations being executed.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bs-component">
+<ul id="duplicatestabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonduplicatestab">
+<a href="#pythonduplicatestab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythonduplicatestab">
+<textarea id="pythonduplicates">
+def find_duplicates(data):
+    for i in range(len(data)):
+        for j in range(len(data)):
+            if i != j and data[i] == data[j]:
+                return True
+    return False
+
+data = list(range(0, 10))
+print(find_duplicates(data))
+data.append(1)
+print(find_duplicates(data))</textarea>
+<button id="pythonduplicatesbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonduplicatesoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="pythonduplicatesdiv" style="display: none;">
+<canvas id="pythonduplicatescanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#duplicatestabs a:first').tab('show')
+        $('#duplicatestabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythonduplicates", "python");
+        
+    });
+    
+</script>
+
+<div class="container">
+<div class="card border-danger mb-3">
+<div class="card-header" id="headingspoiler_duplicates">
+<button class="btn btn-danger btn-smbtn-danger" data-target="#collapsespoiler_duplicates" data-toggle="collapse">Show time complexity</button>
+</div>
+<div class="collapse" id="collapsespoiler_duplicates">
+<div class="card-body">
+<p><code>find_duplicates</code> is $O(n^2)$. Every element in the array is being visited $n$ times to compare with every other element in the array. See if you can spot an easy way to make this algorithm run faster by changing the second for loop. Hint: the complexity will not change, it will still be $O(n^2)$, however the amount of comparisons will be reduced by more than half!</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bs-component">
+<ul id="permutationstabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonpermutationstab">
+<a href="#pythonpermutationstab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythonpermutationstab">
+<textarea id="pythonpermutations">
+def get_permutations(data): 
+	if len(data) == 0: 
+		return [] 
+	if len(data) == 1: 
+		return [data]
+
+	permutations = [] 
+	for i in range(len(data)): 
+		element = data[i] 
+		remainder = data[:i] &#43; data[i&#43;1:] 
+		for p in get_permutations(remainder): 
+			permutations.append([element] &#43; p) 
+
+	return permutations 
+  
+data = list(range(0, 3)) 
+for p in get_permutations(data): 
+    print(p)</textarea>
+<button id="pythonpermutationsbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonpermutationsoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="pythonpermutationsdiv" style="display: none;">
+<canvas id="pythonpermutationscanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#permutationstabs a:first').tab('show')
+        $('#permutationstabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythonpermutations", "python");
+        
+    });
+    
+</script>
+
+<div class="container">
+<div class="card border-danger mb-3">
+<div class="card-header" id="headingspoiler_permutations">
+<button class="btn btn-danger btn-smbtn-danger" data-target="#collapsespoiler_permutations" data-toggle="collapse">Show time complexity</button>
+</div>
+<div class="collapse" id="collapsespoiler_permutations">
+<div class="card-body">
+<p><code>get_permutations</code> is $O(n!)$. This is a hard one to get right since it involves recursive calls. In this case it&rsquo;s easy to verify the correct answer by comparing the number of results with the length of the input. For a list of 3 values we will get 3! = 3 * 2 * 1 = 6 answers.</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bs-component">
+<ul id="binarysearchtabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonbinarysearchtab">
+<a href="#pythonbinarysearchtab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythonbinarysearchtab">
+<textarea id="pythonbinarysearch">
+import math
+def binary_search(input_list, x):
+    left = 0
+    right = len(input_list) - 1
+    while left != right:
+        mid = math.ceil((left &#43; right) / 2)
+        if x &lt; input_list[mid]:
+            right = mid - 1
+        else:
+            left = mid
+
+    if input_list[left] == x:
+        return left
+    return -1
+
+data = list(range(0, 10)) 
+index = binary_search(data, 3)
+print(index)
+index = binary_search(data, 10)
+print(index)</textarea>
+<button id="pythonbinarysearchbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonbinarysearchoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="pythonbinarysearchdiv" style="display: none;">
+<canvas id="pythonbinarysearchcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#binarysearchtabs a:first').tab('show')
+        $('#binarysearchtabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythonbinarysearch", "python");
+        
+    });
+    
+</script>
+
+<div class="container">
+<div class="card border-danger mb-3">
+<div class="card-header" id="headingspoiler_binarysearch">
+<button class="btn btn-danger btn-smbtn-danger" data-target="#collapsespoiler_binarysearch" data-toggle="collapse">Show time complexity</button>
+</div>
+<div class="collapse" id="collapsespoiler_binarysearch">
+<div class="card-body">
+<p><code>binary_search</code> is $O(log(n))$. You can spot logarithmic runtimes by checking the reduction in length for every loop iteration. In this case the while loop will either set the right or left bound to the middle of the array, thus reducing the size by half.</p>
+</div>
+</div>
+</div>
+</div>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://pixelcraft.dev/">Robbin Marcus</a></span>
+            
+            <span><a href="https://pixelcraft.dev/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>

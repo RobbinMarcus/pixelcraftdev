@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:
+Location of the player Rays (they are basically a position and direction) Physics (for example the velocity of a bullet) To define vectors more thoroughly we first have to define scalars which are just ordinary numbers like 1.0. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example (1.0, 2.0) is a 2D vector with the x component set to 1.0 and y set to 2.0.
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/math/vectors/" />
+
+
+    <title>
+        
+            Vectors :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.e02674a12d952c0cafc5ce3ac3d66a0b9a140507232672f9436bfcb5edd80fda.css" integrity="sha256-4CZ0oS2VLAyvxc46w9ZqC5oUBQcjJnL5Q2v8te3YD9o=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Vectors">
+  <meta itemprop="description" content="Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:
+Location of the player Rays (they are basically a position and direction) Physics (for example the velocity of a bullet) To define vectors more thoroughly we first have to define scalars which are just ordinary numbers like 1.0. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example (1.0, 2.0) is a 2D vector with the x component set to 1.0 and y set to 2.0.">
+  <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="wordCount" content="3179">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Vectors">
+  <meta name="twitter:description" content="Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:
+Location of the player Rays (they are basically a position and direction) Physics (for example the velocity of a bullet) To define vectors more thoroughly we first have to define scalars which are just ordinary numbers like 1.0. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example (1.0, 2.0) is a 2D vector with the x component set to 1.0 and y set to 2.0.">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-22 12:31:32 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title">
+                Vectors
+            </h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:</p>
+<ul>
+<li>Location of the player</li>
+<li>Rays (they are basically a position and direction)</li>
+<li>Physics (for example the velocity of a bullet)</li>
+</ul>
+<p>To define vectors more thoroughly we first have to define <strong>scalars</strong> which are just ordinary numbers like <code>1.0</code>. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example <code>(1.0, 2.0)</code> is a 2D vector with the <code>x</code> component set to <code>1.0</code> and <code>y</code> set to <code>2.0</code>.</p>
+<p>Vectors come in many dimensions, in games we commonly use 2D, 3D and 4D variants. We&rsquo;re going to look at a code example for a 3D vector, as all of the operations we are interested in are defined for the third dimension. We will explain all the vector operations in detail, for now try to follow along with the comments. Pick your favorite programming language below to follow along with the code:</p>
+
+<div class="bs-component">
+<ul id="vectorstabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonvectorstab">
+<a href="#pythonvectorstab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+<li class="nav-item" data-tab="cppvectorstab">
+<a href="#cppvectorstab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="pythonvectorstab">
+<textarea id="pythonvectors">
+import math
+
+class Vector:
+    def __init__(self, *args):
+        # Find out from the given input how to set our values
+        if len(args) == 0:
+            self.values = [0,0,0]
+        elif len(args) == 1:
+            self.values = args[0]
+        else: 
+            self.values = list(args)
+        # Make sure we have floating point values
+        self.values = [float(x) for x in self.values]
+
+    # Setters for the properties: also make sure we have float values
+    def setx(self, x): self.values[0] = float(x)
+    def sety(self, y): self.values[1] = float(y)        
+    def setz(self, z): self.values[2] = float(z)     
+        
+    # Define some properties so we can use Vector.x
+    x = property(lambda self: self.values[0], setx)
+    y = property(lambda self: self.values[1], sety)
+    z = property(lambda self: self.values[2], setz)
+	
+    # Pretty print our values
+    def __str__(self):
+        return str(self.values)
+    
+    # Add another vector: just add the individual values
+    def __add__(self, other):
+        return Vector([self.values[i] &#43; other.values[i] for i in range(3)]) 
+    
+    # Subtract another vector: call our add function but negate the values
+    def __sub__(self, other):
+        return self.__add__(-other)
+    
+    # Negate: invert all the values
+    def __neg__(self):
+        return Vector([x * -1 for x in self.values])
+    
+    # Multiply: call the dot product
+    def __mul__(self, other):
+        return self.dot(other)
+        
+    # The vector dot product, sum of the corresponding elements multiplied with each other
+    def dot(self, other):
+        result = 0.0
+        for i in range(3):
+            result &#43;= self.values[i] * other.values[i]
+        return result
+    
+    # Remember Pythagoras?
+    def length(self):
+        # The dot product of a vector with itself returns the sum of all elements squared
+        return math.sqrt(self.dot(self))
+    
+    # Create a unit vector from this vector (set the vector length to 1)
+    def normalize(self):
+        length = self.length()
+        self.values = [x / length for x in self.values]
+
+    # The cross product is only defined for 3D vectors
+    def cross(self, other):
+        return Vector(self.y * other.z - self.z * other.y, self.z * other.x - self.x * other.z, self.x * other.y - self.y * other.x)
+
+
+v = Vector(1, 2, 3)
+v.x = 4
+v &#43;= Vector(0, 0, 1)
+print(&#34;Vector v: &#34; &#43; str(v))
+print(&#34;Negate operation: &#34; &#43; str(-v))
+
+print(&#34;length of v: &#34; &#43; str(v.length()))
+print(&#34;dot product of v with itself: &#34; &#43; str(v * v))
+v.normalize()
+print(&#34;v normalized: &#34; &#43; str(v))
+print(&#34;length of v: &#34; &#43; str(v.length()))
+
+x = Vector(1, 0, 0)
+y = Vector(0, 1, 0)
+z = Vector(0, 0, 1)
+print(&#34;Parallel dot product: &#34; &#43; str(x * x))
+print(&#34;Perpendicular dot product: &#34; &#43; str(x * y))
+print(&#34;Cross product of x and y: &#34; &#43; str(x.cross(y)))
+print(&#34;Cross product of y and x: &#34; &#43; str(y.cross(x)))</textarea>
+<button id="pythonvectorsbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonvectorsoutput" style="display: none;"></pre>
+</div>
+ 
+
+<div class="tab-pane fade" id="cppvectorstab">
+<textarea id="cppvectors">
+#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+
+// Define the struct with the 3 scalars
+struct Float3
+{
+    Float3(float x, float y, float z) : x(x), y(y), z(z) {}
+    Float3(float a) : x(a), y(a), z(a) {}
+    Float3() : x(0), y(0), z(0) {}
+    float x, y, z;
+};
+
+// Negate: simply return the inverse of all components
+inline Float3 operator-(const Float3 &a)
+{
+    return Float3(-a.x, -a.y, -a.z);
+}
+// Subtract: subtract all components individually
+inline Float3 operator-(const Float3 &a, const Float3 &b)
+{
+    return Float3(a.x - b.x, a.y - b.y, a.z - b.z);
+}
+// Add: add all components individually
+inline Float3 operator&#43;(const Float3 &a, const Float3 &b)
+{
+    return Float3(a.x &#43; b.x, a.y &#43; b.y, a.z &#43; b.z);
+}
+// Multiply: multiply all components individually
+inline Float3 operator*(const Float3 &a, const Float3 &b)
+{
+    return Float3(a.x * b.x, a.y * b.y, a.z * b.z);
+}
+// Divide: divide all components individually
+inline Float3 operator/(const Float3 &a, const Float3 &b)
+{
+    return Float3(a.x / b.x, a.y / b.y, a.z / b.z);
+}
+// The vector dot product, sum of the corresponding elements multiplied with each other
+inline float Dot(const Float3 &a, const Float3 &b)
+{
+    return a.x * b.x &#43; a.y * b.y &#43; a.z * b.z;
+}
+// Remember Pythagoras?
+inline float Length(const Float3 &a)
+{
+    // The dot product of a vector with itself returns the sum of all elements squared
+    return sqrtf(Dot(a, a));
+}
+// Create a unit vector from this vector (set the vector length to 1)
+inline Float3 Normalize(const Float3 &a)
+{
+    float len = 1.0f / Length(a);
+    return Float3(a.x * len, a.y * len, a.z * len);
+}
+// The cross product is only defined for 3D vectors
+inline Float3 Cross(Float3 a, Float3 b)
+{
+    return Float3(a.y*b.z - a.z*b.y, a.z*b.x - a.x*b.z, a.x*b.y - a.y*b.x);
+}
+
+int main()
+{
+    Float3 v = Float3(1, 2, 3);
+    v.x = 4;
+    v = v &#43; Float3(0, 0, 1);
+    printf(&#34;Vector v: (%.2f, %.2f, %.2f)\n&#34;, v.x, v.y, v.z);
+    Float3 n = -v;
+    printf(&#34;Negate operation: (%.2f, %.2f, %.2f)\n&#34;, n.x, n.y, n.z);
+
+    printf(&#34;length of v: %.2f\n&#34;, Length(v));
+    printf(&#34;dot product of v with itself: %.2f\n&#34;, Dot(v, v));
+    v = Normalize(v);
+    printf(&#34;v normalized: (%.2f, %.2f, %.2f)\n&#34;, v.x, v.y, v.z);
+    printf(&#34;length of v: %.2f\n&#34;, Length(v));
+    
+    Float3 x = Float3(1, 0, 0);
+    Float3 y = Float3(0, 1, 0);
+    Float3 z = Float3(0, 0, 1);
+    printf(&#34;Parallel dot product: %.2f\n&#34;, Dot(x, x));
+    printf(&#34;Perpendicular dot product: %.2f\n&#34;, Dot(x, y));
+    Float3 c = Cross(x, y);
+    printf(&#34;Cross product of x and y: (%.2f, %.2f, %.2f)\n&#34;, c.x, c.y, c.z);
+    c = Cross(y, x);
+    printf(&#34;Cross product of y and x: (%.2f, %.2f, %.2f)\n&#34;, c.x, c.y, c.z);
+};</textarea>
+<button id="cppvectorsbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppvectorsoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="pythonvectorsdiv" style="display: none;">
+<canvas id="pythonvectorscanvas" height="500" width="500"></canvas>
+</div>
+
+<div id="cppvectorsdiv" style="display: none;">
+<canvas id="cppvectorscanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#vectorstabs a:first').tab('show')
+        $('#vectorstabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("pythonvectors", "python");
+        
+            
+            
+                
+            
+            var editor = createEditor("cppvectors", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<p>For both programming language we&rsquo;re using something called <strong>operator overloading</strong>. This simply means that we&rsquo;re implementing what should happen when we call an operator for the class. For example in <strong>Python</strong> we use <code>_add_</code> to define what happens when we use the <code>+</code> operator on a vector. In <strong>C++</strong> the same thing can be done by defining the <code>operator+</code> function.</p>
+<p>The first couple of operator overloads we wrote are the simple operations:</p>
+<ul>
+<li>Add</li>
+<li>Subtract</li>
+<li>Negate</li>
+</ul>
+<p>In the following example we make one vector $a$ and one vector $b$. We can then use these vectors to create a new vector $a+b$. By using $-b$ we can also create $a-b$. In the following example we will draw out all these vectors to form two triangles. Tweak the values of $a$ and $b$ in the editor to get a different result!</p>
+
+<div class="bs-component">
+<ul id="addvectortabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="cppaddvectortab">
+<a href="#cppaddvectortab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="cppaddvectortab">
+<textarea id="cppaddvector">
+#include &#34;Drawing.h&#34;
+
+int w = 500;
+int h = 500;
+Canvas c(w, h);
+
+void DrawLineWithText(Float2 p1, Float2 p2, const char* text, const char* color, Float2 offset)
+{
+    DrawLine(c, p1, p2, color, 2);
+    DrawText(c, (p1 &#43; p2) / 2 &#43; offset, text, color);
+}
+
+int main()
+{
+    ClearCanvas(c, w, h, &#34;rgb(35, 36, 37)&#34;);
+    
+   	// Our vectors
+    Float2 a = Float2(250, 45);
+    Float2 b = Float2(20, 100);
+    // Define points for lines
+    Float2 p1 = Float2(100, 200);
+    Float2 p2 = p1 &#43; a;
+    Float2 p3 = p1 &#43; a &#43; b;
+    Float2 p4 = p1 &#43; a - b;
+    
+    DrawLineWithText(p1, p2, &#34;a&#34;, &#34;red&#34;, Float2(0, -10));
+    DrawLineWithText(p2, p3, &#34;b&#34;, &#34;green&#34;, Float2(10, 0));
+    DrawLineWithText(p2, p4, &#34;-b&#34;, &#34;green&#34;, Float2(10, 0));
+    DrawLineWithText(p1, p3, &#34;a &#43; b&#34;, &#34;yellow&#34;, Float2(-40, 20));
+    DrawLineWithText(p1, p4, &#34;a - b&#34;, &#34;yellow&#34;, Float2(-30, -10));
+}</textarea>
+<button id="cppaddvectorbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppaddvectoroutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="cppaddvectordiv" style="display: none;">
+<canvas id="cppaddvectorcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#addvectortabs a:first').tab('show')
+        $('#addvectortabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("cppaddvector", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<h2 id="length">Length</h2>
+<p>The length of a vector can be calculated using Pythagoras theorem. Since all of the components are their own axis, we can always form a right-angled triangle. To calculate the length we need to get all the components squared. In the code example above we&rsquo;ve used the dot product as a tool for this. As we will see in the next section, the dot product returns the product of the components. So if we use the dot product of a vector with itself, we have the sum of all components squared. Finally taking the square root of the resulting value will leave us with the length.</p>
+<h2 id="normalize">Normalize</h2>
+<p>Normalizing is a very common operations on vectors. The idea is that we set the magnitude or length of the vector exactly to one. That will leave us with a vector that only has direction. We call this resulting vector a <strong>unit vector</strong>. We can easily get this unit vector by dividing every component by the length of the vector.</p>
+<h2 id="dot-product">Dot product</h2>
+<p>The dot product is defined by adding the products of the individual components of the two vectors as follows:</p>
+$$a \cdot b = a_x b_x + a_y b_y + a_z b_z = d$$<p>The resulting value will be a scalar. The most important property to know about the dot product is that we can use it to determine the angle between two vectors. We can use the following definition use the dot product to get an angle:</p>
+$$a \cdot b = |a| |b| cos \theta$$<p>In this second formula we see that the dot product results in the magnitude of both vectors multiplied by the cosine of the angle (in radians). We can make this property really useful to just retrieve the angle if we have two unit vectors. In this case the magnitude of both vectors is equal to $1$ so we&rsquo;re left with only the cosine of the angle. In the next example we&rsquo;ll see this relationship illustrated by moving a vector.</p>
+
+<div class="bs-component">
+<ul id="dotproducttabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="cppdotproducttab">
+<a href="#cppdotproducttab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="cppdotproducttab">
+<textarea id="cppdotproduct">
+#include &lt;stdio.h&gt;
+#include &#34;Drawing.h&#34;
+#include &#34;Input.h&#34;
+#include &#34;canvas_main.h&#34;
+
+float rad = 0;
+int w = 500;
+int h = 500;
+Canvas c(w, h);
+
+void DrawLineWithText(Float2 p1, Float2 p2, const char* text, const char* color, Float2 offset)
+{
+    DrawLine(c, p1, p2, color, 3);
+    DrawText(c, (p1 &#43; p2) / 2 &#43; offset, text, color);
+}
+
+void DrawCosineGraph(Float2 offset, Float2 size)
+{
+    c.beginPath();
+    c.setStrokeStyle(&#34;yellow&#34;);
+    float x2 = offset.x;
+    float y2 = offset.y &#43; size.y;
+    c.moveTo(x2, y2);
+    for (int i = 0; i &lt; 51; i&#43;&#43;)
+    {
+        float radians = i / 50.0f * 2 * PI;
+        float x = i / 50.0f * size.x;
+        float y = cosf(radians) * 0.5f * size.y;
+        c.lineTo(offset.x &#43; x, offset.y &#43; size.y * 0.5f &#43; y);
+        x2 = x;
+        y2 = y;
+    }
+    c.stroke();
+}
+
+void setup() {}
+
+void loop(double t, double dt)
+{
+    rad &#43;= dt;
+    
+    ClearCanvas(c, w, h, &#34;rgb(35, 36, 37)&#34;);
+    // Draw some axes &#43;
+    DrawLine(c, Float2(0, 150), Float2(w, 150), &#34;gray&#34;, 1);
+    DrawLine(c, Float2(w*0.5f, 0), Float2(w*0.5f, h), &#34;gray&#34;, 1);
+    DrawLine(c, Float2(0, 300), Float2(w, 300), &#34;gray&#34;, 5);
+    DrawLine(c, Float2(0, 400), Float2(w, 400), &#34;gray&#34;, 1);
+    DrawCosineGraph(Float2(0, 310), Float2(500, 180));
+    
+   	// Our vectors
+    Float2 center = Float2(250, 150);
+    Float2 a = Float2(75, 0);
+    Float2 b = Float2(cosf(rad), sinf(rad)) * 75;
+    float d = Dot(Normalize(a), Normalize(b));
+    
+    Float2 p1 = center;
+    Float2 p2 = p1 &#43; a;
+    Float2 p3 = p1 &#43; b;
+    
+    DrawLineWithText(p1, p2, &#34;a&#34;, &#34;green&#34;, a * 0.7f);
+    DrawLineWithText(p1, p3, &#34;b&#34;, &#34;red&#34;, b * 0.7f);
+    DrawDisc(c, center, 7, &#34;black&#34;);
+    
+    c.setStrokeStyle(&#34;white&#34;);
+    c.beginPath();
+    c.arc(center.x, center.y, 55, b.y &lt; 0 ? -acosf(d) : 0, b.y &lt; 0 ? 0 : acosf(d));
+    c.stroke();
+    
+    char degrees[4];
+    std::snprintf(degrees, 4, &#34;%.0f&#34;, acosf(d) * 180 / PI);
+    DrawText(c, center &#43; Float2(55, -20), degrees, &#34;white&#34;);
+    
+    float x = acosf(d) / PI;
+    p1 = Float2(250 &#43; 250 * (b.y &gt; 0 ? -x : x), 400);
+    p2 = Float2(p1.x, p1.y - 90 * d);
+    char buffer[6];
+    std::snprintf(buffer, 6, &#34;%.2f&#34;, d);
+    DrawLineWithText(p1, p2, buffer, &#34;white&#34;, (p2 - p1) * 0.6f);
+}</textarea>
+<button id="cppdotproductbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppdotproductoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="cppdotproductdiv" style="display: none;">
+<canvas id="cppdotproductcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#dotproducttabs a:first').tab('show')
+        $('#dotproducttabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("cppdotproduct", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<h2 id="cross-product">Cross product</h2>
+<p>Unlike the dot product, the cross product returns a vector instead of a scalar. The resulting vector $v$ is perpendicular to both input vectors $a$ and $b$:</p>
+$$a \times b = (a_y b_z - a_z b_y\;, a_z b_x - a_x b_z\;, a_x b_y - a_y b_x) = v$$<p>This property is why the cross product is used most often: to create a perpendicular vector. Similar to the dot product, the magnitude of the resulting vector is scaled according to the length of the input vectors:</p>
+$$|a \times b| = |a| |b| sin \theta$$<p>There are a couple of important edge cases to account for: when $a$ and $b$ are completely parallel or inverse, the resulting vector will be <code>(0, 0, 0)</code>.</p>
+
+<div class="bs-component">
+<ul id="crossproducttabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="cppcrossproducttab">
+<a href="#cppcrossproducttab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="cppcrossproducttab">
+<textarea id="cppcrossproduct">
+#include &lt;stdio.h&gt;
+#include &#34;Drawing.h&#34;
+#include &#34;Input.h&#34;
+#include &#34;canvas_main.h&#34;
+
+float rad = 0;
+int w = 500;
+int h = 500;
+Canvas c(w, h);
+Camera camera(Float3(2.5f), Float3(0, 0, 0), Float2(w, h), 50);
+
+void setup() {}
+
+void loop(double t, double dt)
+{
+    ClearCanvas(c, w, h, &#34;rgb(35, 36, 37)&#34;);
+    DrawLine(c, camera.Project(Float3(-3, 0, 0)), camera.Project(Float3(3, 0, 0)), &#34;gray&#34;, 1);
+    DrawLine(c, camera.Project(Float3(0, -3, 0)), camera.Project(Float3(0, 3, 0)), &#34;gray&#34;, 1);
+    DrawLine(c, camera.Project(Float3(0, 0, 0)), camera.Project(Float3(0, 0, 3)), &#34;gray&#34;, 1);
+    DrawLine(c, camera.Project(Float3(0, 0, 0)), camera.Project(Float3(1, 0, 0)), &#34;gray&#34;, 3);
+    DrawLine(c, camera.Project(Float3(0, 0, 0)), camera.Project(Float3(0, 1, 0)), &#34;gray&#34;, 3);
+    DrawLine(c, camera.Project(Float3(0, 0, 0)), camera.Project(Float3(0, 0, 1)), &#34;gray&#34;, 3);
+	DrawText(c, camera.Project(Float3(1.2f, 0, 0)), &#34;x&#34;, &#34;gray&#34;);
+	DrawText(c, camera.Project(Float3(0, 1.2f, 0)), &#34;y&#34;, &#34;gray&#34;);
+	DrawText(c, camera.Project(Float3(0, 0, 1.2f)), &#34;z&#34;, &#34;gray&#34;);
+    
+    rad &#43;= dt;
+    if (Input::mouseX != 0 || Input::mouseY != 0)
+    {
+        Float2 pos = Float2(Input::mouseX / w, Input::mouseY / h) * (PI / 2);
+        Float3 t = Float3(1, 1, sinf(pos.y));
+        Float3 cameraPos = Float3(
+            t.x * cosf(pos.x) - t.y * sinf(pos.x),
+            t.x * sinf(pos.x) &#43; t.y * cosf(pos.x),
+            t.z);
+       	cameraPos *= 2.5f;
+        camera.SetPosition(cameraPos);
+    }
+    
+    Float3 a = Float3(cosf(rad), sinf(rad), 0);
+    Float3 b = Float3(0, 1, 0);
+    Float3 cross = Cross(a, b);
+    
+    DrawLine(c, camera.Project(Float3(0)), camera.Project(a), &#34;green&#34;, 3);
+    DrawLine(c, camera.Project(Float3(0)), camera.Project(b), &#34;red&#34;, 3);
+    DrawLine(c, camera.Project(Float3(0)), camera.Project(cross), &#34;blue&#34;, 3);
+    DrawText(c, camera.Project(a * 1.1f), &#34;a&#34;, &#34;green&#34;);
+	DrawText(c, camera.Project(b * 1.1f), &#34;b&#34;, &#34;red&#34;);
+	DrawText(c, camera.Project(cross * 1.1f), &#34;c&#34;, &#34;blue&#34;);
+    char buffer[5];
+    std::snprintf(buffer, 5, &#34;%.2f&#34;, Length(cross));
+    DrawText(c, Float2(260, 260), buffer, &#34;white&#34;);
+}</textarea>
+<button id="cppcrossproductbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppcrossproductoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="cppcrossproductdiv" style="display: none;">
+<canvas id="cppcrossproductcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#crossproducttabs a:first').tab('show')
+        $('#crossproducttabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("cppcrossproduct", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+<p>That&rsquo;s most of the practical stuff you should know about vector math that you need regularly in games. Below is an example of the 2D vector library being used in <strong>C++</strong> for all the editors above:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">  1</span><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="ln">  2</span><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="ln">  3</span><span class="cl"><span class="k">struct</span> <span class="nc">Float2</span>
+</span></span><span class="line"><span class="ln">  4</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">  5</span><span class="cl">    <span class="n">Float2</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">  6</span><span class="cl">    <span class="n">Float2</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">  7</span><span class="cl">    <span class="n">Float2</span><span class="p">()</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">  8</span><span class="cl">    <span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">  9</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 10</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 11</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 12</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 13</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 14</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 15</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 16</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 17</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 18</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 19</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 20</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 21</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 22</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 23</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 24</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 25</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 26</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 27</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 28</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 29</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 30</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 31</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 32</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 33</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 34</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 35</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 36</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 37</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 38</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 39</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 40</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 41</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 42</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 43</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 44</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 45</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 46</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 47</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 48</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 49</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 50</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 51</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 52</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 53</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 54</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 55</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 56</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 57</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">/</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 58</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 59</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 60</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 61</span><span class="cl">    <span class="k">return</span> <span class="nf">Float2</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 62</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 63</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">-=</span><span class="p">(</span><span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float2</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 64</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 65</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">-=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 66</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 67</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 68</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float2</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 69</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 70</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 71</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 72</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 73</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">*=</span><span class="p">(</span><span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float2</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 74</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 75</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 76</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 77</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 78</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">/=</span><span class="p">(</span><span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float2</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 79</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 80</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">/=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 81</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">/=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 82</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 83</span><span class="cl"><span class="kr">inline</span> <span class="kt">float</span> <span class="nf">Dot</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 84</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 85</span><span class="cl">    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 86</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 87</span><span class="cl"><span class="kr">inline</span> <span class="kt">float</span> <span class="nf">Length</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 88</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 89</span><span class="cl">    <span class="k">return</span> <span class="n">sqrtf</span><span class="p">(</span><span class="n">Dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln"> 90</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 91</span><span class="cl"><span class="kr">inline</span> <span class="n">Float2</span> <span class="nf">Normalize</span><span class="p">(</span><span class="k">const</span> <span class="n">Float2</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 92</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 93</span><span class="cl">    <span class="kt">float</span> <span class="n">len</span> <span class="o">=</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">Length</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 94</span><span class="cl">    <span class="k">return</span> <span class="n">Float2</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">len</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">len</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 95</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 96</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 97</span><span class="cl"><span class="k">struct</span> <span class="nc">Float3</span>
+</span></span><span class="line"><span class="ln"> 98</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 99</span><span class="cl">    <span class="n">Float3</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">100</span><span class="cl">    <span class="n">Float3</span><span class="p">(</span><span class="kt">float</span> <span class="n">a</span><span class="p">)</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">101</span><span class="cl">    <span class="n">Float3</span><span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="nc">Float4</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">102</span><span class="cl">    <span class="n">Float3</span><span class="p">()</span> <span class="o">:</span> <span class="n">x</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">103</span><span class="cl">    <span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">104</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">105</span><span class="cl">
+</span></span><span class="line"><span class="ln">106</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">107</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">108</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="o">-</span><span class="n">a</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">109</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">110</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">111</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">112</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">113</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">114</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">115</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">116</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">117</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">118</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">-</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">119</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">120</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">121</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">122</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">123</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">124</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">125</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">126</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">127</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">128</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">129</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">130</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">131</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">132</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">133</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">134</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">135</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">136</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">137</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">138</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">139</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">140</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">141</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">142</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">143</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">144</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">145</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">146</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">147</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">148</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">149</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">150</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="kt">float</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">151</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">152</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">/</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">/</span> <span class="n">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">153</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">154</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="k">operator</span><span class="o">/</span><span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">155</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">156</span><span class="cl">    <span class="k">return</span> <span class="nf">Float3</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">157</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">158</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">-=</span><span class="p">(</span><span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float3</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">159</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">160</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">-=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">161</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">-=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">162</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">-=</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">163</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">164</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float3</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">165</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">166</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">+=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">167</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">+=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">168</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">+=</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">169</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">170</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">*=</span><span class="p">(</span><span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float3</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">171</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">172</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">173</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">174</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">*=</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">175</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">176</span><span class="cl"><span class="kr">inline</span> <span class="kt">void</span> <span class="k">operator</span><span class="o">/=</span><span class="p">(</span><span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="n">Float3</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">177</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">178</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">/=</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">179</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">/=</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">180</span><span class="cl">    <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">/=</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">181</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">182</span><span class="cl"><span class="kr">inline</span> <span class="kt">float</span> <span class="nf">Dot</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">,</span> <span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">183</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">184</span><span class="cl">    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">185</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">186</span><span class="cl"><span class="kr">inline</span> <span class="kt">float</span> <span class="nf">Length</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">187</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">188</span><span class="cl">    <span class="k">return</span> <span class="n">sqrtf</span><span class="p">(</span><span class="n">Dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">189</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">190</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="nf">Normalize</span><span class="p">(</span><span class="k">const</span> <span class="n">Float3</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">191</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">192</span><span class="cl">    <span class="kt">float</span> <span class="n">len</span> <span class="o">=</span> <span class="mf">1.0f</span> <span class="o">/</span> <span class="n">Length</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">193</span><span class="cl">    <span class="k">return</span> <span class="n">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">len</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">len</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span> <span class="o">*</span> <span class="n">len</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">194</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">195</span><span class="cl"><span class="kr">inline</span> <span class="n">Float3</span> <span class="nf">Cross</span><span class="p">(</span><span class="n">Float3</span> <span class="n">a</span><span class="p">,</span> <span class="n">Float3</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">196</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">197</span><span class="cl">    <span class="k">return</span> <span class="n">Float3</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">z</span> <span class="o">-</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">z</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">z</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">x</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">a</span><span class="p">.</span><span class="n">y</span><span class="o">*</span><span class="n">b</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">198</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://pixelcraft.dev/">Robbin Marcus</a></span>
+            
+            <span><a href="https://pixelcraft.dev/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>

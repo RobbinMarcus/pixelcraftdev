@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="Before starting this article make sure you are familiar with the visualization tools and vectors, we&rsquo;re going to use them extensively in this raytracing series!
+In this article we&rsquo;re going to do a couple of things:
+Define structures for a ray and sphere Create a camera model Intersect rays with the scene and output a color Rays A ray can be defined as two vectors: one to define the starting position (also known as the origin) and one for the direction it&rsquo;s traversing in. In code this looks as follows:
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/rendering/raytracing/firstraytracer/" />
+
+
+    <title>
+        
+            Your first raytracer :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.e02674a12d952c0cafc5ce3ac3d66a0b9a140507232672f9436bfcb5edd80fda.css" integrity="sha256-4CZ0oS2VLAyvxc46w9ZqC5oUBQcjJnL5Q2v8te3YD9o=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Your first raytracer">
+  <meta itemprop="description" content="Before starting this article make sure you are familiar with the visualization tools and vectors, we’re going to use them extensively in this raytracing series!
+In this article we’re going to do a couple of things:
+Define structures for a ray and sphere Create a camera model Intersect rays with the scene and output a color Rays A ray can be defined as two vectors: one to define the starting position (also known as the origin) and one for the direction it’s traversing in. In code this looks as follows:">
+  <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="wordCount" content="1688">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Your first raytracer">
+  <meta name="twitter:description" content="Before starting this article make sure you are familiar with the visualization tools and vectors, we’re going to use them extensively in this raytracing series!
+In this article we’re going to do a couple of things:
+Define structures for a ray and sphere Create a camera model Intersect rays with the scene and output a color Rays A ray can be defined as two vectors: one to define the starting position (also known as the origin) and one for the direction it’s traversing in. In code this looks as follows:">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-22 12:31:32 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title">
+                Your first raytracer
+            </h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>Before starting this article make sure you are familiar with the visualization tools and vectors, we&rsquo;re going to use them extensively in this raytracing series!</p>
+<p>In this article we&rsquo;re going to do a couple of things:</p>
+<ul>
+<li>Define structures for a ray and sphere</li>
+<li>Create a camera model</li>
+<li>Intersect rays with the scene and output a color</li>
+</ul>
+<h3 id="rays">Rays</h3>
+<p>A ray can be defined as two vectors: one to define the starting position (also known as the origin) and one for the direction it&rsquo;s traversing in. In code this looks as follows:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">struct</span> <span class="nc">Ray</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="n">Float3</span> <span class="n">Position</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="n">Float3</span> <span class="n">Direction</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>In order to traverse along the ray we can calculate a new position where the ray ends up by adding a variable amount of the direction. We&rsquo;ll call this variable amount $t$. Using $t$ we can now see that any point on the ray can be shown as follows:</p>
+
+
+
+<div class="visualization" id="raydiv">
+    <canvas id="ray" width="500" height="150"></canvas>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById("ray");
+            var c = canvas.getContext("2d");
+            var width = "500";
+            var height = "150";
+
+            
+            
+            
+var time = 0;
+var dt = 16;
+var t = 0;
+
+var Position = new Float2(100, 50);
+var Direction = new Float2(0.98, 0.2);
+
+var render = function()
+{
+    time += dt;
+    t = 100 + Math.sin(time * 0.001) * 50;
+
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    var start = new Float2(0, Position.y + Position.x / Direction.x * -Direction.y)
+    c.beginPath();
+    c.moveTo(start.x, start.y);
+    c.setLineDash([5, 15]);
+    c.lineTo(Position.x, Position.y);
+    c.strokeStyle = "";
+    c.stroke();
+
+    var intersect = new Float2(Position.x + Direction.x * t, Position.y + Direction.y * t);
+    c.beginPath();
+    c.setLineDash([]);
+    c.moveTo(Position.x, Position.y);
+    c.lineTo(intersect.x, intersect.y);
+    c.strokeStyle = "white";
+    c.stroke();
+
+    var end = new Float2(canvas.width, intersect.y + (canvas.width - intersect.x) / Direction.x * Direction.y)
+    c.beginPath();
+    c.setLineDash([5, 15]);
+    c.moveTo(end.x, end.y);
+    c.lineTo(intersect.x, intersect.y);
+    c.strokeStyle = "grey";
+    c.stroke();
+
+    c.beginPath();
+    c.arc(Position.x, Position.y, 3, 0, Math.PI * 2);
+    c.fillStyle = "black";
+    c.fill();
+
+    c.fillStyle = "grey";
+    c.font = "24px sans serif";
+    c.fillText("start", Position.x - 20, Position.y - 20);
+
+    c.beginPath();
+    c.arc(intersect.x, intersect.y, 3, 0, Math.PI * 2);
+    c.fillStyle = "red";
+    c.fill();
+
+    c.fillStyle = "red";
+    var text = "t=" + Math.round(t);
+    c.fillText(text, intersect.x, intersect.y - 20);
+}
+
+window.setInterval(render, dt);
+
+        });
+    </script>
+</div>
+
+<p>$t$ can even be negative, meaning we trace the ray backwards!</p>
+<h3 id="sphere">Sphere</h3>
+<p>We use spheres as they are the simplest object to define and create an intersection test for. A perfect sphere can be defined pretty easily using a vector and a scalar. Similar to the ray, we have to define the position of the sphere using a vector. The scalar is used to say how large the sphere is by defining the radius of the sphere:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">struct</span> <span class="nc">Sphere</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="n">Float3</span> <span class="n">Position</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="kt">float</span> <span class="n">Radius</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>To visualize these spheres we have to see if a ray hits the sphere. Therefore we are going to define a ray-sphere intersection. The ray-sphere intersection will be as simple as possible, we are only going to detect if the ray hits the sphere.</p>
+<p>The ray-sphere intersection requires a little bit of linear algebra to solve. Before we set up the formula let&rsquo;s define what parameters we have to work with:</p>
+<ul>
+<li>$O$ = ray position (origin)</li>
+<li>$D$ = ray direction</li>
+<li>$t$ = parameter for the amount of ray direction</li>
+<li>$C$ = position of the center of the sphere</li>
+<li>$R$ = sphere radius</li>
+</ul>
+<p>The idea is to find a point on the ray that is exactly on the surface of the sphere. We know that any point on the surface of the sphere is exactly $R$ away from the center of the sphere, this is how the radius is defined. Let&rsquo;s now assume our Sphere is exactly at the world origin $(0, 0, 0)$. Using that we can define the sphere as follows:</p>
+$$x^2 + y^2 + z^2 = R^2$$<p>Which means any point $(x, y, z)$ is on the sphere if the distance from the origin is exactly equal to the radius. Using this we can compare any point on the ray to any point on the sphere:</p>
+$$|O + tD|^2 - R^2 = 0$$<p>This equation tells us that we are looking for any point on the ray (using $t$) which is exactly on the sphere. So if we can solve this equation for $t$ we know at what distance we intersect the sphere. Solving this requires us to rewrite the equation by expanding the brackets (the $||$ brackets indicate length). After expanding the brackets we&rsquo;ll end up with this:</p>
+$$t^2D^2 + 2OtD + O^2 - R^2 = 0$$<p>This equation is in the form of a quadratic function:</p>
+$$ax^2 + bx + c = 0$$<p>When we translate to this standard form, remember that we are solving for $t$, so we use $t$ instead of $x$ and then we can translate all the other terms to fill in $a$, $b$ and $c$. We will end up with the following terms:</p>
+<ul>
+<li>$a$ = $D^2$</li>
+<li>$b$ = $2OD$</li>
+<li>$c$ = $O^2 - R^2$</li>
+</ul>
+<p>The quadratic function has a known solution which is defined as follows:</p>
+$$x = \dfrac{-b \pm \sqrt{b^2-4ac}}{2a}$$<p>For now we are only interested in the <strong>discriminant</strong> which indicates if we have any intersections at all. The discriminant is this part of the equation: $b^2 - 4ac$. If the solution is 0, there is one solution meaning the ray hits the sphere. If it&rsquo;s larger than 0 there are two solutions meaning the ray passes through the sphere.</p>
+<p>There is one additional term we&rsquo;ve ignored until now which is the sphere position. Adding that to the mix we get the initial equation:</p>
+$$|O + tD - C|^2 - R^2 = 0$$<p>Rewriting that is left as an exercise, but the results are quite similar. Translating all that to code we get the following:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">1</span><span class="cl"><span class="kt">bool</span> <span class="nf">IntersectSphere</span><span class="p">(</span><span class="k">const</span> <span class="n">Ray</span> <span class="o">&amp;</span><span class="n">ray</span><span class="p">,</span> <span class="k">const</span> <span class="n">Sphere</span> <span class="o">&amp;</span><span class="n">sphere</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="n">Float3</span> <span class="n">difference</span> <span class="o">=</span> <span class="n">ray</span><span class="p">.</span><span class="n">Position</span> <span class="o">-</span> <span class="n">sphere</span><span class="p">.</span><span class="n">Position</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="k">auto</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Dot</span><span class="p">(</span><span class="n">ray</span><span class="p">.</span><span class="n">Direction</span><span class="p">,</span> <span class="n">ray</span><span class="p">.</span><span class="n">Direction</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="k">auto</span> <span class="n">b</span> <span class="o">=</span> <span class="mf">2.0f</span> <span class="o">*</span> <span class="n">Dot</span><span class="p">(</span><span class="n">difference</span><span class="p">,</span> <span class="n">ray</span><span class="p">.</span><span class="n">Direction</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">    <span class="k">auto</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Dot</span><span class="p">(</span><span class="n">difference</span><span class="p">,</span> <span class="n">difference</span><span class="p">)</span> <span class="o">-</span> <span class="n">sphere</span><span class="p">.</span><span class="n">Radius</span> <span class="o">*</span> <span class="n">sphere</span><span class="p">.</span><span class="n">Radius</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl">    <span class="k">auto</span> <span class="n">discriminant</span> <span class="o">=</span> <span class="n">b</span> <span class="o">*</span> <span class="n">b</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">c</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl">    <span class="k">return</span> <span class="n">discriminant</span> <span class="o">&gt;</span> <span class="mf">0.0f</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>If none of this made sense or you&rsquo;d like to read it in other words, I can highly recommend following the <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection">ray-sphere intersection tutorial on Scratchapixel</a>.</p>
+<h3 id="a-simple-camera-model">A simple camera model</h3>
+<p>We are going to make a simple camera through which we view the world. The camera model itself is no more complex than a ray, we only store the screen resolution in addition to the position and direction:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">class</span> <span class="nc">SimpleCamera</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="n">Float3</span> <span class="n">Position</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="n">Float3</span> <span class="n">Direction</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">    <span class="n">Float2</span> <span class="n">Resolution</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>To create a ray for every pixel on the screen, we are going to create a viewport: a virtual representation of our screen in front of the camera. Once we have this viewport in place we can interpolate over the <strong>x</strong> and <strong>y</strong> axis similar to what we do when setting a color for every pixel in an image. The idea is to create a plane in front of the camera spanning a range between <code>-1</code> and <code>1</code> (so a total width and height of <code>2</code> per axis).</p>
+<p>Before we dive into coordinates we have to define a coordinate system. For our camera we are going to use the z-axis as the up axis, this means that if we move in the positive direction of the z-axis we are going up. In short this is called <strong>z-up</strong>. Different programs use different conventions here, also commonly seen is <strong>y-up</strong> which means the y-axis would move you up.</p>
+<p>If the camera would be perfectly on the world origin <code>(0, 0, 0)</code> and looking in the positive y-axis direction, the plane coordinates are as follows:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">TopLeft</span>         <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="n">TopRight</span>        <span class="o">=</span> <span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="n">BottomLeft</span>      <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="n">BottomRight</span>     <span class="o">=</span> <span class="p">(</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+<div class="visualization" id="cameradiv">
+    <canvas id="camera" width="600" height="400"></canvas>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById("camera");
+            var c = canvas.getContext("2d");
+            var width = "600";
+            var height = "400";
+
+            
+            
+            
+var time = 0;
+var dt = 16;
+
+var camera = new Camera(new Float3(0.5, 0.5, 0.25), new Float3(0, 0, 0), new Float2(width, height), 100);
+
+var render = function()
+{
+    ClearCanvas(c, width, height, "rgb(35, 36, 37)");
+    time += dt;
+    var t = (Math.sin(time * 0.001) + 1.0) * 0.5;
+    var t2 = (Math.cos((time + 1) * 0.001) + 1.0) * 0.5;
+    var t3 = (Math.sin((time + 1) * 0.001) + 1.0) * 0.5;
+
+    var pos = new Float3(1.5, -1.5, 0.5);
+    pos = pos.Add(new Float3(0, t3 * 0.1, t2 * 0.1));
+    camera.SetPosition(pos);
+
+    c.setLineDash([]);
+
+    var virtualCameraPos = new Float3(0, -1, 0);
+    var topLeft = new Float3(-1, 1, 1);
+    var topRight = new Float3(1, 1, 1);
+    var bottomLeft = new Float3(-1, 1, -1);
+    var bottomRight = new Float3(1, 1, -1);
+    DrawLine(c, camera.Project(topLeft), camera.Project(topRight), "white", 2);
+    DrawLine(c, camera.Project(bottomLeft), camera.Project(bottomRight), "white", 2);
+
+    DrawLine(c, camera.Project(topLeft), camera.Project(bottomLeft), "white", 2);
+    DrawLine(c, camera.Project(topRight), camera.Project(bottomRight), "white", 2);
+
+    var start = new Float3(-0.5, 1, 0.5);
+    var end = new Float3(0.5, 1, -0.5);
+    var interpolated = start.Add(end.Subtract(start).Multiply(new Float3(t, t, t)));
+    var screenPoint = camera.Project(interpolated);
+    DrawLine(c, camera.Project(virtualCameraPos), screenPoint, "black");
+
+    c.setLineDash([3, 5]);
+
+    var projected = Float3.Normalize(interpolated.Subtract(virtualCameraPos));
+    projected = interpolated.Add(projected.Multiply(new Float3(5, 5, 5)));
+    DrawLine(c, screenPoint, camera.Project(projected), "black");
+
+    var screenTop = camera.Project(new Float3(interpolated.x, 1, 1));
+    var screenLeft = camera.Project(new Float3(-1, 1, interpolated.z));
+    DrawLine(c, screenTop, screenPoint, "red");
+    DrawLine(c, screenLeft, screenPoint, "red");
+    DrawText(c, screenTop.Subtract(new Float2(5, 10)), "u", "red");
+    DrawText(c, screenLeft.Subtract(new Float2(15, 0)), "v", "red");
+
+    var cameraPos = camera.Project(virtualCameraPos);
+    DrawDisc(c, cameraPos, 5, "yellow");
+    DrawText(c, cameraPos.Subtract(new Float2(30, 15)), "camera", "white");
+}
+
+window.setInterval(render, dt);
+
+        });
+    </script>
+</div>
+
+<p>To interpolate between these coordinates we don&rsquo;t have to know all of them. We can calculate the top-left coordinate and two vectors to move over the x-axis and y-axis respectively. This requires a bit of vector math to calculate:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kt">void</span> <span class="nf">UpdateViewport</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="c1">// Calculate orthonormal basis: 3 vectors that are all perpendicular to each other
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>	<span class="n">Float3</span> <span class="n">w</span> <span class="o">=</span> <span class="n">Direction</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="n">Float3</span> <span class="n">u</span> <span class="o">=</span> <span class="n">Normalize</span><span class="p">(</span><span class="n">Cross</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">Float3</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)));</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">	<span class="n">Float3</span> <span class="n">v</span> <span class="o">=</span> <span class="n">Cross</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">u</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="c1">// Aspectratio is the ratio between the x and y length of the viewport
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span>	<span class="kt">float</span> <span class="n">aspectRatio</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">.</span><span class="n">x</span> <span class="o">/</span> <span class="n">Resolution</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="c1">// We describe the viewport in 3 variables:
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>	<span class="c1">// TopLeft: top left position of the viewport
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>	<span class="c1">// Horizontal: TopLeft + horizontal moves over the x-axis of the viewport
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>	<span class="c1">// Vertical: TopLeft + vertical moves over the y-axis of the viewport
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span>	<span class="n">Horizontal</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">aspectRatio</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">	<span class="n">Vertical</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">	<span class="n">TopLeft</span> <span class="o">=</span> <span class="n">Position</span> <span class="o">-</span> <span class="n">Horizontal</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">Vertical</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="scene">Scene</h3>
+<p>Our scene will be really simple with just a list of spheres for now. In the scene we define a function to traverse the ray through the scene. This traversal function will do an intersection test with all the spheres from the list to see if the ray hit them.</p>
+<p>To sum up everything we will do in the code below:</p>
+<ul>
+<li>For each pixel, calculate a ray using camera parameters</li>
+<li>For each ray calculate intersections with each sphere</li>
+<li>If we hit a sphere we return a red color</li>
+<li>Otherwise we return a blue sky color</li>
+</ul>
+
+<div class="bs-component">
+<ul id="exampletabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="cppexampletab">
+<a href="#cppexampletab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+
+<div class="tab-pane fade" id="cppexampletab">
+<textarea id="cppexample">
+#include &#34;Drawing.h&#34;
+#include &lt;canvas.h&gt;
+#include &lt;vector&gt;
+
+struct Sphere
+{
+    Float3 Position;
+    float Radius;
+};
+
+class SimpleCamera
+{
+public:
+    Float3 Position;
+    Float3 Direction;
+    Float2 Resolution;
+
+private:
+    Float3 Horizontal;
+    Float3 Vertical;
+    Float3 TopLeft;
+
+public:
+    SimpleCamera(Float3 position, Float3 direction, Float2 resolution)
+    {
+        Position = position;
+        Direction = Normalize(direction);
+        Resolution = resolution;
+
+        UpdateViewport();
+    }
+
+    void UpdateViewport()
+    {
+        Float3 w = Direction;
+        Float3 u = Normalize(Cross(w, Float3(0, 0, 1)));
+        Float3 v = Normalize(Cross(w, u));
+
+        float aspectRatio = Resolution.x / Resolution.y;
+        Horizontal = u * 2 * aspectRatio;
+        Vertical = v * 2;
+        TopLeft = Position - Horizontal / 2 - Vertical / 2 &#43; w;
+    }
+
+    Ray CreateRay(int x, int y)
+    {
+        Float2 pixelCenter = Float2(x, y) &#43; 0.5f;
+        pixelCenter /= Resolution;
+
+        Ray ray;
+        ray.Position = Position;
+        ray.Direction = TopLeft &#43; pixelCenter.x * Horizontal &#43; pixelCenter.y * Vertical;
+        ray.Direction = Normalize(ray.Direction - ray.Position);
+        return ray;
+    }
+};
+
+class Scene
+{
+public:
+    std::vector&lt;Sphere&gt; Spheres;
+
+    void AddSphere(Sphere sphere)
+    {
+        // Add the sphere to the list
+        Spheres.push_back(sphere);
+    }
+
+    bool IntersectSphere(const Ray &ray, const Sphere &sphere)
+    {
+        Float3 difference = ray.Position - sphere.Position;
+        auto a = Dot(ray.Direction, ray.Direction);
+        auto b = 2.0f * Dot(difference, ray.Direction);
+        auto c = Dot(difference, difference) - sphere.Radius * sphere.Radius;
+        auto discriminant = b * b - 4 * a * c;
+        return discriminant &gt; 0.0f;
+    }
+
+    Float3 TraceRay(const Ray &ray)
+    {
+        // Intersection test with all spheres
+        for (const Sphere &sphere : Spheres)
+        {
+            if (IntersectSphere(ray, sphere))
+            {
+                return Float3(1, 0, 0);
+            }
+        }
+
+        // If none intersected return a blue sky color
+        return Float3(0.5f, 0.7f, 1.0f);
+    }
+};
+
+int main()
+{
+    int w = 400;
+    int h = 300;
+
+    SimpleCamera camera = SimpleCamera(Float3(0), Float3(0, 1, 0), Float2(w, h));
+    Scene scene = Scene();
+    scene.AddSphere(Sphere { Float3(0, 10, 0), 3.0f });
+
+    Canvas C(w, h);
+    ImageData image(w, h);
+    for (int y = 0; y &lt; h; y&#43;&#43;)
+    {
+        for (int x = 0; x &lt; w; x&#43;&#43;)
+        {
+            Ray ray = camera.CreateRay(x, y);
+            Float3 c = scene.TraceRay(ray) * 255.0f;
+            image.data[y * w &#43; x] = RGB(c.x, c.y, c.z);
+        }
+    }
+    image.commit();
+    C.putImageData(image, 0, 0);
+}</textarea>
+<button id="cppexamplebutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppexampleoutput" style="display: none;"></pre>
+</div>
+
+
+</div>
+</div>
+
+
+<div id="cppexamplediv" style="display: none;">
+<canvas id="cppexamplecanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#exampletabs a:first').tab('show')
+        $('#exampletabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        
+            
+            
+                
+            
+            var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
+        
+    });
+    
+</script>
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://pixelcraft.dev/">Robbin Marcus</a></span>
+            
+            <span><a href="https://pixelcraft.dev/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>

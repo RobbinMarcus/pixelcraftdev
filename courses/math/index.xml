@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Math on Pixel Craft</title>
+    <link>https://pixelcraft.dev/courses/math/</link>
+    <description>Recent content in Math on Pixel Craft</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 22 Nov 2024 12:31:32 +0100</lastBuildDate>
+    <atom:link href="https://pixelcraft.dev/courses/math/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vectors</title>
+      <link>https://pixelcraft.dev/courses/math/vectors/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/math/vectors/</guid>
+      <description>&lt;p&gt;Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Location of the player&lt;/li&gt;&#xA;&lt;li&gt;Rays (they are basically a position and direction)&lt;/li&gt;&#xA;&lt;li&gt;Physics (for example the velocity of a bullet)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;To define vectors more thoroughly we first have to define &lt;strong&gt;scalars&lt;/strong&gt; which are just ordinary numbers like &lt;code&gt;1.0&lt;/code&gt;. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example &lt;code&gt;(1.0, 2.0)&lt;/code&gt; is a 2D vector with the &lt;code&gt;x&lt;/code&gt; component set to &lt;code&gt;1.0&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; set to &lt;code&gt;2.0&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

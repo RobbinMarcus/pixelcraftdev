@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C&#43;&#43; on Pixel Craft</title>
+    <link>https://pixelcraft.dev/courses/c&#43;&#43;/</link>
+    <description>Recent content in C&#43;&#43; on Pixel Craft</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Fri, 22 Nov 2024 12:31:32 +0100</lastBuildDate>
+    <atom:link href="https://pixelcraft.dev/courses/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introduction to C&#43;&#43;</title>
+      <link>https://pixelcraft.dev/courses/c&#43;&#43;/introductiontocpp/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/c&#43;&#43;/introductiontocpp/</guid>
+      <description>&lt;p&gt;If you have never used C++ you may have heard or seen some code that looks particularly complex, but don&amp;rsquo;t worry: this is not the default! It is one of the older languages that&amp;rsquo;s been around forever and still widely used, why is that?&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-is-c-the-most-used-language-in-game-programming&#34;&gt;Why is C++ the most used language in game programming?&lt;/h2&gt;&#xA;&lt;p&gt;C++ main use case is for writing code that needs to perform well. Games generally tend to have a real time requirement, for example running a game that draws fancy 3D scenes at more than 60 frames per second. In order to achieve that we need to have code that runs fast and have control over almost all aspects, more on that in the next section.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

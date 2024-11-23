@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="If you have never used C&#43;&#43; you may have heard or seen some code that looks particularly complex, but don&rsquo;t worry: this is not the default! It is one of the older languages that&rsquo;s been around forever and still widely used, why is that?
+Why is C&#43;&#43; the most used language in game programming? C&#43;&#43; main use case is for writing code that needs to perform well. Games generally tend to have a real time requirement, for example running a game that draws fancy 3D scenes at more than 60 frames per second. In order to achieve that we need to have code that runs fast and have control over almost all aspects, more on that in the next section.
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/c&#43;&#43;/introductiontocpp/" />
+
+
+    <title>
+        
+            Introduction to C&#43;&#43; :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.e02674a12d952c0cafc5ce3ac3d66a0b9a140507232672f9436bfcb5edd80fda.css" integrity="sha256-4CZ0oS2VLAyvxc46w9ZqC5oUBQcjJnL5Q2v8te3YD9o=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Introduction to C&#43;&#43;">
+  <meta itemprop="description" content="If you have never used C&#43;&#43; you may have heard or seen some code that looks particularly complex, but don’t worry: this is not the default! It is one of the older languages that’s been around forever and still widely used, why is that?
+Why is C&#43;&#43; the most used language in game programming? C&#43;&#43; main use case is for writing code that needs to perform well. Games generally tend to have a real time requirement, for example running a game that draws fancy 3D scenes at more than 60 frames per second. In order to achieve that we need to have code that runs fast and have control over almost all aspects, more on that in the next section.">
+  <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
+  <meta itemprop="wordCount" content="665">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Introduction to C&#43;&#43;">
+  <meta name="twitter:description" content="If you have never used C&#43;&#43; you may have heard or seen some code that looks particularly complex, but don’t worry: this is not the default! It is one of the older languages that’s been around forever and still widely used, why is that?
+Why is C&#43;&#43; the most used language in game programming? C&#43;&#43; main use case is for writing code that needs to perform well. Games generally tend to have a real time requirement, for example running a game that draws fancy 3D scenes at more than 60 frames per second. In order to achieve that we need to have code that runs fast and have control over almost all aspects, more on that in the next section.">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-22 12:31:32 &#43;0100 CET" />
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            
+            </p>
+        </div>
+
+        <article>
+            <h2 class="post-title">
+                Introduction to C++
+            </h2>
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>If you have never used C++ you may have heard or seen some code that looks particularly complex, but don&rsquo;t worry: this is not the default! It is one of the older languages that&rsquo;s been around forever and still widely used, why is that?</p>
+<h2 id="why-is-c-the-most-used-language-in-game-programming">Why is C++ the most used language in game programming?</h2>
+<p>C++ main use case is for writing code that needs to perform well. Games generally tend to have a real time requirement, for example running a game that draws fancy 3D scenes at more than 60 frames per second. In order to achieve that we need to have code that runs fast and have control over almost all aspects, more on that in the next section.</p>
+<p>Besides performance reasons we can look at platform compatibility. Most languages have limited use cases or are very specific on which platforms they run. C++ can run on any platform as long as you have a compiler to generate the machine code for it. That is also the main difference between C++ and other languages like C#, Java or Python. C++ compiles down to machine code which are the literal instructions for the CPU to execute. C# or Java compile your code to an intermediary language that will be translated to CPU instruction at runtime by a virtual machine!</p>
+<h2 id="what-good-is-there-to-learn-from-using-c">What good is there to learn from using C++?</h2>
+<p>C++ gives you an understanding of the inner workings of a computer. Since it&rsquo;s possible to manually allocate memory and work with pointers, you will understand more of how to use it efficiently. This knowledge remains even when using other programming languages afterwards! When you start to optimize code, you will find out how the CPU works. An example is optimizing the size of a struct so it can fit better in the caches of the CPU. The applications are endless: transferring large files between the hard drive and RAM, uploading textures to the GPU and many more.</p>
+<p>You can have direct control over hardware using C++. There are already tons of libraries out there, but you can always write your own code for them. This low level access can&rsquo;t be replicated by most other languages. Rendering operations are hardware operations on the graphics card. There operations are usually done through a C++ program that is compiled out to a Dynamic Link Library (DLL). This DLL can then be loaded in your language of choice to access the functions stored inside. This is perfectly fine for everyday use cases, but if you want to do anything that&rsquo;s unorthodox you&rsquo;re out of luck. That&rsquo;s where C++ comes in.</p>
+<h2 id="some-downsides-of-c">Some downsides of C++</h2>
+<p>C++ can be <em>very</em> verbose, and it has to be because we have to be very precise. This can sometimes lead to a lot of boilerplate code that can be avoided compared to using other languages.</p>
+<p>It&rsquo;s still very easy to write code that&rsquo;s slower than something written in other languages. This is usually because the other languages translate basic operations very efficiently by default. You could still get close if not faster by writing C++ code, but why invest the time to reinvent the wheel?</p>
+<p>Choose your tool for game creation wisely!</p>
+<h2 id="usecase">Usecase</h2>
+<p>Personally I tend to combine C++ with a scripting language for game development. My own game engine <a href="http://www.ryneengine.com/">Ryne</a> runs on C++ and I use C# as a scripting language that users can use to write the high level gameplay code. Of course this comes with some pain points where some parts have to be written in C++ and some in C#, but I think it&rsquo;s a good mix for quick development cycles.</p>
+<h2 id="how-to-use-the-c-course">How to use the C++ course</h2>
+<p>In the C++ course we&rsquo;ll look at many aspects of C++. Depending on your experience with programming in other languages you can start at different levels. I will try to cover all the basics and slowly tackle more complex subjects so you should learn something new regardless of your current skill level with C++.</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span><a href="https://pixelcraft.dev/">Robbin Marcus</a></span>
+            
+            <span><a href="https://pixelcraft.dev/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+            
+        </div>
+    </div>
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>
