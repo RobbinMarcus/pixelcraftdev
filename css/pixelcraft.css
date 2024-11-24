@@ -6,14 +6,20 @@ body {
 }
 
 pre,
-.CodeMirror-linenumber
-{
+.CodeMirror-linenumber {
     font-size: 80%;
 }
 
-/* .CodeMirror-linenumber { */
-/*     font-size: 75%; */
-/* } */
+.support {
+    padding: 20px;
+    /* min-width: 100%; */
+    /* max-width: 100%; */
+
+    a {
+        color: #00bc8c;
+    }
+}
+
 
 .nav-tabs {
     border-bottom: 0px;
