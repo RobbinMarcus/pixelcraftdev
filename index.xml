@@ -5,7 +5,7 @@
     <link>https://pixelcraft.dev/</link>
     <description>Recent content on Pixel Craft</description>
     <generator>Hugo</generator>
-    <language>en</language>
+    <language>en-us</language>
     <lastBuildDate>Fri, 22 Nov 2024 12:31:32 +0100</lastBuildDate>
     <atom:link href="https://pixelcraft.dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -41,7 +41,7 @@
       <link>https://pixelcraft.dev/courses/algorithms/timespacecomplexity/</link>
       <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
       <guid>https://pixelcraft.dev/courses/algorithms/timespacecomplexity/</guid>
-      <description>&lt;p&gt;Every algorithm comes with it&amp;rsquo;s own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.&lt;/p&gt;&#xA;&lt;p&gt;The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let&amp;rsquo;s consider the following algorithm to check if an element exists in a given array:&lt;/p&gt;</description>
+      <description>&lt;p&gt;Every algorithm comes with its own complexities, and to analyze an algorithm we inspect two of these: the space complexity and the time complexity. The time complexity indicates the expected runtime as a function of the length of the input. Similarly the space complexity measures the amount of memory taken as a function of the length of the input.&lt;/p&gt;&#xA;&lt;p&gt;The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let&amp;rsquo;s consider the following algorithm to check if an element exists in a given array:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Unity</title>
