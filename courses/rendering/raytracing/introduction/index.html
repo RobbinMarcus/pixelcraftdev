@@ -161,7 +161,6 @@ Raycasting is calculating the first intersection of a ray with the scene geometr
 In this tutorial series we&rsquo;re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios!</li>
 </ul>
 <p>Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html"><em>Ray Tracing in One Weekend</em></a>. Throughout the series I will refer to some of these articles that I&rsquo;ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here&rsquo;s the complete final example from <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html"><em>Ray Tracing in One Weekend</em></a> running live:</p>
-
 <div class="bs-component">
 <ul id="exampletabs" class="nav nav-tabs" role="tabslist">
 
@@ -171,7 +170,6 @@ In this tutorial series we&rsquo;re going to start by building a simple raycaste
 
 </ul>
 <div id="myTabContent" class="tab-content">
-
 <div class="tab-pane fade" id="cppexampletab">
 <textarea id="cppexample">
 #include &lt;cmath&gt;
@@ -780,11 +778,8 @@ int main() {
 <pre class="output" id="cppexampleoutput" style="display: none;"></pre>
 </div>
 
-
 </div>
 </div>
-
-
 <div id="cppexamplediv" style="display: none;">
 <canvas id="cppexamplecanvas" height="500" width="500"></canvas>
 </div>
@@ -799,16 +794,8 @@ int main() {
             $(this).tab('show');
         })
 
-        
-            
-            
-                
-            
-            var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
-        
-    });
-    
-</script>
+        var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
+    });</script>
 
 <p>It may take a while to compute the final image. I&rsquo;ve adapted the code slightly to run on this web page, but no major changes to the code have been made.</p>
 

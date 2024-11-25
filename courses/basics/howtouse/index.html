@@ -54,7 +54,7 @@ python cpp print(&#39;Hello world!&#39;)data = [&#39;Test&#39;, 1, &#39;Yellow&
 python cpp print(&#39;Hello world!&#39;)data = [&#39;Test&#39;, 1, &#39;Yellow&#39;, &#39;Banana&#39;]for element in data:print(element) Run #include &lt;stdio.h&gt;int main(){printf(&#34;Hello world from C&#43;&#43;!&#34;);} Run There are currently two supported programming languages: Python and C&#43;&#43;. In game programming C&#43;&#43; is the language of choice for most high quality games. This is due to the flexibility it offers to mess around with low level details such as memory management. For high level concepts I will try to use Python more, as it’s the easier language to teach and understand general concepts.">
   <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
   <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
-  <meta itemprop="wordCount" content="586">
+  <meta itemprop="wordCount" content="588">
   <meta itemprop="image" content="https://pixelcraft.dev/">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -154,7 +154,6 @@ python cpp print(&#39;Hello world!&#39;)data = [&#39;Test&#39;, 1, &#39;Yellow&
 
             <div class="post-content">
                 <p>On this site I try to pass most of the knowledge using practical examples. It&rsquo;s a digital book, and unlike paper books I can make pages interactive. There will be interactive code editors on most pages. I would have loved to have these tools when I started learning programming.  Try it out yourself, write any code you want and press run to see the output printed below:</p>
-
 <div class="bs-component">
 <ul id="exampletabs" class="nav nav-tabs" role="tabslist">
 
@@ -168,7 +167,6 @@ python cpp print(&#39;Hello world!&#39;)data = [&#39;Test&#39;, 1, &#39;Yellow&
 
 </ul>
 <div id="myTabContent" class="tab-content">
-
 <div class="tab-pane fade" id="pythonexampletab">
 <textarea id="pythonexample">
 print(&#39;Hello world!&#39;)
@@ -191,11 +189,8 @@ int main()
 <pre class="output" id="cppexampleoutput" style="display: none;"></pre>
 </div>
 
-
 </div>
 </div>
-
-
 <div id="pythonexamplediv" style="display: none;">
 <canvas id="pythonexamplecanvas" height="500" width="500"></canvas>
 </div>
@@ -214,27 +209,17 @@ int main()
             $(this).tab('show');
         })
 
-        
-            
-            
-                
-            
-            var editor = createEditor("pythonexample", "python");
-        
-            
-            
-                
-            
-            var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
-        
-    });
-    
-</script>
+        var editor = createEditor("pythonexample", "python");var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
+    });</script>
 
 <p>There are currently two supported programming languages: <strong>Python</strong> and <strong>C++</strong>. In game programming  <strong>C++</strong> is the language of choice for most high quality games. This is due to the flexibility it offers to mess around with low level details such as memory management. For high level concepts I will try to use <strong>Python</strong> more, as it&rsquo;s the easier language to teach and understand general concepts.</p>
 <p>Often I feel the need to explain visually, especially when it comes to math. Learning by doing or learning by example is what taught me the best, so I will keep providing these code editors. Both for the <strong>Python</strong> and <strong>C++</strong> there is functionality to present to a canvas. Below you&rsquo;ll find a classic game example for the <strong>Python</strong> editor (note that you will have to click on the canvas to enable focus for keypresses):</p>
-
-<div class="bs-component">
+<div class="card border-danger mb-3">
+<div class="card-header" id="headingspoiler_pong">
+<button class="btn btn-danger btn-smbtn-danger" data-target="#collapsespoiler_pong" data-toggle="collapse">Show Editor</button>
+</div>
+<div class="collapse" id="collapsespoiler_pong">
+<div class="card-body"><div class="bs-component">
 <ul id="pongtabs" class="nav nav-tabs" role="tabslist">
 
 <li class="nav-item" data-tab="pythonpongtab">
@@ -243,7 +228,6 @@ int main()
 
 </ul>
 <div id="myTabContent" class="tab-content">
-
 <div class="tab-pane fade" id="pythonpongtab">
 <textarea id="pythonpong">
 from processing import *
@@ -359,11 +343,10 @@ run()</textarea>
 <pre class="output" id="pythonpongoutput" style="display: none;"></pre>
 </div>
 
-
+</div>
+</div></div>
 </div>
 </div>
-
-
 <div id="pythonpongdiv" style="display: none;">
 <canvas id="pythonpongcanvas" height="500" width="500"></canvas>
 </div>
@@ -378,16 +361,16 @@ run()</textarea>
             $(this).tab('show');
         })
 
-        
-            
-            
-                
-            
-            var editor = createEditor("pythonpong", "python");
-        
-    });
-    
-</script>
+        var editor = createEditor("pythonpong", "python");Promise.all([]).then(v => { runEditor(editor) });
+    });$('#collapsespoiler_pong').on('shown.bs.collapse', function ()
+    {
+        var textarea = $(this).find('textarea:first').attr('id');
+        var editor = getEditor(textarea);
+        if (editor)
+        {
+            editor.refresh();
+        }
+    });</script>
 
 
             </div>

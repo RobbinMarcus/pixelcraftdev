@@ -155,7 +155,6 @@ First let’s take a look at Python. We use a framework called processing. There
             <div class="post-content">
                 <p>Outputting text by printing something to the console is rather easy. Getting a setup to output an image is a bit more difficult, but not to worry: I&rsquo;ve done all the hard work for you behind the scenes. Here we&rsquo;ll introduce the tools to work with images specifically for this site.</p>
 <p>First let&rsquo;s take a look at Python. We use a framework called <a href="https://processing.org/">processing</a>. There&rsquo;s a <a href="https://py.processing.org/">variant made for Python</a> which is what we&rsquo;ll use. Follow the comments along in the code editor below to see how we can draw a clear canvas:</p>
-
 <div class="bs-component">
 <ul id="processingtabs" class="nav nav-tabs" role="tabslist">
 
@@ -169,7 +168,6 @@ First let’s take a look at Python. We use a framework called processing. There
 
 </ul>
 <div id="myTabContent" class="tab-content">
-
 <div class="tab-pane fade" id="pythonprocessingtab">
 <textarea id="pythonprocessing">
 # In order to draw anything we need to import the processing framework
@@ -214,11 +212,8 @@ int main()
 <pre class="output" id="cppprocessingoutput" style="display: none;"></pre>
 </div>
  
-
 </div>
 </div>
-
-
 <div id="pythonprocessingdiv" style="display: none;">
 <canvas id="pythonprocessingcanvas" height="500" width="500"></canvas>
 </div>
@@ -237,25 +232,10 @@ int main()
             $(this).tab('show');
         })
 
-        
-            
-            
-                
-            
-            var editor = createEditor("pythonprocessing", "python");
-        
-            
-            
-                
-            
-            var editor = createEditor("cppprocessing", "text\/x-c\u002b\u002bsrc");
-        
-    });
-    
-</script>
+        var editor = createEditor("pythonprocessing", "python");var editor = createEditor("cppprocessing", "text\/x-c\u002b\u002bsrc");
+    });</script>
 
 <p>This is great to draw static images, but it gets more interesting if we can actually create some moving parts. Both the processing framework and the C++ framework have a method to continuously update the canvas. For the Python variant the function is called <code>draw()</code> and in C++ we have a more extended function <code>loop()</code> with some parameters we&rsquo;ll use in the examples below. We&rsquo;re going to draw a circle that moves left to right using the <code>sine</code> function applied on the total time since the program started. The variants have different functions names which may be confusing, I tried to stick as close as the existing Javascript canvas drawing functions for the C++ functionality I made, which is different to the processing functions defined for the Python drawing code.</p>
-
 <div class="bs-component">
 <ul id="animatedtabs" class="nav nav-tabs" role="tabslist">
 
@@ -269,7 +249,6 @@ int main()
 
 </ul>
 <div id="myTabContent" class="tab-content">
-
 <div class="tab-pane fade" id="pythonanimatedtab">
 <textarea id="pythonanimated">
 from processing import *
@@ -318,11 +297,8 @@ void loop(double t, double dt)
 <pre class="output" id="cppanimatedoutput" style="display: none;"></pre>
 </div>
  
-
 </div>
 </div>
-
-
 <div id="pythonanimateddiv" style="display: none;">
 <canvas id="pythonanimatedcanvas" height="500" width="500"></canvas>
 </div>
@@ -341,25 +317,10 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        
-            
-            
-                
-            
-            var editor = createEditor("pythonanimated", "python");
-        
-            
-            
-                
-            
-            var editor = createEditor("cppanimated", "text\/x-c\u002b\u002bsrc");
-        
-    });
-    
-</script>
+        var editor = createEditor("pythonanimated", "python");var editor = createEditor("cppanimated", "text\/x-c\u002b\u002bsrc");
+    });</script>
 
 <p>Finally let&rsquo;s take a look at how to set individual pixels as this is a common use case for rendering applications. Here we only look at C++ as we aren&rsquo;t going to touch individual pixels from Python. In the example below we&rsquo;re creating an image in which we set the color of every pixel. After we&rsquo;ve done that we&rsquo;ll draw the image on the canvas.</p>
-
 <div class="bs-component">
 <ul id="pixelstabs" class="nav nav-tabs" role="tabslist">
 
@@ -369,7 +330,6 @@ void loop(double t, double dt)
 
 </ul>
 <div id="myTabContent" class="tab-content">
-
 <div class="tab-pane fade" id="cpppixelstab">
 <textarea id="cpppixels">
 #include &#34;Drawing.h&#34;
@@ -412,11 +372,8 @@ void loop(double t, double dt)
 <pre class="output" id="cpppixelsoutput" style="display: none;"></pre>
 </div>
 
-
 </div>
 </div>
-
-
 <div id="cpppixelsdiv" style="display: none;">
 <canvas id="cpppixelscanvas" height="500" width="500"></canvas>
 </div>
@@ -431,16 +388,8 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        
-            
-            
-                
-            
-            var editor = createEditor("cpppixels", "text\/x-c\u002b\u002bsrc");
-        
-    });
-    
-</script>
+        var editor = createEditor("cpppixels", "text\/x-c\u002b\u002bsrc");
+    });</script>
 
 
             </div>
