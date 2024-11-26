@@ -5,6 +5,11 @@ body {
     font-weight: 300;
 }
 
+.content {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
 pre,
 .CodeMirror-linenumber {
     font-size: 80%;
