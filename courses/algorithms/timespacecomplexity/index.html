@@ -54,7 +54,7 @@ The actual amount of time or space it takes to execute the algorithm is not the 
 The actual amount of time or space it takes to execute the algorithm is not the main concern here, we are going to remove as many factors as possible. We are going to assume that a certain operation is going to take a constant time, and the only thing that changes the time complexity is the amount of these constant operations we execute. Let’s consider the following algorithm to check if an element exists in a given array:">
   <meta itemprop="datePublished" content="2024-11-22T12:31:32+01:00">
   <meta itemprop="dateModified" content="2024-11-22T12:31:32+01:00">
-  <meta itemprop="wordCount" content="951">
+  <meta itemprop="wordCount" content="950">
   <meta itemprop="image" content="https://pixelcraft.dev/">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -171,7 +171,6 @@ The actual amount of time or space it takes to execute the algorithm is not the 
 </span></span><span class="line"><span class="ln">4</span><span class="cl">            <span class="k">return</span> <span class="kc">True</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="k">return</span> <span class="kc">False</span>
 </span></span></code></pre></div><p>If every comparison in the above code is taking up a constant time, the time complexity can be described by the element we are looking for: $x$. The amount of comparisons executed can be visualized if we track them in code as follows:</p>
-<p>EditorLinearExample:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">def</span> <span class="nf">countComparisons</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
@@ -448,7 +447,6 @@ print(index)</textarea>
         <div class="post-info">
             
             
-
   		</div>
 
         
