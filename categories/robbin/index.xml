@@ -6,8 +6,15 @@
     <description>Recent content in Robbin on Pixel Craft</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://pixelcraft.dev/categories/robbin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>New course release and discord</title>
+      <link>https://pixelcraft.dev/blog/article_matrices/</link>
+      <pubDate>Sat, 30 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://pixelcraft.dev/blog/article_matrices/</guid>
+      <description>&lt;p&gt;A new course was released: &lt;a href=&#34;https://pixelcraft.dev/courses/math/matrices&#34;&gt;Matrices&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In addition to that I opened a &lt;a href=&#34;https://discord.gg/nsMjdHdcrU&#34;&gt;discord server&lt;/a&gt;. You&amp;rsquo;re welcome to join and discuss the articles!&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Technology</title>
       <link>https://pixelcraft.dev/blog/technology/</link>

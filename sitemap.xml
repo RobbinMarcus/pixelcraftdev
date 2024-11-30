@@ -8,19 +8,25 @@
     <loc>https://pixelcraft.dev/courses/rendering/raytracing/introduction/</loc>
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
-    <loc>https://pixelcraft.dev/about/</loc>
-    <lastmod>2024-11-26T00:00:00+00:00</lastmod>
+    <loc>https://pixelcraft.dev/courses/math/vectors/</loc>
+    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
-    <loc>https://pixelcraft.dev/categories/blog/</loc>
-    <lastmod>2024-11-26T00:00:00+00:00</lastmod>
+    <loc>https://pixelcraft.dev/courses/math/matrices/</loc>
+    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/categories/</loc>
-    <lastmod>2024-11-26T00:00:00+00:00</lastmod>
+    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pixelcraft.dev/blog/article_matrices/</loc>
+    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/</loc>
-    <lastmod>2024-11-26T00:00:00+00:00</lastmod>
+    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/categories/robbin/</loc>
+    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pixelcraft.dev/about/</loc>
     <lastmod>2024-11-26T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/blog/technology/</loc>
@@ -69,9 +75,6 @@
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/courses/frameworks/unreal-engine/unreal-engine/</loc>
-    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
-  </url><url>
-    <loc>https://pixelcraft.dev/courses/math/vectors/</loc>
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/courses/basics/visualizationtools/</loc>

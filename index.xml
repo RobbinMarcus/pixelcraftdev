@@ -6,7 +6,7 @@
     <description>Recent content on Pixel Craft</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://pixelcraft.dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Introduction to raytracing</title>
@@ -14,6 +14,27 @@
       <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
       <guid>https://pixelcraft.dev/courses/rendering/raytracing/introduction/</guid>
       <description>&lt;p&gt;At the time of writing, the term raytracing is used often to represent &amp;ldquo;high quality graphics&amp;rdquo; or making scenes look more realistic. Even though this could be achieved by using ray tracing techniques, in essence raytracing is used for a lot more. Let&amp;rsquo;s first split the term to make sure we&amp;rsquo;re talking about the same thing:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raycasting&lt;/strong&gt; is calculating the first intersection of a ray with the scene geometry. This is used commonly to trace visibility queries, or find the world space coordinates for a pixel on the screen for example.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raytracing&lt;/strong&gt; is a series of tracing a rays into the scene, usually with secondary rays to calculate light traversal paths. For example we could try to render a diffuse object by sending out 10 secondary rays in different directions to calculate how lit this part of the surface should be.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Pathtracing&lt;/strong&gt; is a form of raytracing where we use probability sampling to reflect realistic light paths. It&amp;rsquo;s an iterative process where we sample new directions from the material properties that will make the end result eventually converge to the reference image given enough samples.&#xA;In this tutorial series we&amp;rsquo;re going to start by building a simple raycaster and then continue to expand to a full fledged pathtracer at the end. Pathtracing involves a lot of theory and math, but raycasting and raytracing are pretty straightforward tools to use in everyday scenarios!&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Over the years there have been plenty of amazing free online resources to learn raytracing from. One of them is &lt;a href=&#34;https://raytracing.github.io/books/RayTracingInOneWeekend.html&#34;&gt;&lt;em&gt;Ray Tracing in One Weekend&lt;/em&gt;&lt;/a&gt;. Throughout the series I will refer to some of these articles that I&amp;rsquo;ve learned from in addition to providing my own examples. Feel free to follow any of the reference articles I mention. Without further ado, here&amp;rsquo;s the complete final example from &lt;a href=&#34;https://raytracing.github.io/books/RayTracingInOneWeekend.html&#34;&gt;&lt;em&gt;Ray Tracing in One Weekend&lt;/em&gt;&lt;/a&gt; running live:&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Vectors</title>
+      <link>https://pixelcraft.dev/courses/math/vectors/</link>
+      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
+      <guid>https://pixelcraft.dev/courses/math/vectors/</guid>
+      <description>&lt;p&gt;Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Location of the player&lt;/li&gt;&#xA;&lt;li&gt;Rays (they are basically a position and direction)&lt;/li&gt;&#xA;&lt;li&gt;Physics (for example the velocity of a bullet)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;To define vectors more thoroughly we first have to define &lt;strong&gt;scalars&lt;/strong&gt; which are just ordinary numbers like &lt;code&gt;1.0&lt;/code&gt;. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example &lt;code&gt;(1.0, 2.0)&lt;/code&gt; is a 2D vector with the &lt;code&gt;x&lt;/code&gt; component set to &lt;code&gt;1.0&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; set to &lt;code&gt;2.0&lt;/code&gt;.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Matrices</title>
+      <link>https://pixelcraft.dev/courses/math/matrices/</link>
+      <pubDate>Sat, 30 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://pixelcraft.dev/courses/math/matrices/</guid>
+      <description>&lt;div class=&#34;visualization&#34; id=&#34;thematrixdiv&#34;&gt;&#xA;    &lt;canvas id=&#34;thematrix&#34; width=&#34;600&#34; height=&#34;300&#34;&gt;&lt;/canvas&gt;&#xA;    &lt;script&gt;&#xA;        $(document).ready(function() {&#xA;            var canvas = document.getElementById(&#34;thematrix&#34;);&#xA;            var c = canvas.getContext(&#34;2d&#34;);&#xA;            var width = &#34;600&#34;;&#xA;            var height = &#34;300&#34;;&#xA;&#xA;            &#xA;            &#xA;            &#xA;var dt = 32;&#xA;const fontSize = 16;&#xA;const columns = Math.round(canvas.width / fontSize);&#xA;const drops = Array(columns).fill(0);&#xA;for (let i = 0; i &lt; drops.length; i++) &#xA;{&#xA;    drops[i] = Math.random() * 300;&#xA;}&#xA;&#xA;// Characters used in the animation&#xA;const symbols = &#39;アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#39;;&#xA;&#xA;// Draw the animation&#xA;function draw() &#xA;{&#xA;    // Semi-transparent black background for fade-out effect&#xA;    c.fillStyle = &#34;rgba(0, 0, 0, 0.05)&#34;;&#xA;    c.fillRect(0, 0, canvas.width, canvas.height);&#xA;&#xA;    // Set text color and font&#xA;    c.fillStyle = &#34;#0F0&#34;;&#xA;    c.font = fontSize + &#34;px monospace&#34;;&#xA;&#xA;    // Loop over each column to draw symbols&#xA;    for (let i = 0; i &lt; drops.length; i++) &#xA;    {&#xA;        const symbol = symbols[Math.floor(Math.random() * symbols.length)];&#xA;        const x = i * fontSize;&#xA;        const y = drops[i] * fontSize;&#xA;&#xA;        // Draw symbol&#xA;        c.fillText(symbol, x, y);&#xA;&#xA;        // Randomly reset drop position to top or let it fall&#xA;        if (y &gt; canvas.height &amp;&amp; Math.random() &gt; 0.975) &#xA;        {&#xA;            drops[i] = 0;&#xA;        }&#xA;        drops[i]++;&#xA;    }&#xA;}&#xA;&#xA;window.setInterval(draw, dt);&#xA;&#xA;        });&#xA;    &lt;/script&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;Similar to &lt;a href=&#34;https://pixelcraft.dev/courses/math/vectors&#34;&gt;vectors&lt;/a&gt;, matrices are used a lot in game development. Most commonly you find them in graphics, physics, and animations. In this article we&amp;rsquo;ll take a look at how to construct them and how to transform vectors using matrices.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>New course release and discord</title>
+      <link>https://pixelcraft.dev/blog/article_matrices/</link>
+      <pubDate>Sat, 30 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>https://pixelcraft.dev/blog/article_matrices/</guid>
+      <description>&lt;p&gt;A new course was released: &lt;a href=&#34;https://pixelcraft.dev/courses/math/matrices&#34;&gt;Matrices&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In addition to that I opened a &lt;a href=&#34;https://discord.gg/nsMjdHdcrU&#34;&gt;discord server&lt;/a&gt;. You&amp;rsquo;re welcome to join and discuss the articles!&lt;/p&gt;</description>
     </item>
     <item>
       <title>About</title>
@@ -63,13 +84,6 @@
       <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
       <guid>https://pixelcraft.dev/courses/frameworks/unreal-engine/unreal-engine/</guid>
       <description>&lt;p&gt;One of the largest engine used to create high quality games. This series will be about where to start with UE and in depth topics like tweaking the engine settings or changing core systems.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Vectors</title>
-      <link>https://pixelcraft.dev/courses/math/vectors/</link>
-      <pubDate>Fri, 22 Nov 2024 12:31:32 +0100</pubDate>
-      <guid>https://pixelcraft.dev/courses/math/vectors/</guid>
-      <description>&lt;p&gt;Vectors are the most crucial part of nearly any game, they are used for a lot of things. Some examples:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Location of the player&lt;/li&gt;&#xA;&lt;li&gt;Rays (they are basically a position and direction)&lt;/li&gt;&#xA;&lt;li&gt;Physics (for example the velocity of a bullet)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;To define vectors more thoroughly we first have to define &lt;strong&gt;scalars&lt;/strong&gt; which are just ordinary numbers like &lt;code&gt;1.0&lt;/code&gt;. These scalars have a magnitude but no direction. In contrast, vectors have both a magnitude and a direction. A vector is nothing more than a set of these scalars, for example &lt;code&gt;(1.0, 2.0)&lt;/code&gt; is a 2D vector with the &lt;code&gt;x&lt;/code&gt; component set to &lt;code&gt;1.0&lt;/code&gt; and &lt;code&gt;y&lt;/code&gt; set to &lt;code&gt;2.0&lt;/code&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Visualization tools</title>

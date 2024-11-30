@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content=" Similar to vectors, matrices are used a lot in game development. Most commonly you find them in graphics, physics, and animations. In this article we&rsquo;ll take a look at how to construct them and how to transform vectors using matrices.
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/math/matrices/" />
+
+
+    <title>
+        
+            Matrices :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.fe660341311327b1218c8ebe88e6d312b0441d57b792eb87a39e2d377c3bf673.css" integrity="sha256-/mYDQTETJ7EhjI6&#43;iObTErBEHVe3kuuHo54tN3w79nM=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Matrices">
+  <meta itemprop="description" content="Similar to vectors, matrices are used a lot in game development. Most commonly you find them in graphics, physics, and animations. In this article we’ll take a look at how to construct them and how to transform vectors using matrices.">
+  <meta itemprop="datePublished" content="2024-11-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1456">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Matrices">
+  <meta name="twitter:description" content="Similar to vectors, matrices are used a lot in game development. Most commonly you find them in graphics, physics, and animations. In this article we’ll take a look at how to construct them and how to transform vectors using matrices.">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-11-30 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+    <script defer data-domain="pixelcraft.dev" src="https://plausible.pixelcraft.dev:65535/js/script.outbound-links.js"></script>
+
+        
+            <script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+        </div>
+
+        <article>
+            <h3 class="post-author">
+                
+            </h3>
+            <h6 class="post-day">
+                
+                    2024-11-30
+                
+            </h6>
+            <hr>
+
+            <h2 class="post-title">
+                Matrices
+            </h2>
+
+
+            
+            
+            
+
+            <div class="post-content">
+                
+
+
+<div class="visualization" id="thematrixdiv">
+    <canvas id="thematrix" width="600" height="300"></canvas>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById("thematrix");
+            var c = canvas.getContext("2d");
+            var width = "600";
+            var height = "300";
+
+            
+            
+            
+var dt = 32;
+const fontSize = 16;
+const columns = Math.round(canvas.width / fontSize);
+const drops = Array(columns).fill(0);
+for (let i = 0; i < drops.length; i++) 
+{
+    drops[i] = Math.random() * 300;
+}
+
+// Characters used in the animation
+const symbols = 'アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+// Draw the animation
+function draw() 
+{
+    // Semi-transparent black background for fade-out effect
+    c.fillStyle = "rgba(0, 0, 0, 0.05)";
+    c.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Set text color and font
+    c.fillStyle = "#0F0";
+    c.font = fontSize + "px monospace";
+
+    // Loop over each column to draw symbols
+    for (let i = 0; i < drops.length; i++) 
+    {
+        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+
+        // Draw symbol
+        c.fillText(symbol, x, y);
+
+        // Randomly reset drop position to top or let it fall
+        if (y > canvas.height && Math.random() > 0.975) 
+        {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+
+window.setInterval(draw, dt);
+
+        });
+    </script>
+</div>
+
+<p>Similar to <a href="/courses/math/vectors">vectors</a>, matrices are used a lot in game development. Most commonly you find them in graphics, physics, and animations. In this article we&rsquo;ll take a look at how to construct them and how to transform vectors using matrices.</p>
+<p>First let&rsquo;s check some common transformations stored in a matrix:</p>
+<ul>
+<li><strong>Scaling</strong>: Changes the size of an object.</li>
+<li><strong>Rotation</strong>: Rotates an object around an axis.</li>
+<li><strong>Translation</strong>: Moves an object from one position to another.</li>
+<li><strong>Projection</strong>: Projects 3D objects onto a 2D screen.</li>
+</ul>
+
+
+
+<div class="visualization" id="matrixdiv">
+    <canvas id="matrix" width="300" height="300"></canvas>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById("matrix");
+            var c = canvas.getContext("2d");
+            var width = "300";
+            var height = "300";
+
+            
+            
+            
+var time = 0;
+var dt = 16;
+
+var animation1 = 2000.0;
+var animation2 = 2000.0;
+var animation3 = 2000.0;
+var animationTime = animation1 + animation2 + animation3;
+
+var center = new Float2(width / 2, height / 2);
+
+// Box dimensions
+const boxWidth = 100;
+const boxHeight = 100;
+const vertices =
+[
+    new Float2(-boxWidth / 2, -boxHeight / 2),
+    new Float2(boxWidth / 2, -boxHeight / 2),
+    new Float2(boxWidth / 2, boxHeight / 2),
+    new Float2(-boxWidth / 2, boxHeight / 2)
+];
+
+// Helper function to draw the box
+function drawBox(transformedVertices)
+{
+    c.beginPath();
+    c.moveTo(center.x + transformedVertices[0].x, center.y + transformedVertices[0].y);
+
+    for (let i = 1; i < transformedVertices.length; i++) 
+    {
+        c.lineTo(center.x + transformedVertices[i].x, center.y + transformedVertices[i].y);
+    }
+    c.closePath();
+
+    c.strokeStyle = "yellow";
+    c.stroke();
+}
+
+var render = function()
+{
+    time += dt;
+    var anim = time % animationTime;
+
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (anim < animation1)
+    {
+        DrawText(c, new Float2(canvas.width / 2 - 30, 50), "Scale", "white");
+        // Normalize animation time to [0, 1]
+        let t = anim / animation1;
+
+        let maxScale = 1.5;
+        let scale = 1 + (maxScale - 1) * Math.sin(t * Math.PI);
+
+        const transformedVertices = vertices.map(vertex =>
+            new Float2(vertex.x * scale, vertex.y * scale)
+        );
+
+        drawBox(transformedVertices);
+    }
+    else if (anim < animation1 + animation2)
+    {
+        DrawText(c, new Float2(canvas.width / 2 - 40, 50), "Rotate", "white");
+        // Normalize animation time to [0, 1]
+        let t = (anim - animation1) / animation2;
+        let angle = t * 2 * Math.PI;
+
+        // Calculate the rotation matrix for the current angle
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        const rotationMatrix = new Matrix2([cos, -sin, sin, cos]);
+
+        // Apply the rotation matrix to each vertex of the box
+        const transformedVertices = vertices.map(vertex =>
+            rotationMatrix.MultiplyVector(vertex)
+        );
+
+        drawBox(transformedVertices);
+    }
+    else if (anim < animationTime)
+    {
+        DrawText(c, new Float2(canvas.width / 2 - 50, 50), "Translate", "white");
+        // Normalize animation time to [0, 1]
+        let t = (anim - animation1 - animation2) / animation3;
+        let angle = t * 2 * Math.PI;
+
+        // Define the circle radius
+        let radius = 50;
+
+        // Calculate the translation coordinates based on the circular path
+        let translationX = radius * Math.cos(angle);
+        let translationY = radius * Math.sin(angle);
+
+        const transformedVertices = vertices.map(vertex =>
+            new Float2(vertex.x + translationX - radius, vertex.y + translationY)
+        );
+
+        drawBox(transformedVertices);
+    }
+}
+
+window.setInterval(render, dt);
+
+        });
+    </script>
+</div>
+
+<p>The matrices we will use are two dimensional. They can have any shape, but we will mostly focus on square matrices, that means row and column size are equal. Here are two examples of matrics, a 2x2 and a 4x4 matrix:</p>
+$$
+\begin{bmatrix}
+1 & 0 \\
+0 & 1 \\
+\end{bmatrix}
+$$$$
+\begin{bmatrix}
+1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$<p>These matrices are called <strong>identity</strong> matrices, because they are empty (filled with zeroes) except for the diagonal. Later in this article you will find out why this is a good starting point for many matrix operations.</p>
+<h3 id="matrix-multiplications">Matrix multiplications</h3>
+<p><a href="/courses/math/vectors">Vectors</a> from the previous article are essentially one dimensional matrices:</p>
+$$
+\begin{bmatrix}
+1 & 0 
+\end{bmatrix}
+$$<p>We&rsquo;ve seen that we can define a dot product for a vector as follows:</p>
+$$a \cdot b = a_x b_x + a_y b_y$$<p>We can use this exact same operation to create matrix multiplications. You can see rows and colums of the matrix as vectors, then using a dot product we can also define a matrix multiplication. Here&rsquo;s an example:</p>
+
+
+
+<div class="visualization" id="multiplicationdiv">
+    <canvas id="multiplication" width="800" height="400"></canvas>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById("multiplication");
+            var c = canvas.getContext("2d");
+            var width = "800";
+            var height = "400";
+
+            
+            
+            
+var time = 0;
+var dt = 16;
+var animationTime = 2000.0;
+
+// Symbolic matrices
+const startMatrixA = [
+    ['A₁₁', 'A₁₂'],
+    ['A₂₁', 'A₂₂']
+];
+matrixA = JSON.parse(JSON.stringify(startMatrixA));
+
+const startMatrixB = [
+    ['B₁₁', 'B₁₂'],
+    ['B₂₁', 'B₂₂']
+];
+matrixB  = JSON.parse(JSON.stringify(startMatrixB));
+
+const startResultMatrix = [
+    ['', ''],
+    ['', '']
+];
+resultMatrix = JSON.parse(JSON.stringify(startResultMatrix));
+
+// Dynamically calculate cell size based on the longest possible text
+const cellPadding = 20;
+const textFont = '20px Arial';
+c.font = textFont;
+const maxTextWidth = c.measureText('A₁₁ * B₁₁ + A₁₂ * B₂₁').width;
+const cellSize = 60;
+const maxCellSize = Math.max(maxTextWidth + cellPadding, 100);
+
+let completedSteps = new Set();
+
+// Positions of the matrices
+const matrixB_X = 200;
+const matrixB_Y = 50;
+
+const matrixA_X = 50;
+const matrixA_Y = 200;
+
+const resultMatrix_X = 200;
+const resultMatrix_Y = 200;
+
+// Steps representing the symbolic multiplication process
+const steps = [
+    { aRow: 0, aCol: 0, bRow: 0, bCol: 0, targetRow: 0, targetCol: 0, aSymbol: 'A₁₁', bSymbol: 'B₁₁' },
+    { aRow: 0, aCol: 1, bRow: 1, bCol: 0, targetRow: 0, targetCol: 0, aSymbol: 'A₁₂', bSymbol: 'B₂₁' },
+    { aRow: 0, aCol: 0, bRow: 0, bCol: 1, targetRow: 0, targetCol: 1, aSymbol: 'A₁₁', bSymbol: 'B₁₂' },
+    { aRow: 0, aCol: 1, bRow: 1, bCol: 1, targetRow: 0, targetCol: 1, aSymbol: 'A₁₂', bSymbol: 'B₂₂' },
+    { aRow: 1, aCol: 0, bRow: 0, bCol: 0, targetRow: 1, targetCol: 0, aSymbol: 'A₂₁', bSymbol: 'B₁₁' },
+    { aRow: 1, aCol: 1, bRow: 1, bCol: 0, targetRow: 1, targetCol: 0, aSymbol: 'A₂₂', bSymbol: 'B₂₁' },
+    { aRow: 1, aCol: 0, bRow: 0, bCol: 1, targetRow: 1, targetCol: 1, aSymbol: 'A₂₁', bSymbol: 'B₁₂' },
+    { aRow: 1, aCol: 1, bRow: 1, bCol: 1, targetRow: 1, targetCol: 1, aSymbol: 'A₂₂', bSymbol: 'B₂₂' }
+];
+
+function drawMatrix(matrix, x, y, label, sizeX, sizeY) 
+{
+    c.font = textFont;
+    c.fillText(label, x, y - 10);
+
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 2; j++) {
+            c.strokeRect(x + j * sizeX, y + i * sizeY, sizeX, sizeY);
+            c.fillText(matrix[i][j], x + j * sizeX + 10, y + i * sizeY + 35);
+        }
+    }
+}
+
+function drawAnimationStep(time) 
+{
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = '#a9a9b3';
+    c.strokeStyle = '#a9a9b3';
+    drawMatrix(matrixA, matrixA_X, matrixA_Y, 'Matrix A', cellSize, cellSize);
+    drawMatrix(matrixB, matrixB_X, matrixB_Y, 'Matrix B', maxCellSize, cellSize);
+    drawMatrix(resultMatrix, resultMatrix_X, resultMatrix_Y, 'Result', maxCellSize, cellSize);
+
+    c.beginPath();
+    c.arc(matrixA_X + 140, matrixA_Y - 25, 100, Math.PI, 1.5 * Math.PI);
+    c.stroke();
+    c.beginPath();
+    c.arc(matrixA_X + 140, matrixA_Y - 25, 50, Math.PI, 1.5 * Math.PI);
+    c.stroke();
+
+    const stepIndex = Math.floor(time / animationTime) % steps.length;
+    const progress = (time % animationTime) / animationTime;
+    const step = steps[stepIndex];
+
+    // Starting positions for matrix elements being animated
+    const aStartX = matrixA_X + step.aCol * cellSize + 10;
+    const aStartY = matrixA_Y + step.aRow * cellSize + 35;
+
+    const bStartX = matrixB_X + step.bCol * maxCellSize + 10;
+    const bStartY = matrixB_Y + step.bRow * cellSize + 35;
+
+    // Destination positions for the result matrix
+    const resultX = resultMatrix_X + step.targetCol * maxCellSize + 10;
+    const resultY = resultMatrix_Y + step.targetRow * cellSize + 35;
+
+    // Current positions during animation (moving from start to result)
+    const aCurrentX = aStartX + progress * (resultX - aStartX);
+    const aCurrentY = aStartY + progress * (resultY - aStartY);
+
+    const bCurrentX = bStartX + progress * (resultX - bStartX);
+    const bCurrentY = bStartY + progress * (resultY - bStartY);
+
+    // Draw moving symbols
+    c.fillStyle = 'green';
+    c.fillText(step.aSymbol, aCurrentX, aCurrentY);
+
+    c.fillStyle = 'red';
+    c.fillText(step.bSymbol, bCurrentX, bCurrentY);
+
+    // When the animation is near the end of the step, update result matrix
+    if (progress > 0.95 && !completedSteps.has(stepIndex)) 
+    {
+        const expression = `${step.aSymbol} * ${step.bSymbol}`;
+        resultMatrix[step.targetRow][step.targetCol] += resultMatrix[step.targetRow][step.targetCol] ? " + " + expression : expression;
+        completedSteps.add(stepIndex);
+
+        if (stepIndex == steps.length - 1)
+        {
+            reset();
+        }
+    }
+}
+
+function render()
+{
+    time += dt;
+    drawAnimationStep(time);
+}
+
+function reset()
+{
+    resultMatrix = JSON.parse(JSON.stringify(startResultMatrix));
+    completedSteps.clear();
+}
+
+window.setInterval(render, dt);
+
+        });
+    </script>
+</div>
+
+<p>When you visualize it like this, you can see we use the vectors $(A_{11} A_{12})$ and $(B_{11} B_{21})$ to create the result for the first entry in the result matrix. It&rsquo;s important to realize here: if we would swap the matrices around, you would not get the same result! Since we use a row from matrix A to multiply with a column of matrix B. The matrix multiplication is not <strong>commutative</strong>. Enough explanation, let&rsquo;s get to some code.</p>
+<div class="bs-component">
+<ul id="matrixmulttabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pythonmatrixmulttab">
+<a href="#pythonmatrixmulttab" class="nav-link" data-bs-toggle="tab">python</a>
+</li>
+
+<li class="nav-item" data-tab="cppmatrixmulttab">
+<a href="#cppmatrixmulttab" class="nav-link" data-bs-toggle="tab">cpp</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+<div class="tab-pane fade" id="pythonmatrixmulttab">
+<textarea id="pythonmatrixmult">class Matrix:
+    def __init__(self, n, m):
+        self.matrix = [[float(0) for j in range(m)] for i in range(n)]
+
+    # Pretty print our values
+    def __str__(self):
+        strings = []
+        for row in self.matrix:
+            strings.append(str(row))
+        return &#39;\n&#39;.join(strings)  
+    
+    # Override operators for length 
+    def __len__(self):
+        return len(self.matrix)
+    # Override operators for array access 
+    def __getitem__(self, item):
+        return self.matrix[item]
+
+    # Get or set individual values
+    def get(self, i, j):
+        return self.matrix[i][j]
+    def set(self, i, j, v):
+        self.matrix[i][j] = float(v)
+
+    # Set full matrix from a [[]] list
+    def fromValues(self, values):
+        self.matrix = [[float(v) for v in value] for value in values]
+    
+    def transpose(self):
+        result = Matrix(len(self.matrix), len(self.matrix[0]))
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                result[j][i] = self.matrix[i][j]
+        return result
+
+    # Matrix multiplication
+    def multiply(self, other):
+        result = Matrix(len(self.matrix[0]), len(other))
+        for i in range(len(self.matrix)):
+            for j in range(len(other[0])):
+                for k in range(len(other)):
+                    result[i][j] &#43;= self.matrix[i][k] * other[k][j]
+        return result
+
+    def __mul__(self, other):
+        if isinstance(other, Matrix):
+            return self.multiply(other)
+        return [[num*other for num in row] for row in self.matrix]
+
+a = Matrix(2, 2)
+a.set(0, 0, 1)
+a.set(1, 1, 1)
+print(&#34;a:&#34;)
+print(a)
+
+b = Matrix(2, 2)
+b.set(0, 0, 1)
+b.set(1, 0, 2)
+b.set(0, 1, 3)
+b.set(1, 1, 4)
+print(&#34;b:&#34;)
+print(b)
+
+print(&#34;a * b:&#34;)
+print(a * b)
+
+print(&#34;b transposed:&#34;)
+print(b.transpose())</textarea>
+<button id="pythonmatrixmultbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pythonmatrixmultoutput" style="display: none;"></pre>
+</div>
+
+
+<div class="tab-pane fade" id="cppmatrixmulttab">
+<textarea id="cppmatrixmult">#include &lt;math.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;vector&gt;
+
+struct Matrix
+{
+    std::vector&lt;std::vector&lt;float&gt;&gt; Data;
+
+    Matrix(int n, int m)
+    {
+        Data.resize(n);
+        for (int i = 0; i &lt; n; i&#43;&#43;)
+        {
+            Data[i].resize(m);
+            for (int j = 0; j &lt; m; j&#43;&#43;)
+                Data[i][j] = 0.0f;
+        }
+    }
+
+    // Get or set individual values
+    float Get(int x, int y) { return Data[x][y]; }
+    void Set(int x, int y, float value) { Data[x][y] = value; }
+
+    // Add access functions
+    int size() const { return Data.size(); }
+    std::vector&lt;float&gt;&amp; operator[](int index) { return Data[index]; }
+    std::vector&lt;float&gt; operator[](int index) const { return Data[index]; }
+};
+
+// Matrix multiplication
+inline Matrix operator*(const Matrix &amp;a, const Matrix &amp;b)
+{
+    Matrix result(a[0].size(), b.size());
+    for (int i = 0; i &lt; a.size(); i&#43;&#43;)
+        for (int j = 0; j &lt; b[i].size(); j&#43;&#43;)
+            for (int k = 0; k &lt; b.size(); k&#43;&#43;)
+                result[i][j] &#43;= a[i][k] * b[k][j];
+    return result;
+}
+
+Matrix Transpose(const Matrix &amp;m)
+{
+    Matrix result(m.size(), m[0].size());
+    for (int i = 0; i &lt; m.size(); i&#43;&#43;)
+        for (int j = 0; j &lt; m[0].size(); j&#43;&#43;)
+            result[j][i] = m[i][j];
+    return result;
+}
+
+void PrintMatrix(const Matrix &amp;m)
+{
+    for (int i = 0; i &lt; m.size(); i&#43;&#43;)
+    {
+        printf(&#34;[&#34;);
+        for (int j = 0; j &lt; m[i].size(); j&#43;&#43;)
+        {
+            printf(&#34;%.1f&#34;, m[i][j]);
+            if (j &lt; m[i].size() - 1)
+                printf(&#34;, &#34;);
+        }
+        printf(&#34;]\n&#34;);
+    }
+}
+
+int main()
+{
+    Matrix a(2, 2);
+    a.Set(0, 0, 1);
+    a.Set(1, 1, 1);
+    printf(&#34;a:\n&#34;);
+    PrintMatrix(a);
+
+    Matrix b(2, 2);
+    b.Set(0, 0, 1);
+    b.Set(1, 0, 2);
+    b.Set(0, 1, 3);
+    b.Set(1, 1, 4);
+    printf(&#34;b:\n&#34;);
+    PrintMatrix(b);
+
+    printf(&#34;a * b:\n&#34;);
+    Matrix c = a * b;
+    PrintMatrix(c);
+
+    printf(&#34;b transposed:\n&#34;);
+    c = Transpose(b);
+    PrintMatrix(c);
+}</textarea>
+<button id="cppmatrixmultbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="cppmatrixmultoutput" style="display: none;"></pre>
+</div>
+
+</div>
+</div>
+<div id="pythonmatrixmultdiv" style="display: none;">
+<canvas id="pythonmatrixmultcanvas" height="500" width="500"></canvas>
+</div>
+
+<div id="cppmatrixmultdiv" style="display: none;">
+<canvas id="cppmatrixmultcanvas" height="500" width="500"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#matrixmulttabs a:first').tab('show')
+        $('#matrixmulttabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        var editor = createEditor("pythonmatrixmult", "python");var editor = createEditor("cppmatrixmult", "text\/x-c\u002b\u002bsrc");
+    });</script>
+
+<p>You may have noticed when printing out the matrix it&rsquo;s slightly different to what you expect. We&rsquo;re setting matrix b to <code>[1, 2, 3, 4]</code> in memory layout, yet if we print out the matrix it seems to look like <code>[1, 3, 2, 4]</code>. This is because we are defining the matrix to have a <strong>column major</strong> loadout. That means, when reading the memory in order, we&rsquo;ll read through the matrix in columns. When we reach the end of the first column, we continue with the second and so on.</p>
+<p>I&rsquo;ve explicitly chosen this example to feature this to make you aware. There isn&rsquo;t really a reason to choose either <strong>column major</strong> or <strong>row major</strong> over the other. It&rsquo;s a design choice. When making games, you will probably use a math library or be provided one. In this case it&rsquo;s important to know how these matrices are laid out in memory.</p>
+<p>One specific library that&rsquo;s popular to use in games is called <a href="https://github.com/g-truc/glm">GLM</a>. When using this library you could make the case that it wouldn&rsquo;t be necessary to figure out how they are stored in memory. GLM provides common operations to set specific data in the matrix:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">mat4x4</span> <span class="n">identity</span> <span class="o">=</span> <span class="n">mat4x4</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">auto</span> <span class="n">S</span> <span class="o">=</span> <span class="n">glm</span><span class="o">::</span><span class="n">scale</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">Scale</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="k">auto</span> <span class="n">R</span> <span class="o">=</span> <span class="n">glm</span><span class="o">::</span><span class="n">rotate</span><span class="p">(</span><span class="n">identiy</span><span class="p">,</span> <span class="n">Rotation</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="k">auto</span> <span class="n">T</span> <span class="o">=</span> <span class="n">glm</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">Translation</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="k">auto</span> <span class="n">result</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">position</span><span class="p">;</span>
+</span></span></code></pre></div><p>These functions help to keep the implementation hidden behind the scenes. However when you want to use the matrix to move objects around, for example in a vertex shader, it would still be crucial to make sure the resulting multiplication is what you expect it to be! So always make sure you know how a matrix is laid out in memory.</p>
+<p>One last thing to notice about the last example is the order of multiplication: <code>T * R * S * position</code>. You can read this as: translate the rotated, scaled, transform. This comes down to applying the matrix operations in reverse: we first apply the scale to the given transform, then rotate it, and finally translate it. This is exactly what we want.</p>
+<p>Imagine doing these operations in the wrong order: first translating a point and then rotating. When rotating a vector, we rotate it around the origin. So the translated point will then be rotated around the origin, usually resulting in something completely unexpected:</p>
+
+
+
+<div class="visualization" id="orderdiv">
+    <canvas id="order" width="600" height="300"></canvas>
+    <script>
+        $(document).ready(function() {
+            var canvas = document.getElementById("order");
+            var c = canvas.getContext("2d");
+            var width = "600";
+            var height = "300";
+
+            
+            
+            
+var time = 0;
+var dt = 16;
+
+var animation1 = 4000.0;
+var animation2 = 1000.0;
+var animationTime = animation1 + animation2;
+
+var center = new Float2(width / 2, height / 2);
+
+// Box dimensions
+const boxWidth = 75;
+const boxHeight = 75;
+const vertices =
+[
+    new Float2(-boxWidth / 2, -boxHeight / 2),
+    new Float2(boxWidth / 2, -boxHeight / 2),
+    new Float2(boxWidth / 2, boxHeight / 2),
+    new Float2(-boxWidth / 2, boxHeight / 2)
+];
+
+// Helper function to draw the box
+function drawBox(transformedVertices)
+{
+    c.beginPath();
+    c.moveTo(center.x + transformedVertices[0].x, center.y + transformedVertices[0].y);
+
+    for (let i = 1; i < transformedVertices.length; i++) 
+    {
+        c.lineTo(center.x + transformedVertices[i].x, center.y + transformedVertices[i].y);
+    }
+    c.closePath();
+
+    c.strokeStyle = "yellow";
+    c.stroke();
+}
+
+function rotate(vertices, angle)
+{
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const rotationMatrix = new Matrix2([cos, -sin, sin, cos]);
+
+    // Apply the rotation matrix to each vertex of the box
+    const transformedVertices = vertices.map(vertex =>
+        rotationMatrix.MultiplyVector(vertex)
+    );
+
+    return transformedVertices;
+}
+
+function translate(vertices, t)
+{
+    // Define the circle radius
+    let radius = boxWidth;
+
+    // Calculate the translation coordinates based on the circular path
+    let translationX = t * radius;
+    let translationY = 0;
+
+    transformedVertices = vertices.map(vertex =>
+        new Float2(vertex.x + translationX, vertex.y + translationY)
+    );
+
+    return transformedVertices;
+}
+
+var render = function()
+{
+    time += dt;
+    var anim = time % animationTime;
+
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Normalize animation time to [0, 1]
+    let t = anim / animation1;
+    let t1 = Math.min(1.0, t * 2);
+    let t2 = Math.min(1.0, (t - 0.5) * 2);
+
+    {
+        const text = "Rotate then translate";
+        const width = c.measureText(text).width;
+        DrawText(c, new Float2(150 - width * 0.5, 50), text, "white");
+
+        let angle = t1 * 0.75 * Math.PI;
+        transformedVertices = rotate(vertices, angle);
+
+        if (t > 0.5)
+        {
+            transformedVertices = translate(transformedVertices, t2);
+        }
+
+        // Offset to the left 
+        transformedVertices = transformedVertices.map(vertex => new Float2(vertex.x - 150, vertex.y));
+
+        c.beginPath();
+        c.arc(canvas.width / 2 - 150, canvas.height / 2, 3, 0, 2 * Math.PI);
+        c.fillStyle = "red";
+        c.fill();
+        drawBox(transformedVertices);
+    }
+
+    {
+        const text = "Translate then rotate";
+        const width = c.measureText(text).width;
+        DrawText(c, new Float2(450 - width * 0.5, 50), text, "white");
+
+        transformedVertices = translate(vertices, t1);
+
+        if (t > 0.5)
+        {
+            let angle = t2 * 0.75 * Math.PI;
+            transformedVertices = rotate(transformedVertices, angle);
+        }
+
+        // Offset to the right 
+        transformedVertices = transformedVertices.map(vertex => new Float2(vertex.x + 150, vertex.y));
+
+        c.beginPath();
+        c.arc(canvas.width / 2 + 150, canvas.height / 2, 3, 0, 2 * Math.PI);
+        c.fillStyle = "red";
+        c.fill();
+        drawBox(transformedVertices);
+    }
+}
+
+window.setInterval(render, dt);
+
+        });
+    </script>
+</div>
+
+<p>The red dots show the origin of each cube before applying the operations on the vertices. You can see the rotation moves the vertices of the cubes around the origin, no matter where they are.</p>
+<p>Coming back to the operation <code>T * R * S * position</code>: the result in this case will be a vector, because the position is a vector. However if we only took <code>T * R * S</code> the result would be a matrix containing all the operations. If you would inspect the matrix you could retrieve the translation, rotation, and scale from it:</p>
+$$
+\begin{bmatrix}
+\color{yellow}{1} & \color{green}{0} & \color{green}{0} & \color{blue}{0} \\
+\color{green}{0} & \color{yellow}{1} & \color{green}{0} & \color{blue}{0} \\
+\color{green}{0} & \color{green}{0} & \color{yellow}{1} & \color{blue}{0} \\
+\color{blue}{0} & \color{blue}{0} & \color{blue}{0} & \color{red}{1}
+\end{bmatrix}
+$$<p>Where $\color{blue}{blue}$ numbers apply a translation. The $\color{red}{red}$ diagonal represents a scaling. Within the $\color{green}{green}$ square rotations are stored. Of course $\color{yellow}{yellow}$ is where the diagonal and square overlap, so these can both have part of a rotation and scale. The translation is either stored on the right column, or the bottom row. This depends once again on the design being row major or column major.</p>
+<p>These are the most common things you should know about matrices for game development. There are more specific applications, for example calculating a perspective projection for rendering. We will cross that bridge when we get to it!</p>
+
+            </div>
+
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+
+        
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="/courses/math/vectors/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">Vectors</span>
+                </a>
+            </span>
+            
+
+            
+        </div>
+    </div>
+
+
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span>Robbin Marcus</span>
+            
+            <span><a href="https://pixelcraft.dev/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+                &nbsp; <a href="https://discord.gg/nsMjdHdcrU"  rel="me noopener " title="Discord"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a> &nbsp;
+            
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>PixelCraft is completely free, and always will be. If you want to see more, you can <a href="https://buymeacoffee.com/pixelcraft">buy me a coffee</a></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>
