@@ -52,7 +52,7 @@
   <meta itemprop="description" content="Similar to vectors, matrices are used a lot in game development. Most commonly you find them in graphics, physics, and animations. In this article we’ll take a look at how to construct them and how to transform vectors using matrices.">
   <meta itemprop="datePublished" content="2024-11-30T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-30T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1456">
+  <meta itemprop="wordCount" content="1530">
   <meta itemprop="image" content="https://pixelcraft.dev/">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -747,7 +747,18 @@ int main()
 </span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="k">auto</span> <span class="n">T</span> <span class="o">=</span> <span class="n">glm</span><span class="o">::</span><span class="n">translate</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="n">Translation</span><span class="p">);</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="k">auto</span> <span class="n">result</span> <span class="o">=</span> <span class="n">T</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">S</span> <span class="o">*</span> <span class="n">position</span><span class="p">;</span>
 </span></span></code></pre></div><p>These functions help to keep the implementation hidden behind the scenes. However when you want to use the matrix to move objects around, for example in a vertex shader, it would still be crucial to make sure the resulting multiplication is what you expect it to be! So always make sure you know how a matrix is laid out in memory.</p>
-<p>One last thing to notice about the last example is the order of multiplication: <code>T * R * S * position</code>. You can read this as: translate the rotated, scaled, transform. This comes down to applying the matrix operations in reverse: we first apply the scale to the given transform, then rotate it, and finally translate it. This is exactly what we want.</p>
+<p>If you want to change the matrix, but not the underlying library, there is another common operation you can use: <strong>transpose</strong>. Transposing the matrix will flip the rows and columns. In the code example, <code>matrix[x][y]</code> will become <code>matrix[y][x]</code>. You can visualize it as flipping the numbers over the diagonal of the matrix:</p>
+$$
+\begin{bmatrix}
+1 & x \\
+y & 1 \\
+\end{bmatrix}
+=>
+\begin{bmatrix}
+1 & y \\
+x & 1 \\
+\end{bmatrix}
+$$<p>One last thing to notice about the last example is the order of multiplication: <code>T * R * S * position</code>. You can read this as: translate the rotated, scaled, transform. This comes down to applying the matrix operations in reverse: we first apply the scale to the given transform, then rotate it, and finally translate it. This is exactly what we want.</p>
 <p>Imagine doing these operations in the wrong order: first translating a point and then rotating. When rotating a vector, we rotate it around the origin. So the translated point will then be rotated around the origin, usually resulting in something completely unexpected:</p>
 
 
