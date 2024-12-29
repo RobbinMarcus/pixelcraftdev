@@ -791,7 +791,7 @@ int main() {
 </div>
 </div>
 <div id="cppexamplediv" style="display: none;">
-<canvas id="cppexamplecanvas" height="500" width="500"></canvas>
+<canvas id="cppexamplecanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -804,7 +804,9 @@ int main() {
             $(this).tab('show');
         })
 
-        var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("cpp", "example", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>It may take a while to compute the final image. I&rsquo;ve adapted the code slightly to run on this web page, but no major changes to the code have been made.</p>
@@ -848,6 +850,8 @@ int main() {
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

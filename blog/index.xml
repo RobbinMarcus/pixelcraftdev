@@ -6,8 +6,15 @@
     <description>Recent content in Blog on Pixel Craft</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 30 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://pixelcraft.dev/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>New article: Shaders</title>
+      <link>https://pixelcraft.dev/blog/article_shaders/</link>
+      <pubDate>Sun, 29 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://pixelcraft.dev/blog/article_shaders/</guid>
+      <description>&lt;p&gt;A new course was released: &lt;a href=&#34;https://pixelcraft.dev/courses/rendering/shaders&#34;&gt;Shaders&lt;/a&gt;.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>New course release and discord</title>
       <link>https://pixelcraft.dev/blog/article_matrices/</link>

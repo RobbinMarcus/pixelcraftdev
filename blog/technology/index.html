@@ -203,7 +203,7 @@ for element in data:
 </div>
 </div>
 <div id="pythonpythondiv" style="display: none;">
-<canvas id="pythonpythoncanvas" height="500" width="500"></canvas>
+<canvas id="pythonpythoncanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -216,7 +216,9 @@ for element in data:
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonpython", "python");
+        {
+                var editor = createEditor("python", "python", "python");}
+        
     });</script>
 
 <h3 id="c">C++</h3>
@@ -246,7 +248,7 @@ int main()
 </div>
 </div>
 <div id="cppcppdiv" style="display: none;">
-<canvas id="cppcppcanvas" height="500" width="500"></canvas>
+<canvas id="cppcppcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -259,7 +261,9 @@ int main()
             $(this).tab('show');
         })
 
-        var editor = createEditor("cppcpp", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("cpp", "cpp", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>When executing the code you see a couple of different steps happening:</p>
@@ -416,11 +420,11 @@ void loop(double t, double dt)
 </div>
 </div>
 <div id="pythonanimateddiv" style="display: none;">
-<canvas id="pythonanimatedcanvas" height="500" width="500"></canvas>
+<canvas id="pythonanimatedcanvas" height="400" width="600"></canvas>
 </div>
 
 <div id="cppanimateddiv" style="display: none;">
-<canvas id="cppanimatedcanvas" height="500" width="500"></canvas>
+<canvas id="cppanimatedcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -433,7 +437,11 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonanimated", "python");var editor = createEditor("cppanimated", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("python", "animated", "python");}
+        {
+                var editor = createEditor("cpp", "animated", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <h3 id="writing-the-pages">Writing the pages</h3>
@@ -515,6 +523,8 @@ var render = function()
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

@@ -718,11 +718,11 @@ int main()
 </div>
 </div>
 <div id="pythonmatrixmultdiv" style="display: none;">
-<canvas id="pythonmatrixmultcanvas" height="500" width="500"></canvas>
+<canvas id="pythonmatrixmultcanvas" height="400" width="600"></canvas>
 </div>
 
 <div id="cppmatrixmultdiv" style="display: none;">
-<canvas id="cppmatrixmultcanvas" height="500" width="500"></canvas>
+<canvas id="cppmatrixmultcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -735,7 +735,11 @@ int main()
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonmatrixmult", "python");var editor = createEditor("cppmatrixmult", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("python", "matrixmult", "python");}
+        {
+                var editor = createEditor("cpp", "matrixmult", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>You may have noticed when printing out the matrix it&rsquo;s slightly different to what you expect. We&rsquo;re setting matrix b to <code>[1, 2, 3, 4]</code> in memory layout, yet if we print out the matrix it seems to look like <code>[1, 3, 2, 4]</code>. This is because we are defining the matrix to have a <strong>column major</strong> loadout. That means, when reading the memory in order, we&rsquo;ll read through the matrix in columns. When we reach the end of the first column, we continue with the second and so on.</p>
@@ -957,6 +961,8 @@ $$<p>Where $\color{blue}{blue}$ numbers apply a translation. The $\color{red}{re
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

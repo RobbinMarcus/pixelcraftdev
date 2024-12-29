@@ -15,15 +15,21 @@
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/categories/</loc>
-    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
+    <lastmod>2024-12-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://pixelcraft.dev/blog/article_matrices/</loc>
-    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
+    <loc>https://pixelcraft.dev/blog/article_shaders/</loc>
+    <lastmod>2024-12-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/</loc>
-    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
+    <lastmod>2024-12-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/categories/robbin/</loc>
+    <lastmod>2024-12-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pixelcraft.dev/courses/rendering/shaders/</loc>
+    <lastmod>2024-12-29T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pixelcraft.dev/blog/article_matrices/</loc>
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/about/</loc>
@@ -44,9 +50,6 @@
     <loc>https://pixelcraft.dev/courses/</loc>
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
-    <loc>https://pixelcraft.dev/courses/frameworks/</loc>
-    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
-  </url><url>
     <loc>https://pixelcraft.dev/courses/basics/howtouse/</loc>
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
@@ -63,18 +66,6 @@
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/courses/algorithms/timespacecomplexity/</loc>
-    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
-  </url><url>
-    <loc>https://pixelcraft.dev/courses/frameworks/unity/</loc>
-    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
-  </url><url>
-    <loc>https://pixelcraft.dev/courses/frameworks/unity/unity/</loc>
-    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
-  </url><url>
-    <loc>https://pixelcraft.dev/courses/frameworks/unreal-engine/</loc>
-    <lastmod>2024-11-22T12:31:32+01:00</lastmod>
-  </url><url>
-    <loc>https://pixelcraft.dev/courses/frameworks/unreal-engine/unreal-engine/</loc>
     <lastmod>2024-11-22T12:31:32+01:00</lastmod>
   </url><url>
     <loc>https://pixelcraft.dev/courses/basics/visualizationtools/</loc>

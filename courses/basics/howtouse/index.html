@@ -202,11 +202,11 @@ int main()
 </div>
 </div>
 <div id="pythonexamplediv" style="display: none;">
-<canvas id="pythonexamplecanvas" height="500" width="500"></canvas>
+<canvas id="pythonexamplecanvas" height="400" width="600"></canvas>
 </div>
 
 <div id="cppexamplediv" style="display: none;">
-<canvas id="cppexamplecanvas" height="500" width="500"></canvas>
+<canvas id="cppexamplecanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -219,7 +219,11 @@ int main()
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonexample", "python");var editor = createEditor("cppexample", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("python", "example", "python");}
+        {
+                var editor = createEditor("cpp", "example", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>There are currently two supported programming languages: <strong>Python</strong> and <strong>C++</strong>. In game programming  <strong>C++</strong> is the language of choice for most high quality games. This is due to the flexibility it offers to mess around with low level details such as memory management. For high level concepts I will try to use <strong>Python</strong> more, as it&rsquo;s the easier language to teach and understand general concepts.</p>
@@ -358,7 +362,7 @@ run()</textarea>
 </div>
 </div>
 <div id="pythonpongdiv" style="display: none;">
-<canvas id="pythonpongcanvas" height="500" width="500"></canvas>
+<canvas id="pythonpongcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -371,7 +375,10 @@ run()</textarea>
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonpong", "python");Promise.all([]).then(v => { runEditor(editor) });
+        {
+                var editor = createEditor("python", "pong", "python");
+                    runEditor(editor);}
+        
     });$('#collapsespoiler_pong').on('shown.bs.collapse', function ()
     {
         var textarea = $(this).find('textarea:first').attr('id');
@@ -422,6 +429,8 @@ run()</textarea>
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

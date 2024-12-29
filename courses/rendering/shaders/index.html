@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="I&rsquo;m sure you&rsquo;ve heard the term shaders before if you&rsquo;re into gaming. There are some games that allow you to make custom shaders to change how the game looks, the most popular being Minecraft. Here we&rsquo;ll take a brief look at the different shader stages and what they are used for.
+In the history of drawing pixels on a 2D screen, we&rsquo;ve found two different methods for presenting 3D data:
+Rasterization: This is the most hardware supported rendering method at this moment. All realtime game engines and visualizations use some form of this. In this method we typically project triangles to a 2D plane (your screen) and then decide for every pixel what triangle we should visualize. Raytracing: With raytracing or pathtracing we actually reverse this process, instead of ending up at the screen we start out at the screen and then trace rays back into the scene. For every pixel we determine what object we collide with in the scene and determine what color the pixel is that way. With the shaders below and continued articles here we&rsquo;ll dive into rasterization. If instead you&rsquo;re more interested in learning raytracing you can visit the raytracing course page!
+" />
+<meta name="keywords" content="homepage, courses" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pixelcraft.dev/courses/rendering/shaders/" />
+
+
+    <title>
+        
+            Shaders :: Pixel Craft 
+        
+    </title>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/pixelcraft.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/css/codemirror.css">
+
+
+
+  <link rel="stylesheet" href="/main.min.fe660341311327b1218c8ebe88e6d312b0441d57b792eb87a39e2d377c3bf673.css" integrity="sha256-/mYDQTETJ7EhjI6&#43;iObTErBEHVe3kuuHo54tN3w79nM=" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="/css/tokyonight-night.css">
+<link rel="stylesheet" type="text/css" href="/css/pixelcraft.css">
+
+
+
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />   
+<meta name="msapplication-TileColor" content="">
+
+
+
+  <meta itemprop="name" content="Shaders">
+  <meta itemprop="description" content="I’m sure you’ve heard the term shaders before if you’re into gaming. There are some games that allow you to make custom shaders to change how the game looks, the most popular being Minecraft. Here we’ll take a brief look at the different shader stages and what they are used for.
+In the history of drawing pixels on a 2D screen, we’ve found two different methods for presenting 3D data:
+Rasterization: This is the most hardware supported rendering method at this moment. All realtime game engines and visualizations use some form of this. In this method we typically project triangles to a 2D plane (your screen) and then decide for every pixel what triangle we should visualize. Raytracing: With raytracing or pathtracing we actually reverse this process, instead of ending up at the screen we start out at the screen and then trace rays back into the scene. For every pixel we determine what object we collide with in the scene and determine what color the pixel is that way. With the shaders below and continued articles here we’ll dive into rasterization. If instead you’re more interested in learning raytracing you can visit the raytracing course page!">
+  <meta itemprop="datePublished" content="2024-12-29T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-29T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1544">
+  <meta itemprop="image" content="https://pixelcraft.dev/">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://pixelcraft.dev/">
+  <meta name="twitter:title" content="Shaders">
+  <meta name="twitter:description" content="I’m sure you’ve heard the term shaders before if you’re into gaming. There are some games that allow you to make custom shaders to change how the game looks, the most popular being Minecraft. Here we’ll take a brief look at the different shader stages and what they are used for.
+In the history of drawing pixels on a 2D screen, we’ve found two different methods for presenting 3D data:
+Rasterization: This is the most hardware supported rendering method at this moment. All realtime game engines and visualizations use some form of this. In this method we typically project triangles to a 2D plane (your screen) and then decide for every pixel what triangle we should visualize. Raytracing: With raytracing or pathtracing we actually reverse this process, instead of ending up at the screen we start out at the screen and then trace rays back into the scene. For every pixel we determine what object we collide with in the scene and determine what color the pixel is that way. With the shaders below and continued articles here we’ll dive into rasterization. If instead you’re more interested in learning raytracing you can visit the raytracing course page!">
+
+
+
+
+
+
+
+    <meta property="article:published_time" content="2024-12-29 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+    <script defer data-domain="pixelcraft.dev" src="https://plausible.pixelcraft.dev:65535/js/script.outbound-links.js"></script>
+
+        
+            <script>
+  MathJax = {
+    tex: {
+      displayMath: [['$$', '$$']],
+      inlineMath: [['$', '$']],
+    }
+  };
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+        
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <img src="/images/pixelcraft.png" alt="" />
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about">About</a></li><li><a href="/blog">Blog</a></li><li><a href="/courses">Courses</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+                <span class="theme-toggle not-selectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+   <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+   3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+   13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+ </svg></span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+        </div>
+
+        <article>
+            <h3 class="post-author">
+                
+            </h3>
+            <h6 class="post-day">
+                
+                    2024-12-29
+                
+            </h6>
+            <hr>
+
+            <h2 class="post-title">
+                Shaders
+            </h2>
+
+
+            
+            
+            
+
+            <div class="post-content">
+                <p>I&rsquo;m sure you&rsquo;ve heard the term shaders before if you&rsquo;re into gaming. There are some games that allow you to make custom shaders to change how the game looks, the most popular being <a href="https://en.wikipedia.org/wiki/Minecraft">Minecraft</a>. Here we&rsquo;ll take a brief look at the different shader stages and what they are used for.</p>
+<p>In the history of drawing pixels on a 2D screen, we&rsquo;ve found two different methods for presenting 3D data:</p>
+<ul>
+<li><strong>Rasterization</strong>: This is the most hardware supported rendering method at this moment. All realtime game engines and visualizations use some form of this. In this method we typically project triangles to a 2D plane (your screen) and then decide for every pixel what triangle we should visualize.</li>
+<li><strong>Raytracing</strong>: With raytracing or pathtracing we actually reverse this process, instead of ending up at the screen we start out at the screen and then trace rays back into the scene. For every pixel we determine what object we collide with in the scene and determine what color the pixel is that way.</li>
+</ul>
+<p>With the shaders below and continued articles here we&rsquo;ll dive into <strong>rasterization</strong>. If instead you&rsquo;re more interested in learning raytracing you can visit the <a href="/courses/rendering/raytracing">raytracing course page</a>!</p>
+<p>Note: this page uses webgpu, this should run out of the box on chromium based browsers. If the examples below are not running, check the <a href="https://github.com/gpuweb/gpuweb/wiki/Implementation-Status">implementation status</a>.</p>
+<h2 id="shaderstages-overview">Shaderstages overview</h2>
+<p>Below we&rsquo;ll take a look at the non-optional shader stages that are almost always used.</p>
+<h3 id="vertex-shader">Vertex shader</h3>
+<p>The vertex shader is the first programmable stage of the graphics pipeline. It takes input data such as the position, color, and texture coordinates of each vertex and performs transformations like <a href="/courses/math/matrices">scaling, rotating, and translating</a> them to fit the scene.</p>
+<h3 id="pixel-shader">Pixel shader</h3>
+<p>Also known as fragment shader. The pixel shader is responsible for calculating the color, lighting, and texture of each pixel in the final image. It processes fragments, which are potential pixels, and decides their final appearance based on inputs like textures, lighting models, and other material properties.</p>
+<h2 id="your-first-pixel-shader">Your first pixel shader</h2>
+<p>Let&rsquo;s tackle all the shaders one by one. We&rsquo;re going to skip any setup for now. I&rsquo;ve done all of that behind the scenes. Let&rsquo;s focus on the pixel shader here. We&rsquo;re going to apply a color to the output screen for every pixel in a triangle:</p>
+<div class="bs-component">
+<ul id="pixelonlytabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="pixelpixelonlytab">
+<a href="#pixelpixelonlytab" class="nav-link" data-bs-toggle="tab">pixel</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+<div class="tab-pane fade" id="pixelpixelonlytab">
+<textarea id="pixelpixelonly">@fragment
+fn main() -&gt; @location(0) vec4f 
+{
+    return vec4f(0.39, 0.58, 0.93, 1);
+}</textarea>
+<button id="pixelpixelonlybutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pixelpixelonlyoutput" style="display: none;"></pre>
+</div>
+ 
+</div>
+</div>
+<div id="pixelpixelonlydiv" style="display: none;">
+<canvas id="pixelpixelonlycanvas" height="400" width="600"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#pixelonlytabs a:first').tab('show')
+        $('#pixelonlytabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        {
+                var editor = createEditor("pixel", "pixelonly", "wgsl");
+                    runEditor(editor);}
+        
+    });</script>
+
+<p>Try changing the <code>vec4f</code> and notice the output changes for every pixel inside the triangle.</p>
+<p>There&rsquo;s a lot to unpack about this shader already. Of course there are is some specific syntax to notice: <code>@fragment</code> indicates that the next function definition will be interpreted as a fragment shader. The <code>-&gt; @location(0) vec4f</code> tells you that the function outputs a float4 vector. The <code>@location</code> is an attribute that determines what outputs you want from the shader and at what location in the memory.</p>
+<h2 id="extending-with-a-vertex-shader">Extending with a vertex shader</h2>
+<p>Let&rsquo;s add the next part, a vertex shader:</p>
+<div class="bs-component">
+<ul id="vertexonlytabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="vertexvertexonlytab">
+<a href="#vertexvertexonlytab" class="nav-link" data-bs-toggle="tab">vertex</a>
+</li>
+
+<li class="nav-item" data-tab="pixelvertexonlytab">
+<a href="#pixelvertexonlytab" class="nav-link" data-bs-toggle="tab">pixel</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+<div class="tab-pane fade" id="vertexvertexonlytab">
+<textarea id="vertexvertexonly">@vertex
+fn main(@location(0) pos: vec2f) -&gt; @builtin(position) vec4f 
+{
+    return vec4f(pos, 0, 1);
+}</textarea>
+<button id="vertexvertexonlybutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="vertexvertexonlyoutput" style="display: none;"></pre>
+</div>
+
+<div class="tab-pane fade" id="pixelvertexonlytab">
+<textarea id="pixelvertexonly">@fragment
+fn main() -&gt; @location(0) vec4f 
+{
+    return vec4f(0.39, 0.58, 0.93, 1);
+}</textarea>
+<button id="pixelvertexonlybutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pixelvertexonlyoutput" style="display: none;"></pre>
+</div>
+ 
+</div>
+</div>
+<div id="vertexvertexonlydiv" style="display: none;">
+<canvas id="vertexvertexonlycanvas" height="400" width="600"></canvas>
+</div>
+
+<div id="pixelvertexonlydiv" style="display: none;">
+<canvas id="pixelvertexonlycanvas" height="400" width="600"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#vertexonlytabs a:first').tab('show')
+        $('#vertexonlytabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        {
+                var editor = createEditor("vertex", "vertexonly", "wgsl");
+                    runEditor(editor);}
+        {
+                var editor = createEditor("pixel", "vertexonly", "wgsl");}
+        
+    });</script>
+
+<p>The pixel shader remains unchanged from the last example, but now we are able to change the vertex positions. Try to change the vertex shader output to <code>vec4f(pos + vec2f(1, 0), 0, 1);</code> and see if you understand what happens when you run it. Can you figure out what the vertex positions for this test triangle are?</p>
+<p>Similar to the pixel shader we have some specific syntax: <code>@vertex</code> to indicate the function is a vertex shader. This time around the function is getting some input! <code>@location(0) pos: vec2f</code> tells us we&rsquo;re expecting to get a float2 vector at position 0 which we are naming <code>pos</code>. And as output we&rsquo;re returning a position that&rsquo;s a <code>@builtin</code> attribute.</p>
+<p>In this case the builtin attribute is <code>position</code>, which is a special attribute that tells the graphics pipeline where to place the vertex on the screen. The output of the vertex shader returns positions in the so called <strong>clip space</strong>. This is a coordinate system between <code>[-1, 1]</code>. Any position (output from the vertex shader) that&rsquo;s outside this clip space is not processed (it&rsquo;s clipped).</p>
+<p>For these examples I simply specified a triangle with coordinates that are within the clip space, so we don&rsquo;t have to do any processing in the vertex shader at all, we just output the input directly. Usually in the vertex shader you would perform a projection to transform 3D positions to 2D positions on your screen.</p>
+<h2 id="extending-with-the-javascript-setup">Extending with the javascript setup</h2>
+<p>Finally we&rsquo;ll look at the complete code example that sets up the webgpu context, creates a vertex buffer, compiles the shaders, creates a render pipeline, and draws the triangle on the screen. This involves more code than the vertex and pixel shaders only. Take a look at the js tab below and see if you can follow along with the comments.</p>
+<div class="bs-component">
+<ul id="testtabs" class="nav nav-tabs" role="tabslist">
+
+<li class="nav-item" data-tab="vertextesttab">
+<a href="#vertextesttab" class="nav-link" data-bs-toggle="tab">vertex</a>
+</li>
+
+<li class="nav-item" data-tab="pixeltesttab">
+<a href="#pixeltesttab" class="nav-link" data-bs-toggle="tab">pixel</a>
+</li>
+
+<li class="nav-item" data-tab="jstesttab">
+<a href="#jstesttab" class="nav-link" data-bs-toggle="tab">js</a>
+</li>
+
+</ul>
+<div id="myTabContent" class="tab-content">
+<div class="tab-pane fade" id="vertextesttab">
+<textarea id="vertextest">@vertex
+fn main(@location(0) pos: vec2f) -&gt; @builtin(position) vec4f 
+{
+    return vec4f(pos, 0, 1);
+}</textarea>
+<button id="vertextestbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="vertextestoutput" style="display: none;"></pre>
+</div>
+ 
+<div class="tab-pane fade" id="pixeltesttab">
+<textarea id="pixeltest">@fragment
+fn main() -&gt; @location(0) vec4f 
+{
+    return vec4f(0.39, 0.58, 0.93, 1);
+}</textarea>
+<button id="pixeltestbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="pixeltestoutput" style="display: none;"></pre>
+</div>
+ 
+<div class="tab-pane fade" id="jstesttab">
+<textarea id="jstest">return async function(type, id)
+{
+    if (!navigator.gpu) 
+        throw new Error(&#34;WebGPU not supported on this browser.&#34;);
+
+    // Request an adapter
+    const adapter = await navigator.gpu.requestAdapter();
+    if (!adapter) 
+        throw new Error(&#34;No appropriate GPUAdapter found.&#34;);
+
+    // Request a device
+    const device = await adapter.requestDevice();
+
+    // Create webgpu canvas context
+    const canvas = document.getElementById(type &#43; id &#43; &#34;canvas&#34;);
+    const context = canvas.getContext(&#34;webgpu&#34;);
+    const canvasFormat = navigator.gpu.getPreferredCanvasFormat();
+    context.configure({ device: device, format: canvasFormat, });
+
+    // Create a vertex buffer with the triangle vertices
+    const vertices = new Float32Array([0, 0.75, 0.75, -0.75, -0.75, -0.75]);
+    const vertexBuffer = device.createBuffer({
+      size: vertices.byteLength,
+      usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+    });
+    // Upload the vertex data to the GPU
+    device.queue.writeBuffer(vertexBuffer, 0, vertices);
+
+    // Define the layout of the vertex buffer
+    const vertexBufferLayout = {
+      arrayStride: 8,
+      attributes: [{
+        format: &#34;float32x2&#34;,
+        offset: 0,
+        shaderLocation: 0, 
+      }],
+    };
+
+    // Compile vertex and pixel shaders to modules
+    const vertexShaderCode = document.getElementById(&#34;vertex&#34; &#43; id).value; 
+    const vertexShaderModule = device.createShaderModule({ code: vertexShaderCode });
+    const pixelShaderCode = document.getElementById(&#34;pixel&#34; &#43; id).value; 
+    const pixelShaderModule = device.createShaderModule({ code: pixelShaderCode });
+
+    // Create a render pipeline with the vertex and pixel shader modules
+    const pipeline = device.createRenderPipeline({
+        layout: &#34;auto&#34;,
+        vertex: {
+            module: vertexShaderModule,
+            entryPoint: &#34;main&#34;,
+            buffers: [vertexBufferLayout]
+        },
+        fragment: {
+            module: pixelShaderModule,
+            entryPoint: &#34;main&#34;,
+            targets: [{ format: canvasFormat }],
+        },
+    });
+
+    // Create a command encoder and render pass
+    const encoder = device.createCommandEncoder();
+    const pass = encoder.beginRenderPass({
+        colorAttachments: [{
+            view: context.getCurrentTexture().createView(),
+            loadOp: &#34;clear&#34;,
+            clearValue: { r: 0, g: 0, b: 0, a: 1 },
+            storeOp: &#34;store&#34;,
+        }]
+    });
+
+    // Draw the triangle using the vertex buffer and render pipeline
+    pass.setPipeline(pipeline);
+    pass.setVertexBuffer(0, vertexBuffer);
+    pass.draw(vertices.length / 2);
+    pass.end();
+
+    device.queue.submit([encoder.finish()]);
+}</textarea>
+<button id="jstestbutton" type="button" class="btn btn-success">Run</button>
+<pre class="output" id="jstestoutput" style="display: none;"></pre>
+</div>
+ 
+</div>
+</div>
+<div id="vertextestdiv" style="display: none;">
+<canvas id="vertextestcanvas" height="400" width="600"></canvas>
+</div>
+
+<div id="pixeltestdiv" style="display: none;">
+<canvas id="pixeltestcanvas" height="400" width="600"></canvas>
+</div>
+
+<div id="jstestdiv" style="display: none;">
+<canvas id="jstestcanvas" height="400" width="600"></canvas>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() 
+    { 
+        $('#testtabs a:first').tab('show')
+        $('#testtabs a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+        {
+                var editor = createEditor("vertex", "test", "wgsl");
+                    runEditor(editor);}
+        {
+                var editor = createEditor("pixel", "test", "wgsl");}
+        {
+                var editor = createEditor("js", "test", "text\/javascript");}
+        
+    });</script>
+
+<h3 id="adapter-device-and-context">Adapter, device, and context</h3>
+<p>There is a lot to breakdown from this code. The first couple of lines are required for any webgpu setup. We request an adapter and device. The adapter is your actual GPU we want to render on, the device is an abstraction so we can call function on the GPU in isolation from other applications. After we have the basics, we initialize the context to use the canvas on this webpage as output.</p>
+<h3 id="vertex-buffer">Vertex buffer</h3>
+<p>Now we dive straight into graphics code you would see in almost any other API as well. First we create a vertex buffer as a float32 array. These are the actual locations of the vertices in 2D coordinates, we later define this as an array of 2D vectors in the <code>vertexBufferLayout</code>. We&rsquo;ll go more in depth on buffers in a future course, but for now note the <code>GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST</code> specifiers. These explain we want to use this buffer in the vertex shader, and we are only copying to the buffer on the GPU, not reading back from it on the CPU.</p>
+<h3 id="shader-modules-and-pipeline">Shader modules and pipeline</h3>
+<p>The next part is the shader modules. We compile the vertex and pixel shaders from the code defined in the other tabs to modules that we can use in the render pipeline. The pipeline is where everything comes together: We create the vertex and fragment stages and tell them to use the modules above. As input for the vertex shader we want to add the <code>vertexBufferLayout</code> we created earlier. The pixel shader module is defined with the canvas format we&rsquo;re using, so we know what output format to return the color in.</p>
+<h3 id="render-pass">Render pass</h3>
+<p>For the actual rendering we create a command encoder and a render pass. The encoder is used to record commands that will be executed on the GPU. For our commands we want to create a render pass. In this pass we have to set the pipeline and vertexbuffer so everything is connected. We then issue a <code>draw</code> command, this command expects the number of vertices we want to draw, so we can just use our vertices array size divided by 2.</p>
+<p>Finally we submit the command encoder to the device queue. This queues it up for execution on the GPU which will run through all the steps we laid out in the render pass.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>That&rsquo;s all for now! We&rsquo;ve covered the basics of shaders and how to set up a simple webgpu context to render a triangle with a color.</p>
+
+            </div>
+
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+            
+            
+  		</div>
+
+        
+
+    </main>
+
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/processing-js@1.6.6/processing.min.js"></script>
+
+<script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
+<script type="text/javascript" src="/js/codemirror/python.js"></script>
+<script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
+<script type="text/javascript" src="/js/codeeditor.js"></script>
+<script type="text/javascript" src="/js/drawing.js"></script>
+<script type="text/javascript" src="/js/wasm/wasm.js"></script>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2024</span>
+            <span>Robbin Marcus</span>
+            
+            <span><a href="https://pixelcraft.dev/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+                &nbsp; <a href="https://discord.gg/nsMjdHdcrU"  rel="me noopener " title="Discord"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a> &nbsp;
+            
+        </div>
+    </div>
+    
+    
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>PixelCraft is completely free, and always will be. If you want to see more, you can <a href="https://buymeacoffee.com/pixelcraft">buy me a coffee</a></span>
+        </div>
+    </div>
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+<script type="text/javascript" src="/bundle.min.4037dc94fd1565c4fd3354e2b4a2d1ff11842c906242435350b4d2d8d6e8b7890da46c0a865173f543a6161c1f4d1c94147f1b907db36489fc2bf5e20d4af75c.js" integrity="sha512-QDfclP0VZcT9M1TitKLR/xGELJBiQkNTULTS2Nbot4kNpGwKhlFz9UOmFhwfTRyUFH8bkH2zZIn8K/XiDUr3XA=="></script>
+
+
+
+
+
+
+    </body>
+</html>

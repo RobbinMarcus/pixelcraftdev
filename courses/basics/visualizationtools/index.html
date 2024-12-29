@@ -225,11 +225,11 @@ int main()
 </div>
 </div>
 <div id="pythonprocessingdiv" style="display: none;">
-<canvas id="pythonprocessingcanvas" height="500" width="500"></canvas>
+<canvas id="pythonprocessingcanvas" height="400" width="600"></canvas>
 </div>
 
 <div id="cppprocessingdiv" style="display: none;">
-<canvas id="cppprocessingcanvas" height="500" width="500"></canvas>
+<canvas id="cppprocessingcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -242,7 +242,11 @@ int main()
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonprocessing", "python");var editor = createEditor("cppprocessing", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("python", "processing", "python");}
+        {
+                var editor = createEditor("cpp", "processing", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>This is great to draw static images, but it gets more interesting if we can actually create some moving parts. Both the processing framework and the C++ framework have a method to continuously update the canvas. For the Python variant the function is called <code>draw()</code> and in C++ we have a more extended function <code>loop()</code> with some parameters we&rsquo;ll use in the examples below. We&rsquo;re going to draw a circle that moves left to right using the <code>sine</code> function applied on the total time since the program started. The variants have different functions names which may be confusing, I tried to stick as close as the existing Javascript canvas drawing functions for the C++ functionality I made, which is different to the processing functions defined for the Python drawing code.</p>
@@ -310,11 +314,11 @@ void loop(double t, double dt)
 </div>
 </div>
 <div id="pythonanimateddiv" style="display: none;">
-<canvas id="pythonanimatedcanvas" height="500" width="500"></canvas>
+<canvas id="pythonanimatedcanvas" height="400" width="600"></canvas>
 </div>
 
 <div id="cppanimateddiv" style="display: none;">
-<canvas id="cppanimatedcanvas" height="500" width="500"></canvas>
+<canvas id="cppanimatedcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -327,7 +331,11 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonanimated", "python");var editor = createEditor("cppanimated", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("python", "animated", "python");}
+        {
+                var editor = createEditor("cpp", "animated", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>Finally let&rsquo;s take a look at how to set individual pixels as this is a common use case for rendering applications. Here we only look at C++ as we aren&rsquo;t going to touch individual pixels from Python. In the example below we&rsquo;re creating an image in which we set the color of every pixel. After we&rsquo;ve done that we&rsquo;ll draw the image on the canvas.</p>
@@ -385,7 +393,7 @@ void loop(double t, double dt)
 </div>
 </div>
 <div id="cpppixelsdiv" style="display: none;">
-<canvas id="cpppixelscanvas" height="500" width="500"></canvas>
+<canvas id="cpppixelscanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -398,7 +406,9 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        var editor = createEditor("cpppixels", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("cpp", "pixels", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 
@@ -441,6 +451,8 @@ void loop(double t, double dt)
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

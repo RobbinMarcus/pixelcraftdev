@@ -222,7 +222,7 @@ print(is_even(2))</textarea>
 </div>
 </div>
 <div id="pythonisevendiv" style="display: none;">
-<canvas id="pythonisevencanvas" height="500" width="500"></canvas>
+<canvas id="pythonisevencanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -235,7 +235,9 @@ print(is_even(2))</textarea>
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythoniseven", "python");
+        {
+                var editor = createEditor("python", "iseven", "python");}
+        
     });</script>
 
 <div class="container">
@@ -279,7 +281,7 @@ print(find_duplicates(data))</textarea>
 </div>
 </div>
 <div id="pythonduplicatesdiv" style="display: none;">
-<canvas id="pythonduplicatescanvas" height="500" width="500"></canvas>
+<canvas id="pythonduplicatescanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -292,7 +294,9 @@ print(find_duplicates(data))</textarea>
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonduplicates", "python");
+        {
+                var editor = createEditor("python", "duplicates", "python");}
+        
     });</script>
 
 <div class="container">
@@ -343,7 +347,7 @@ for p in get_permutations(data):
 </div>
 </div>
 <div id="pythonpermutationsdiv" style="display: none;">
-<canvas id="pythonpermutationscanvas" height="500" width="500"></canvas>
+<canvas id="pythonpermutationscanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -356,7 +360,9 @@ for p in get_permutations(data):
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonpermutations", "python");
+        {
+                var editor = createEditor("python", "permutations", "python");}
+        
     });</script>
 
 <div class="container">
@@ -409,7 +415,7 @@ print(index)</textarea>
 </div>
 </div>
 <div id="pythonbinarysearchdiv" style="display: none;">
-<canvas id="pythonbinarysearchcanvas" height="500" width="500"></canvas>
+<canvas id="pythonbinarysearchcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -422,7 +428,9 @@ print(index)</textarea>
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonbinarysearch", "python");
+        {
+                var editor = createEditor("python", "binarysearch", "python");}
+        
     });</script>
 
 <div class="container">
@@ -460,6 +468,8 @@ print(index)</textarea>
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

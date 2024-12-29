@@ -370,11 +370,11 @@ int main()
 </div>
 </div>
 <div id="pythonvectorsdiv" style="display: none;">
-<canvas id="pythonvectorscanvas" height="500" width="500"></canvas>
+<canvas id="pythonvectorscanvas" height="400" width="600"></canvas>
 </div>
 
 <div id="cppvectorsdiv" style="display: none;">
-<canvas id="cppvectorscanvas" height="500" width="500"></canvas>
+<canvas id="cppvectorscanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -387,7 +387,11 @@ int main()
             $(this).tab('show');
         })
 
-        var editor = createEditor("pythonvectors", "python");var editor = createEditor("cppvectors", "text\/x-c\u002b\u002bsrc");
+        {
+                var editor = createEditor("python", "vectors", "python");}
+        {
+                var editor = createEditor("cpp", "vectors", "text\/x-c\u002b\u002bsrc");}
+        
     });</script>
 
 <p>For both programming language we&rsquo;re using something called <strong>operator overloading</strong>. This simply means that we&rsquo;re implementing what should happen when we call an operator for the class. For example in <strong>Python</strong> we use <code>_add_</code> to define what happens when we use the <code>+</code> operator on a vector. In <strong>C++</strong> the same thing can be done by defining the <code>operator+</code> function.</p>
@@ -454,7 +458,7 @@ int main()
 </div>
 </div>
 <div id="cppaddvectordiv" style="display: none;">
-<canvas id="cppaddvectorcanvas" height="500" width="500"></canvas>
+<canvas id="cppaddvectorcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -467,7 +471,10 @@ int main()
             $(this).tab('show');
         })
 
-        var editor = createEditor("cppaddvector", "text\/x-c\u002b\u002bsrc");Promise.all([]).then(v => { runEditor(editor) });
+        {
+                var editor = createEditor("cpp", "addvector", "text\/x-c\u002b\u002bsrc");
+                    runEditor(editor);}
+        
     });$('#collapsespoiler_addvector').on('shown.bs.collapse', function ()
     {
         var textarea = $(this).find('textarea:first').attr('id');
@@ -590,7 +597,7 @@ void loop(double t, double dt)
 </div>
 </div>
 <div id="cppdotproductdiv" style="display: none;">
-<canvas id="cppdotproductcanvas" height="500" width="500"></canvas>
+<canvas id="cppdotproductcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -603,7 +610,10 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        var editor = createEditor("cppdotproduct", "text\/x-c\u002b\u002bsrc");Promise.all([]).then(v => { runEditor(editor) });
+        {
+                var editor = createEditor("cpp", "dotproduct", "text\/x-c\u002b\u002bsrc");
+                    runEditor(editor);}
+        
     });$('#collapsespoiler_dotproduct').on('shown.bs.collapse', function ()
     {
         var textarea = $(this).find('textarea:first').attr('id');
@@ -696,7 +706,7 @@ void loop(double t, double dt)
 </div>
 </div>
 <div id="cppcrossproductdiv" style="display: none;">
-<canvas id="cppcrossproductcanvas" height="500" width="500"></canvas>
+<canvas id="cppcrossproductcanvas" height="400" width="600"></canvas>
 </div>
 
 
@@ -709,7 +719,10 @@ void loop(double t, double dt)
             $(this).tab('show');
         })
 
-        var editor = createEditor("cppcrossproduct", "text\/x-c\u002b\u002bsrc");Promise.all([]).then(v => { runEditor(editor) });
+        {
+                var editor = createEditor("cpp", "crossproduct", "text\/x-c\u002b\u002bsrc");
+                    runEditor(editor);}
+        
     });$('#collapsespoiler_crossproduct').on('shown.bs.collapse', function ()
     {
         var textarea = $(this).find('textarea:first').attr('id');
@@ -856,6 +869,8 @@ void loop(double t, double dt)
 <script type="text/javascript" src="/js/codemirror/codemirror.js"></script>
 <script type="text/javascript" src="/js/codemirror/python.js"></script>
 <script type="text/javascript" src="/js/codemirror/clike.js"></script>
+<script type="text/javascript" src="/js/codemirror/javascript.js"></script>
+<script type="text/javascript" src="/js/codemirror/wgsl.js"></script>
 <script type="text/javascript" src="/js/codeeditor.js"></script>
 <script type="text/javascript" src="/js/drawing.js"></script>
 <script type="text/javascript" src="/js/wasm/wasm.js"></script>

@@ -6,7 +6,14 @@
     <description>Recent content in Rendering on Pixel Craft</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate></lastBuildDate>
+    <lastBuildDate>Sun, 29 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://pixelcraft.dev/courses/rendering/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shaders</title>
+      <link>https://pixelcraft.dev/courses/rendering/shaders/</link>
+      <pubDate>Sun, 29 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>https://pixelcraft.dev/courses/rendering/shaders/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m sure you&amp;rsquo;ve heard the term shaders before if you&amp;rsquo;re into gaming. There are some games that allow you to make custom shaders to change how the game looks, the most popular being &lt;a href=&#34;https://en.wikipedia.org/wiki/Minecraft&#34;&gt;Minecraft&lt;/a&gt;. Here we&amp;rsquo;ll take a brief look at the different shader stages and what they are used for.&lt;/p&gt;&#xA;&lt;p&gt;In the history of drawing pixels on a 2D screen, we&amp;rsquo;ve found two different methods for presenting 3D data:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Rasterization&lt;/strong&gt;: This is the most hardware supported rendering method at this moment. All realtime game engines and visualizations use some form of this. In this method we typically project triangles to a 2D plane (your screen) and then decide for every pixel what triangle we should visualize.&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Raytracing&lt;/strong&gt;: With raytracing or pathtracing we actually reverse this process, instead of ending up at the screen we start out at the screen and then trace rays back into the scene. For every pixel we determine what object we collide with in the scene and determine what color the pixel is that way.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;With the shaders below and continued articles here we&amp;rsquo;ll dive into &lt;strong&gt;rasterization&lt;/strong&gt;. If instead you&amp;rsquo;re more interested in learning raytracing you can visit the &lt;a href=&#34;https://pixelcraft.dev/courses/rendering/raytracing&#34;&gt;raytracing course page&lt;/a&gt;!&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>
